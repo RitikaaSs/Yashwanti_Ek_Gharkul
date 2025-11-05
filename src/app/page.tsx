@@ -11,14 +11,18 @@ export default function Home() {
       {/* Banner section start */}
       <section className="home_banner_section">
         <div className="home_banner_imgbox">
-          <img src="/assets/images/home/banner-image.webp" alt="Banner image" className="img-fluid" />
+          {/* <img src="/assets/images/home/banner-image.webp" alt="Banner image" className="img-fluid" /> */}
+          <video className="hero-video-tag" width="100%" height="100%" autoPlay muted loop playsInline preload="none" poster="/assets/images/home/hero-poster.webp">
+            <source src="/assets/videos/hero-video.webm" type="video/webm" />
+            <source src="/assets/videos/hero-video.mp4" type="video/mp4" />
+          </video>
         </div>
         <div className="home_banner_imgbox_gredient">
-          <img src="/assets/images/home/banner-gredient.webp" alt="Banner gredient image" className="img-fluid" />
+          {/* <img src="/assets/images/home/banner-gredient.webp" alt="Banner gredient image" className="img-fluid" /> */}
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-6 col-md-8 col-sm-10 col-12">
               <div className="home_banner_content_box">
                 <h1 className="heading">Our Home of Care,<br /> <span>Dignity</span>, and <span>Togetherness</span></h1>
                 <div className="banner_para_home">
@@ -157,7 +161,7 @@ export default function Home() {
                     </div>
                     <div className="promise_listing_content">Round-the-Clock Security</div>
                   </div>
-              </div>
+                </div>
               </div>
             </div>
           </div>
@@ -171,7 +175,7 @@ export default function Home() {
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-lg-4">
+            <div className="col-xl-4 col-lg-5">
               <div className="family_connection_mainbox">
                 <div className="family_connection_leftbox">
                   <h2 className="sub_heading">Family Connection</h2>
@@ -188,7 +192,7 @@ export default function Home() {
                       </div>
                       <div className="family_connection_content">
                         <div className="family_connection_heading">Regular Updates</div>
-                        <div className="family_connection_text">Track health, activities, and daily routines at a glance.</div>
+                        <div className="family_connection_text">Timely information on routines and updates.</div>
                       </div>
                     </div>
                     <div className="family_connection_listing">
@@ -214,6 +218,15 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <div className="steps_below_para_mainbox">
+                <p className="m-0">
+                  We at Yashwanti, encourage Family Togetherness – Loved ones are urged to visit, celebrate, and stay connected through our digital platform.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       {/* Family connection section ends */}
@@ -225,8 +238,7 @@ export default function Home() {
               <div className="headingBox text-center">
                 <h2 className="sub_heading">Step Into Our Gharkul</h2>
                 <div className="stps_para_first">
-                  <p>A home where every heart is welcomed, every life celebrated, and every day is filled
-                    with care a companionship.</p>
+                  <p>A home where every heart is welcomed, every life is celebrated, and every day is filled with care and companionship.</p>
                 </div>
                 <div className="stps_para_second">
                   <p>Your journey with us begins by simply following the next few steps</p>
@@ -238,8 +250,8 @@ export default function Home() {
             <div className="col-lg-12">
               <Swiper
                 modules={[Navigation, Autoplay]}
-                spaceBetween={30}
-                slidesPerView={1}
+                spaceBetween={40}
+                slidesPerView={3}
                 navigation={{
                   nextEl: ".custom-next",
                   prevEl: ".custom-prev",
@@ -247,170 +259,132 @@ export default function Home() {
                 pagination={{ clickable: true }}
                 autoplay={{ delay: 3000 }}
                 loop={true}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                  },
+                  992: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                  },
+                }}
               >
                 <SwiperSlide>
-                  <div className="steps_mainBox">
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
-                      </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">1</div>
-                          <div className="step_heading">Begin Your Journey</div>
-                        </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Fill the admission form and share your story.</div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step1.svg" alt="Begin Your Journey" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
+                  <div className="step_listing">
+                    <div className="step_arrow">
+                      <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
                     </div>
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                    <div className="step_contentBox">
+                      <div className="step_headingBox">
+                        <div className="step_number">1</div>
+                        <div className="step_heading">Begin Your Journey</div>
                       </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">2</div>
-                          <div className="step_heading">Thoughtful Review</div>
-                        </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Our team listens carefully to understand your needs.</div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step2.svg" alt="Thoughtful Review" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
-                      </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">3</div>
-                          <div className="step_heading">Holistic Assessment</div>
-                        </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Doctor evaluates physical, mental, and emotional well-being.
-                          </div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step3.svg" alt="Holistic Assessment" className="img-fluid" />
-                          </div>
+                      <div className="step_textBox">
+                        <div className="step_text">Fill the admission form and share your story.</div>
+                        <div className="step_img">
+                          <img src="/assets/images/home/step1.svg" alt="Begin Your Journey" className="img-fluid" />
                         </div>
                       </div>
                     </div>
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                  <div className="steps_mainBox">
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
-                      </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">1</div>
-                          <div className="step_heading">Begin Your Journey</div>
-                        </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Fill the admission form and share your story.</div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step1.svg" alt="Begin Your Journey" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
+                  <div className="step_listing step_brown_head">
+                    <div className="step_arrow">
+                      <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
                     </div>
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                    <div className="step_contentBox">
+                      <div className="step_headingBox">
+                        <div className="step_number">2</div>
+                        <div className="step_heading">Thoughtful Review</div>
                       </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">2</div>
-                          <div className="step_heading">Thoughtful Review</div>
-                        </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Our team listens carefully to understand your needs.</div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step2.svg" alt="Thoughtful Review" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
-                      </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">3</div>
-                          <div className="step_heading">Holistic Assessment</div>
-                        </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Doctor evaluates physical, mental, and emotional well-being.
-                          </div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step3.svg" alt="Holistic Assessment" className="img-fluid" />
-                          </div>
+                      <div className="step_textBox">
+                        <div className="step_text">Our team listens carefully to understand your needs.</div>
+                        <div className="step_img">
+                          <img src="/assets/images/home/step2.svg" alt="Thoughtful Review" className="img-fluid" />
                         </div>
                       </div>
                     </div>
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                  <div className="steps_mainBox">
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                  <div className="step_listing step_brown_violate">
+                    <div className="step_arrow">
+                      <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                    </div>
+                    <div className="step_contentBox">
+                      <div className="step_headingBox">
+                        <div className="step_number">3</div>
+                        <div className="step_heading">Holistic Assessment</div>
                       </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">1</div>
-                          <div className="step_heading">Begin Your Journey</div>
+                      <div className="step_textBox">
+                        <div className="step_text">Doctor evaluates physical, mental, and emotional well-being.
                         </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Fill the admission form and share your story.</div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step1.svg" alt="Begin Your Journey" className="img-fluid" />
-                          </div>
+                        <div className="step_img">
+                          <img src="/assets/images/home/step3.svg" alt="Holistic Assessment" className="img-fluid" />
                         </div>
                       </div>
                     </div>
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="step_listing">
+                    <div className="step_arrow">
+                      <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                    </div>
+                    <div className="step_contentBox">
+                      <div className="step_headingBox">
+                        <div className="step_number">4</div>
+                        <div className="step_heading">Begin Your Journey</div>
                       </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">2</div>
-                          <div className="step_heading">Thoughtful Review</div>
-                        </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Our team listens carefully to understand your needs.</div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step2.svg" alt="Thoughtful Review" className="img-fluid" />
-                          </div>
+                      <div className="step_textBox">
+                        <div className="step_text">Fill the admission form and share your story.</div>
+                        <div className="step_img">
+                          <img src="/assets/images/home/step1.svg" alt="Begin Your Journey" className="img-fluid" />
                         </div>
                       </div>
                     </div>
-                    <div className="step_listing">
-                      <div className="step_arrow">
-                        <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="step_listing step_brown_head">
+                    <div className="step_arrow">
+                      <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                    </div>
+                    <div className="step_contentBox">
+                      <div className="step_headingBox">
+                        <div className="step_number">5</div>
+                        <div className="step_heading">Thoughtful Review</div>
                       </div>
-                      <div className="step_contentBox">
-                        <div className="step_headingBox">
-                          <div className="step_number">3</div>
-                          <div className="step_heading">Holistic Assessment</div>
+                      <div className="step_textBox">
+                        <div className="step_text">Our team listens carefully to understand your needs.</div>
+                        <div className="step_img">
+                          <img src="/assets/images/home/step2.svg" alt="Thoughtful Review" className="img-fluid" />
                         </div>
-                        <div className="step_textBox">
-                          <div className="step_text">Doctor evaluates physical, mental, and emotional well-being.
-                          </div>
-                          <div className="step_img">
-                            <img src="/assets/images/home/step3.svg" alt="Holistic Assessment" className="img-fluid" />
-                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="step_listing step_brown_violate">
+                    <div className="step_arrow">
+                      <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
+                    </div>
+                    <div className="step_contentBox">
+                      <div className="step_headingBox">
+                        <div className="step_number">6</div>
+                        <div className="step_heading">Holistic Assessment</div>
+                      </div>
+                      <div className="step_textBox">
+                        <div className="step_text">Doctor evaluates physical, mental, and emotional well-being.
+                        </div>
+                        <div className="step_img">
+                          <img src="/assets/images/home/step3.svg" alt="Holistic Assessment" className="img-fluid" />
                         </div>
                       </div>
                     </div>
@@ -428,20 +402,11 @@ export default function Home() {
               </Swiper>
             </div>
           </div>
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="steps_below_para_mainbox">
-                <p className="m-0">
-                  We at Yashwanti, encourage Family Togetherness – Loved ones are urged to visit, celebrate, and stay connected through our digital platform.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
       {/* Step into gharkul section ends */}
       {/* Stories section start */}
-      <section className="stories_section">
+      <section className="stories_section d-none">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -575,7 +540,15 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="home_contact_rightbox">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d129736.13036395071!2d73.39286545857954!3d17.116888696845677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bea07a1fc654a51%3A0x6957d6ae614fe73e!2sDesai%20Wadi!5e0!3m2!1sen!2sin!4v1759126603134!5m2!1sen!2sin" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7671.694570699371!2d73.5662173157595!3d15.969349542000481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc0070065711503%3A0x4b052ddee8b813c7!2sYashwanti%20Ek%20Gharkul!5e0!3m2!1sen!2sin!4v1761819592100!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
                 </div>
               </div>
             </div>
