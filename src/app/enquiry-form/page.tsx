@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import InnerBanner from "../../components/InnerBanner";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { enquirySchema } from "@/schemas/enquirySchema";
-import { z } from "zod";
+// import { useForm } from "react-hook-form";
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { enquirySchema } from "@/schemas/enquirySchema";
+// import { z } from "zod";
 import { useRouter } from "next/navigation";
 
 // Generate TypeScript type from schema
@@ -42,7 +42,7 @@ const EnquiryForm = () => {
     const router = useRouter();
 const [msg, setMsg] = useState("");
 
-    const handleInputChange = async (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormValues((prev) => ({ ...prev, [name]: value }));
     }

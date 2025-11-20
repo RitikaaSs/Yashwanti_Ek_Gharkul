@@ -94,8 +94,8 @@ const AboutUs = () => {
                         </div>
                         <div className="container">
                             <div className="row">
-                                <div className="col-lg-5"></div>
-                                <div className="col-lg-7">
+                                <div className="col-lg-5 col-md-4"></div>
+                                <div className="col-lg-7 col-md-8">
                                     <div className="vision_content_box">
                                         <h2 className="sub_heading">Our Vision</h2>
                                         <p className="m-0">To build a compassionate Gharkul where every elder lives with dignity, joy, and belonging — a home where ageing is embraced with love, respect, and togetherness.</p>

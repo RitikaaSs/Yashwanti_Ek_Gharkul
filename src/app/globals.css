@@ -1122,6 +1122,10 @@
       font-family: 'Poppins-SemiBold';
       margin: 0 0 0.313rem 0;
     }
+
+    .outcpmes_contentbox p {
+      margin: 0 0 1.875rem 0;
+    }
   }
 
   .about_registration_section {
@@ -1163,7 +1167,7 @@
 
     .promise_of_care_secondpara p {
       text-align: center;
-      margin: 0 0 1.25rem 0;
+      margin: 0 0 1.875rem 0;
     }
 
     .promise_of_care_listing_box {
@@ -1444,6 +1448,49 @@
         font-size: 14px;
       }
     }
+
+    footer {
+      .footer_social_links ul li a svg {
+        width: 40px;
+        height: 40px;
+      }
+
+      .footer_icon_box img {
+        max-width: 140px;
+      }
+    }
+
+    .inner_about_section {
+      .inner_about_slogan_box {
+        padding: 0.625rem 3.125rem;
+        font-size: 22px;
+      }
+    }
+
+    .sub_heading {
+      font-size: 2.188rem;
+    }
+
+    .inner_banner_section {
+      .inner_banner_corner_img_two img {
+        max-width: 100px;
+      }
+
+      .inner_banner_corner_img_one img {
+        max-width: 80px;
+      }
+    }
+
+    .promise_of_care_section {
+      .promise_of_care_listing_content {
+        padding: 15px 30px 20px 30px;
+      }
+
+      .promise_of_care_card_heading {
+        font-size: 16px;
+      }
+    }
+
   }
 
   @media (max-width: 1200px) {
@@ -1484,7 +1531,33 @@
 
     .footer_back_imgbox {
       align-self: end;
-      padding: 3.75rem 0 0 0;
+      padding: 1.875rem 0 0 0;
+    }
+
+    .about_registration_section {
+      .about_registration_mainbox {
+        grid-template-columns: 1fr 0.6fr;
+        gap: 40px;
+      }
+    }
+
+    footer {
+      .footer_icon_box img {
+        max-width: 120px;
+      }
+    }
+
+    .promise_of_care_section {
+      .promise_of_care_listing_box {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 60px;
+      }
+    }
+
+    .promise_of_care_section {
+      .promise_of_care_listing_content {
+        padding: 30px 30px 20px 30px;
+      }
     }
   }
 
@@ -1509,7 +1582,7 @@
         max-width: 100%;
         width: 350px;
         height: 100%;
-        z-index: 999;
+        z-index: 9999;
         padding: 1.25rem;
         overflow: hidden;
         transform: translateX(100%);
@@ -1673,6 +1746,100 @@
         padding: 0;
       }
     }
+
+    .inner_about_section {
+      padding: 60px 0 0 0;
+
+      .inner_about_mainbox {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .inner_about_rightbox {
+        grid-row: 1/2;
+      }
+    }
+
+    .vision_section {
+      margin: 60px 0 0 0;
+    }
+
+    .vision_section {
+      .vision_img_box {
+        width: 100%;
+        height: 230px;
+      }
+
+      .vision_img_box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: left;
+      }
+    }
+
+    .mission_section {
+      .mission_img_box {
+        max-width: 30%;
+      }
+
+      .mission_mainbox {
+        padding: 0 0 40px 0;
+      }
+    }
+
+    .outcomes_section {
+      padding: 40px 0;
+
+      .outcomes_listing_heading {
+        font-size: 16px;
+      }
+
+      .outcomes_listing_mainbox {
+        gap: 20px;
+      }
+    }
+
+    .about_registration_section {
+      padding: 60px 0 0 0;
+
+      .about_registration_mainbox {
+        grid-template-columns: 1fr 0.8fr;
+        gap: 20px;
+      }
+
+      .about_registration_rightbox {
+        font-size: 22px;
+      }
+    }
+
+    .inner_banner_section {
+      .inner_banner_corner_img_two img {
+        max-width: 80px;
+      }
+
+      .inner_banner_corner_img_one img {
+        max-width: 60px;
+      }
+    }
+
+    .promise_of_care_section {
+      padding: 60px 0 0 0;
+    }
+
+    .promise_of_care_section {
+      .promise_of_care_listing_box {
+        gap: 20px;
+      }
+
+      .promise_of_care_listing_content {
+        padding: 10px 30px 20px 30px;
+      }
+
+      .promise_of_care_card_heading {
+        font-size: 16px;
+      }
+    }
   }
 
   @media (max-width: 767.98px) {
@@ -1738,6 +1905,46 @@
 
       .footer_icon_box img {
         max-width: 120px;
+      }
+    }
+
+    .vision_section {
+      .vision_img_box {
+        display: none;
+      }
+    }
+
+    .mission_section {
+      padding: 60px 0 0 0;
+
+      .mission_img_box {
+        display: none;
+      }
+    }
+
+    .about_registration_section {
+      .about_registration_mainbox {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .inner_banner_section {
+      .inner_banner_corner_img_two img {
+        max-width: 60px;
+      }
+
+      .inner_banner_corner_img_one img {
+        max-width: 40px;
+      }
+    }
+
+    .promise_of_care_section {
+      .promise_of_care_listing_box {
+        grid-template-columns: 1fr;
+      }
+
+      .promise_of_care_listing_content {
+        padding: 30px 30px 20px 30px;
       }
     }
   }
@@ -1815,6 +2022,40 @@
         justify-content: center;
         text-align: center;
         gap: 10px;
+      }
+    }
+
+    .outcomes_section {
+      .outcomes_listing_mainbox {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+    .inner_about_section {
+      .inner_about_slogan_box {
+        font-size: 16px;
+      }
+    }
+
+    .inner_banner_section {
+      .inner_banner_corner_img_two img {
+        max-width: 40px;
+      }
+
+      .inner_banner_corner_img_one img {
+        max-width: 30px;
+      }
+    }
+
+    .inner_banner_section {
+      .inner_banner_imgbox {
+        aspect-ratio: 2 / 1;
+      }
+    }
+
+    .promise_of_care_section {
+      .promise_of_care_listing_content {
+        padding: 15px 20px 20px 20px;
       }
     }
 
