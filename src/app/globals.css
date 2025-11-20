@@ -13,6 +13,8 @@
     --color-white: #ffffff;
     --color-brown: #A07744;
     --color-green: #028298;
+    --color-body: #021A45;
+    --color-background: #faf6e3;
     --transition-fast: 0.2s ease-in-out;
   }
 
@@ -73,7 +75,8 @@
     width: 100%;
     height: 100%;
     font-family: 'Poppins-Regular';
-    color: var(--color-black);
+    color: var(--color-body);
+    background-color: var(--color-background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -182,6 +185,49 @@
     color: #ECCC7E;
   }
 
+  .my_custom_listing ul li {
+    position: relative;
+    padding: 0 0 12px 22px;
+  }
+
+  .my_custom_listing ul li:last-child {
+    padding: 0 0 0 22px;
+  }
+
+  .my_custom_listing ul li::after {
+    position: absolute;
+    content: "";
+    width: 14px;
+    height: 14px;
+    background-image: url(../../public/assets/images/about/right-arrow.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: 0;
+    top: 4px;
+  }
+
+  .submite_btn {
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: var(--color-green);
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins-SemiBold';
+  }
+
+  .submite_btn span {
+    font-family: 'Poppins-Light';
+  }
+
+  .submite_btn:hover {
+    background-color: #a07744;
+  }
+
   /* Component css ends  */
 
   /* Header section start */
@@ -254,6 +300,7 @@
       height: fit-content;
       position: absolute;
       top: 4px;
+      z-index: 999;
     }
   }
 
@@ -718,7 +765,7 @@
   footer {
     margin: 100px 0 0 0;
     padding: 3.75rem 0 2.5rem 0;
-    background-color: var(--color-brown);
+    background-color: #0B8FA6;
     color: var(--color-white);
 
     .footer_top_box {
@@ -747,9 +794,22 @@
       gap: 25px;
     }
 
+    .footer_social_links ul li a svg {
+      transition-duration: 0.3s;
+    }
+
+    .footer_social_links ul li a svg:hover {
+      transform: scale(1.08);
+    }
+
     .footer_quick_links ul li a {
       color: var(--color-white);
       display: inline-block;
+      transition-duration: 0.3s;
+    }
+
+    .footer_quick_links ul li a:hover {
+      color: #8dd7e4;
     }
 
     .footer_quick_links ul li:not(:last-child) {
@@ -796,6 +856,469 @@
   }
 
   /* responsive header ends */
+  /* Inner Banner CSS start */
+  .inner_banner_section {
+    .inner_banner_mainbox {
+      display: grid;
+      grid-template-areas: "stack";
+    }
+
+    .inner_banner_imgbox {
+      grid-area: stack;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .inner_banner_mainbox .container {
+      grid-area: stack;
+      z-index: 10;
+      align-self: center;
+      text-align: center;
+      justify-self: center;
+    }
+
+    .inner_banner_corner_img_one {
+      grid-area: stack;
+      z-index: 5;
+      width: fit-content;
+      height: fit-content;
+      align-self: end;
+    }
+
+    .inner_banner_corner_img_two {
+      grid-area: stack;
+      z-index: 5;
+      width: fit-content;
+      height: fit-content;
+      justify-self: end;
+      align-self: end;
+    }
+
+    .inner_banner_corner_img_one img {
+      max-width: 100px;
+    }
+
+    .inner_banner_corner_img_two img {
+      max-width: 120px;
+    }
+
+    .inner_banner_imgbox img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .breadcrumb {
+      justify-content: center;
+      background: transparent;
+    }
+
+    .breadcrumb-item a {
+      color: #ECCC7E;
+      font-family: 'Poppins-SemiBold';
+    }
+
+    .breadcrumb-item.active {
+      color: var(--color-white);
+      padding: 0 0 0 30px;
+    }
+
+    .breadcrumb-item+.breadcrumb-item::before {
+      color: var(--color-white);
+      padding: 0 30px 0 0;
+    }
+  }
+
+  /* Inner Banner CSS ends  */
+
+  /* ===================ABOUT US PAGE START ====================== */
+  .inner_about_section {
+    padding: 100px 0 0 0;
+
+    .inner_about_para .extra_content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease, opacity 0.5s ease;
+      opacity: 0;
+    }
+
+    .inner_about_para .extra_content.expanded {
+      max-height: 1000px;
+      /* adjust based on content height */
+      opacity: 1;
+    }
+
+    .readmore_btn {
+      margin-top: 1rem;
+      display: inline-block;
+      padding: 10px 25px;
+      background-color: var(--color-green);
+      color: #fff;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Poppins-SemiBold';
+    }
+
+    .readmore_btn span {
+      font-family: 'Poppins-Light';
+    }
+
+    .readmore_btn:hover {
+      background-color: #a07744;
+    }
+
+    .inner_about_mainbox {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 40px;
+    }
+
+    .inner_about_rightbox {
+      display: grid;
+      grid-template-areas: "stack";
+      height: fit-content;
+    }
+
+    .inner_about_background_box {
+      grid-area: stack;
+      z-index: 1;
+      width: fit-content;
+      height: fit-content;
+      position: relative;
+      top: -40px;
+      left: -20px;
+    }
+
+    .inner_about_right_img_box {
+      grid-area: stack;
+      z-index: 2;
+      align-self: center;
+      justify-self: center;
+      width: fit-content;
+      height: fit-content;
+    }
+
+    .inner_about_slogan_box {
+      grid-area: stack;
+      z-index: 3;
+      align-self: end;
+      justify-self: center;
+      width: -moz-fit-content;
+      width: fit-content;
+      height: -moz-fit-content;
+      height: fit-content;
+      text-align: center;
+      padding: 1.25rem 3.125rem;
+      background-color: #028298e0;
+      border-radius: 100px;
+      font-size: 25px;
+      color: var(--color-white);
+      font-family: 'Poppins-Light';
+      line-height: normal;
+    }
+
+    .inner_about_slogan_box span {
+      font-family: 'Poppins-SemiBold';
+    }
+
+    .sub_heading {
+      text-align: start;
+    }
+  }
+
+  .vision_section {
+    margin: 100px 0 0 0;
+
+    .sub_heading {
+      text-align: start;
+    }
+
+    .vision_mainbox {
+      display: grid;
+      grid-template-areas: "stack";
+    }
+
+    .vision_img_box {
+      grid-area: stack;
+    }
+
+    .vision_mainbox .container {
+      grid-area: stack;
+      align-self: center;
+    }
+  }
+
+  .mission_section {
+
+    .sub_heading {
+      text-align: start;
+    }
+
+    .mission_mainbox {
+      display: grid;
+      grid-template-areas: "stack";
+    }
+
+    .mission_mainbox .container {
+      grid-area: stack;
+      align-self: center;
+    }
+
+    .mission_img_box {
+      grid-area: stack;
+      justify-self: end;
+    }
+  }
+
+  .outcomes_section {
+    padding: 60px 0;
+    background: linear-gradient(0deg, rgba(252, 247, 236, 0.9) 0%, rgba(253, 250, 242, 1) 80%, rgba(255, 255, 255, 0.9) 100%);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("../../public/assets/images/about/outcomes-background-image.webp");
+      background-repeat: no-repeat;
+      background-size: cover;
+      opacity: 0.8;
+      z-index: -1;
+    }
+
+    .outcomes_listing_mainbox {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px;
+    }
+
+    .outcomes_listing_box {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+    }
+
+    .outcomes_listing_icon {
+      width: 80px;
+      height: 80px;
+      overflow: hidden;
+    }
+
+    .outcomes_listing_icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: scale-down;
+    }
+
+    .outcomes_listing_heading {
+      font-size: 18px;
+      font-family: 'Poppins-SemiBold';
+      margin: 0 0 0.313rem 0;
+    }
+  }
+
+  .about_registration_section {
+    padding: 100px 0 0 0;
+
+    .about_registration_mainbox {
+      display: grid;
+      grid-template-columns: 1fr 0.5fr;
+      align-items: center;
+    }
+
+    .about_registration_heading {
+      font-size: 18px;
+      font-family: 'Poppins-SemiBold';
+      margin: 0 0 1.875rem 0;
+    }
+
+    .about_registration_rightbox {
+      background-color: var(--color-brown);
+      padding: 1.875rem;
+      border-radius: 20px;
+      text-align: center;
+      color: var(--color-white);
+      font-family: 'Playfair-Regular';
+      font-size: 25px;
+      box-shadow: 0px 8px 12px #dedede;
+    }
+  }
+
+  /* ===================ABOUT US PAGE ENDS ======================= */
+  /* ===================Services PAGE START ====================== */
+  .promise_of_care_section {
+    padding: 100px 0 0 0;
+
+    .promise_of_care_firstpara p {
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .promise_of_care_secondpara p {
+      text-align: center;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .promise_of_care_listing_box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .promise_of_care_listing {
+      display: grid;
+      grid-template-areas: "stack";
+      filter: drop-shadow(2px 4px 6px #d9d9d9);
+      transition-duration: 0.5s;
+    }
+
+    /* .promise_of_care_listing:hover {
+      filter: drop-shadow(0px 4px 0px var(--color-green));
+    } */
+
+    .promise_of_care_listing_img {
+      grid-area: stack;
+    }
+
+    .promise_of_care_listing_content {
+      grid-area: stack;
+      width: fit-content;
+      height: fit-content;
+      padding: 30px;
+    }
+
+    .promise_of_care_card_heading {
+      font-size: 18px;
+      font-family: 'Poppins-SemiBold';
+      margin: 0 0 0.625rem 0;
+    }
+
+    .promise_of_care_listing_img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+  }
+
+  /* ===================Services PAGE ENDS ======================= */
+  /* ===================ENQUIRY FORM PAGE START ================== */
+  .enquiry_form_section {
+    padding: 100px 0 0 0;
+    background: linear-gradient(180deg, rgba(255, 254, 253, 1) 0%, rgba(252, 247, 236, 0.3) 100%);
+
+    .enquiry_form_mainbox {
+      padding: 50px;
+      border-radius: 30px;
+      background-color: #fff;
+      box-shadow: 4px 4px 20px #d6d6d666;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 80px;
+    }
+
+    .enquiry_formbox form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .msg_form_group,
+    .form_submit {
+      grid-column: 1/3;
+    }
+
+    /* .form_submit {
+      text-align: center;
+    } */
+
+    .form-control,
+    .form-select {
+      padding: 1.25rem 1.25rem;
+      border-radius: 80px;
+      color: #93959e;
+    }
+
+    .form-control::placeholder {
+      color: #93959e;
+      font-size: 14px;
+    }
+
+    .form_group select {
+      font-size: 14px;
+      color: #93959e;
+    }
+
+    .enquiry_form_mainbox p {
+      position: relative;
+      padding: 0 0 20px 0;
+      margin: 0 0 40px 0;
+    }
+
+    .enquiry_form_mainbox p:after {
+      content: "";
+      position: absolute;
+      width: 30%;
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: #d6d6d68a;
+      border-radius: 40px;
+    }
+
+    .error_msg {
+      font-size: 12px;
+      color: red;
+      margin: 0px 0 0 20px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--color-green);
+      box-shadow: unset;
+    }
+
+    .enquiry_form_rightbox {
+      width: 100%;
+      aspect-ratio: 1/1.2;
+      position: relative;
+    }
+
+    .enquiry_form_rightbox::after {
+      content: "";
+      position: absolute;
+      right: -15px;
+      bottom: -15px;
+      background-color: var(--color-green);
+      border-radius: 30px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .enquiry_form_rightbox img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sub_heading {
+      text-align: start;
+    }
+  }
+
+  /* ===================ENQUIRY FORM PAGE ENDS =================== */
 
   /* Media quairy start */
   @media (max-width: 1440px) {
@@ -915,6 +1438,12 @@
         padding: 0 0 0.625rem 0;
       }
     }
+
+    .promise_of_care_section {
+      .promise_of_care_listing_content p {
+        font-size: 14px;
+      }
+    }
   }
 
   @media (max-width: 1200px) {
@@ -1006,9 +1535,9 @@
         display: inline-block;
       }
 
-      .header_menu_box nav ul li:last-child a {
-        /* border-bottom: none; */
-      }
+      /* .header_menu_box nav ul li:last-child a {
+        border-bottom: none;
+      } */
 
       .header_menu_box nav ul li a.header_login_btn {
         justify-content: center;
