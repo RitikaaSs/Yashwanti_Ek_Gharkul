@@ -62,15 +62,15 @@ const AboutUs = () => {
                                                 onClick={toggleReadMore}
                                             >
                                                 {isExpanded ? (
-                                                    <>Read <span>Less</span></>
+                                                    <>Read Less</>
                                                 ) : (
-                                                    <>Read <span>More</span></>
+                                                    <>Read More</>
                                                 )}
                                             </button>
                                         </div>
                                     </div>
                                     <div className="inner_about_rightbox">
-                                        <div className="inner_about_background_box">
+                                        <div className="inner_about_background_box d-none">
                                             <img src="/assets/images/about/about-us-yellow-pattern.webp" alt="Pattern image" className="img-fluid" />
                                         </div>
                                         <div className="inner_about_right_img_box">

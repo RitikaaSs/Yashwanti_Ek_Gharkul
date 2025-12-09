@@ -9,31 +9,27 @@ export async function POST(req: NextRequest) {
       full_name,
       email,
       phone_number,
-      subject,
-      message,
+      preferred_date,
+      preferred_time_slot,
+      purpose_of_visit,
+      number_of_visitors
     } = body;
-
-    // Basic validation
-    // if (!full_name || !email || !subject || !message) {
-    //   return NextResponse.json(
-    //     { error: "Required fields are missing" },
-    //     { status: 400 }
-    //   );
-    // }
 
     // Insert into MySQL
     const query = `
-      INSERT INTO enquiry_form 
-      (full_name, email, phone_number, subject, message)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO visit_requests 
+      (full_name, email, phone_number, preferred_date, preferred_time_slot, purpose_of_visit, number_of_visitors)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     await db.query(query, [
       full_name,
       email,
-      phone_number || null,
-      subject,
-      message,
+      phone_number,
+      preferred_date,
+      preferred_time_slot,
+      purpose_of_visit,
+      number_of_visitors
     ]);
 
     return NextResponse.json(

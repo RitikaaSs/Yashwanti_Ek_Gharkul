@@ -13,13 +13,7 @@ export async function POST(req: NextRequest) {
       message,
     } = body;
 
-    // Basic validation
-    // if (!full_name || !email || !subject || !message) {
-    //   return NextResponse.json(
-    //     { error: "Required fields are missing" },
-    //     { status: 400 }
-    //   );
-    // }
+
 
     // Insert into MySQL
     const query = `
@@ -38,7 +32,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { status: 1, message: "Form submitted successfully" },
-      { status: 201 }
+      { status: 200 }
     );
 
   } catch (error) {

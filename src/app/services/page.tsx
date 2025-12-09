@@ -29,7 +29,7 @@ const Services = () => {
                                         <p>Live Life with Love & Dignity</p>
                                     </div>
                                     <div className="promise_of_care_secondpara">
-                                        <p>At Yashwanti Ek Gharkul, our servicesis not about providing a facility, it’s about building a loving home. Where elders can enjoy life with peace, safety and belonging.</p>
+                                        <p>At Yashwanti Ek Gharkul, our intention is not about providing a facility, it’s about building a loving home. Where elders can enjoy life with peace, safety and belonging.</p>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import InnerBanner from "../../components/InnerBanner";
@@ -40,7 +40,7 @@ const EnquiryForm = () => {
     });
     const [errors, setErrors] = useState<Partial<FormValues>>({});
     const router = useRouter();
-const [msg, setMsg] = useState("");
+    const [msg, setMsg] = useState("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -50,6 +50,7 @@ const [msg, setMsg] = useState("");
     const validate = () => {
         const phoneRegex = /^[6-9]\d{9}$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // const numberRegex = /^\d+$/;
         const newErrors: Partial<FormValues> = {};
         if (!formValues.full_name) newErrors.full_name = "required";
         // if (!formValues.email) newErrors.email = "required";
@@ -90,7 +91,7 @@ const [msg, setMsg] = useState("");
         if (data.status == 1) {
             setMsg("Form submitted successfully!");
             // e.target.reset();
-            router.refresh(); 
+            router.refresh();
         } else {
             setMsg(data.error || "Something went wrong!");
         }
@@ -223,7 +224,7 @@ const [msg, setMsg] = useState("");
                                                         Submit <span>Enquiry</span>
                                                     </button>
                                                 </div>
-{msg && <p>{msg}</p>}
+                                                {msg && <p>{msg}</p>}
                                             </form>
                                         </div>
                                     </div>
