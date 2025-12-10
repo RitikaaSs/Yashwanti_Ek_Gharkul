@@ -36,137 +36,148 @@ export default function LoginPage() {
     }
   };
 
-  return (
+return (
+  <div
+    style={{
+      minHeight: "100vh",
+      background: "#0A6C85",
+      display: "flex",
+      alignItems: "center",
+      // justifyContent: "center",
+      flexDirection: "column",
+      padding: "20px",
+    }}
+  >
+    {/* Logo ABOVE card */}
+    <img
+      src="/assets/images/home/footer-logo.webp"
+      alt="Logo"
+      style={{
+        width: "130px",
+        marginBottom: "25px",
+      }}
+    />
+
+    {/* LOGIN CARD */}
     <div
       style={{
-        minHeight: "100vh",
-        background: "#0A6C85",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px",
+        background: "#fff",
+        padding: "40px 35px",
+        borderRadius: "16px",
+        maxWidth: "420px",
+        width: "100%",
+        boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
       }}
     >
-      <div
+      <h2
         style={{
-          background: "#fff",
-          padding: "40px 35px",
-          borderRadius: "16px",
-          maxWidth: "420px",
-          width: "100%",
-          boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
+          textAlign: "center",
+          marginBottom: "25px",
+          color: "#0A6C85",
+          fontWeight: "600",
         }}
       >
-        <h2
+        Login
+      </h2>
+
+      {error && (
+        <p
           style={{
+            color: "red",
             textAlign: "center",
-            marginBottom: "25px",
-            color: "#0A6C85",
-            fontWeight: "600",
+            marginBottom: "15px",
+            fontSize: "14px",
           }}
         >
-          Login
-        </h2>
+          {error}
+        </p>
+      )}
 
-        {error && (
-          <p
-            style={{
-              color: "red",
-              textAlign: "center",
-              marginBottom: "15px",
-              fontSize: "14px",
-            }}
-          >
-            {error}
-          </p>
-        )}
-
-        <form onSubmit={handleLogin}>
-          {/* Email */}
-          <div style={{ marginBottom: "18px" }}>
-            <label style={{ fontSize: "14px", fontWeight: "500" }}>Email</label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #ccc",
-                marginTop: "6px",
-              }}
-              required
-            />
-          </div>
-
-          {/* Password */}
-          <div style={{ marginBottom: "18px", position: "relative" }}>
-            <label style={{ fontSize: "14px", fontWeight: "500" }}>
-              Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #ccc",
-                marginTop: "6px",
-                paddingRight: "40px",
-              }}
-              required
-            />
-
-            <span
-              onClick={() => setShowPassword(!showPassword)}
-              style={{
-                position: "absolute",
-                right: "12px",
-                top: "40px",
-                cursor: "pointer",
-                fontSize: "13px",
-                color: "#0A6C85",
-                fontWeight: "600",
-              }}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </span>
-          </div>
-
-          {/* Forgot Password */}
-          <div style={{ textAlign: "right", marginBottom: "18px" }}>
-            <a
-              href="/forgot-password"
-              style={{ color: "#0A6C85", fontSize: "14px", fontWeight: "500" }}
-            >
-              Forgot Password?
-            </a>
-          </div>
-
-          {/* Login Button */}
-          <button
-            type="submit"
+      <form onSubmit={handleLogin}>
+        {/* Email */}
+        <div style={{ marginBottom: "18px" }}>
+          <label style={{ fontSize: "14px", fontWeight: "500" }}>Email</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             style={{
               width: "100%",
               padding: "12px",
-              background: "#0A6C85",
-              color: "#fff",
-              border: "none",
               borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "600",
+              border: "1px solid #ccc",
+              marginTop: "6px",
+            }}
+            required
+          />
+        </div>
+
+        {/* Password */}
+        <div style={{ marginBottom: "18px", position: "relative" }}>
+          <label style={{ fontSize: "14px", fontWeight: "500" }}>
+            Password
+          </label>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1px solid #ccc",
+              marginTop: "6px",
+              paddingRight: "40px",
+            }}
+            required
+          />
+
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "12px",
+              top: "40px",
               cursor: "pointer",
+              fontSize: "13px",
+              color: "#0A6C85",
+              fontWeight: "600",
             }}
           >
-            Login
-          </button>
-        </form>
-      </div>
+            {showPassword ? "Hide" : "Show"}
+          </span>
+        </div>
+
+        <div style={{ textAlign: "right", marginBottom: "18px" }}>
+          <a
+            href="/forgot-password"
+            style={{ color: "#0A6C85", fontSize: "14px", fontWeight: "500" }}
+          >
+            Forgot Password?
+          </a>
+        </div>
+
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "12px",
+            background: "#0A6C85",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontWeight: "600",
+            cursor: "pointer",
+          }}
+        >
+          Login
+        </button>
+      </form>
     </div>
-  );
+  </div>
+);
+
 }

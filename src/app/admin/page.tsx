@@ -1,52 +1,143 @@
-export default function AdminDashboard() {
+"use client";
+import { useEffect, useState } from "react";
+
+export default function AdminLayout() {
+  const [approved, setApproved] = useState(0);
+  const [onHold, setOnHold] = useState(0);
+  const [rejected, setRejected] = useState(0);
+
+  useEffect(() => {
+    async function fetchCounts() {
+      try {
+        const res = await fetch("/api/candidate/total_count", {
+          method: "POST",
+        });
+
+        const data = await res.json();
+
+        if (data.status === 1) {
+          setApproved(data.approved);
+          setOnHold(data.on_hold);
+          setRejected(data.rejected);
+        }
+      } catch (error) {
+        console.error("Error fetching status counts:", error);
+      }
+    }
+
+    fetchCounts();
+  }, []);
+
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div>
+      <style>{`
+        body, html {
+          margin: 0;
+          padding: 0;
+          font-family: Arial, sans-serif;
+        }
+        .layout {
+          display: flex;
+          background: #f5f5f5;
+          min-height: 100vh;
+        }
+        .sidebar {
+          width: 240px;
+          background: #0A6C85;
+          color: white;
+          display: flex;
+          flex-direction: column;
+          padding: 20px 0;
+        }
+        .sidebar h2 {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        .menu a {
+          display: block;
+          padding: 12px 20px;
+          text-decoration: none;
+          color: #cfcfcf;
+          transition: 0.2s;
+        }
+        .menu a:hover {
+          background: #34344a;
+          color: #fff;
+        }
+        .main {
+          flex: 1;
+          padding: 30px;
+        }
+        .card {
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+      `}</style>
 
-      {/* SIDEBAR */}
-      <aside className="w-64 bg-[#1D4ED8] text-white flex flex-col py-6 shadow-xl">
+      <div className="layout">
+        <aside className="sidebar">
+          <div style={{ "padding": '0 3.75rem' }}><img src="/assets/images/home/footer-logo.webp" alt="Logo" className="img-fluid" /></div>
 
-        {/* Logo */}
-        <div className="text-2xl font-semibold px-6 mb-10">Gharkul Admin</div>
+          <nav className="menu">
+            <a href="#">Dashboard</a>
+            <a href="#">Resident List</a>
+            <a href="#">Logout</a>
+          </nav>
+        </aside>
 
-        {/* Navigation Menu */}
-        <nav className="flex-1 space-y-1 px-4">
+        <main className="main">
+          <div className="card">
+            <h1>Welcome to Admin Panel</h1>
 
-          <a href="/admin/candidates" className="block py-3 px-4 rounded hover:bg-blue-700 transition">
-            Candidates
-          </a>
+            {/* Stats Cards Container */}
+            <div
+              style={{
+                display: "flex",
+                gap: "20px",
+                marginTop: "20px",
+              }}
+            >
+              {/* Card 1 */}
+              <div
+                style={{
+                  flex: 1,
+                  background: "#0A6C85",
+                  color: "white",
+                  padding: "20px",
+                  borderRadius: "8px",
+                  textAlign: "center",
+                }}
+              >
+                <h3 style={{ margin: 0, fontSize: "18px" }}>TOTAL RESIDENTS</h3>
+                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                  {approved}
+                </p>
+              </div>
 
-          <a href="/admin/applications" className="block py-3 px-4 rounded hover:bg-blue-700 transition">
-            Applications
-          </a>
+              {/* Card 2 */}
+              <div
+                style={{
+                  flex: 1,
+                  background: "#0A6C85",
+                  color: "white",
+                  padding: "20px",
+                  borderRadius: "8px",
+                  textAlign: "center",
+                }}
+              >
+                <h3 style={{ margin: 0, fontSize: "18px" }}>ON HOLD APPLICATIONS</h3>
+                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                  {onHold}
+                </p>
+              </div>
+            </div>
+          </div>
 
-          <a href="/admin/users" className="block py-3 px-4 rounded hover:bg-blue-700 transition">
-            Users
-          </a>
-
-          <a href="/admin/settings" className="block py-3 px-4 rounded hover:bg-blue-700 transition">
-            Settings
-          </a>
-
-        </nav>
-
-        {/* Footer (like screenshot bottom) */}
-        <div className="mt-auto px-6 py-4 text-sm border-t border-blue-500/40">
-          Admin User
-        </div>
-
-      </aside>
-
-
-      {/* MAIN CONTENT AREA */}
-      <main className="flex-1 p-8">
-        <h1 className="text-3xl font-semibold mb-6">Dashboard</h1>
-
-        {/* Example card */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-700">Welcome to the Gharkul Admin Panel.</p>
-        </div>
-      </main>
-
+        </main>
+      </div>
     </div>
   );
 }

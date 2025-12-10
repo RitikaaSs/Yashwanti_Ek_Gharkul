@@ -1,3 +1,5 @@
+// admin can approve or reject elderly candidate applications
+
 import { NextRequest, NextResponse } from "next/server";
 import db from "../../../../../utils/db";
 
