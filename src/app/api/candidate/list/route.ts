@@ -39,13 +39,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ status: 0, error: "Unknown error" });
   }
 }
-
-// async function fetchCandidates(status: string) {
-//   const res = await fetch("/api/elderly_candidates/filter", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ status }),
-//   });
-
-//   return await res.json();
-// }

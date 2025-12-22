@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export default function AdminLayout() {
   const [approved, setApproved] = useState(0);
   const [onHold, setOnHold] = useState(0);
-  const [rejected, setRejected] = useState(0);
+  // const [rejected, setRejected] = useState(0);
 
   useEffect(() => {
     async function fetchCounts() {
@@ -18,7 +18,7 @@ export default function AdminLayout() {
         if (data.status === 1) {
           setApproved(data.approved);
           setOnHold(data.on_hold);
-          setRejected(data.rejected);
+          // setRejected(data.rejected);
         }
       } catch (error) {
         console.error("Error fetching status counts:", error);
@@ -28,7 +28,7 @@ export default function AdminLayout() {
     fetchCounts();
   }, []);
 
-
+// #ececec
   return (
     <div>
       <style>{`
@@ -82,12 +82,14 @@ export default function AdminLayout() {
           <div style={{ "padding": '0 3.75rem' }}><img src="/assets/images/home/footer-logo.webp" alt="Logo" className="img-fluid" /></div>
 
           <nav className="menu">
-            <a href="#">Dashboard</a>
-            <a href="#">Resident List</a>
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/resident-list">Resident List</a>
+            <a href="#">Users</a>
+            <a href="#">Visit requests</a>
+            <a href="#">Enquiries</a>
             <a href="#">Logout</a>
           </nav>
         </aside>
-
         <main className="main">
           <div className="card">
             <h1>Welcome to Admin Panel</h1>
@@ -101,6 +103,7 @@ export default function AdminLayout() {
               }}
             >
               {/* Card 1 */}
+              <a href="/admin/resident_list" style={{ textDecoration: 'none' }}>
               <div
                 style={{
                   flex: 1,
@@ -116,8 +119,10 @@ export default function AdminLayout() {
                   {approved}
                 </p>
               </div>
+              </a>
 
               {/* Card 2 */}
+              <a href="#" style={{ textDecoration: 'none' }}>
               <div
                 style={{
                   flex: 1,
@@ -133,6 +138,7 @@ export default function AdminLayout() {
                   {onHold}
                 </p>
               </div>
+              </a>
             </div>
           </div>
 

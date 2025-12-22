@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import db from "../../../../../utils/db";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { RowDataPacket } from "mysql2";
+
+interface UserRow extends RowDataPacket {
+  id: number;
+  email: string;
+  password_hash: string;
+  role: string;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,10 +19,11 @@ export async function POST(req: NextRequest) {
       password
     } = body
     // Fetch user
-    const [rows]: any = await db.query(
-      "SELECT * FROM users WHERE email = ? LIMIT 1",
-      [email]
-    );
+   const [rows] = await db.query<UserRow[]>(
+  "SELECT * FROM users WHERE email = ? LIMIT 1",
+  [email]
+);
+
 
     if (!rows || rows.length === 0) {
       return NextResponse.json(

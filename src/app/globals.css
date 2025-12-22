@@ -65,6 +65,99 @@
     font-style: normal;
     font-display: swap;
   }
+/*-------------------------------- RITIKAS CSS START -----------------------------------------------*/
+
+.grey_box {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 15px;
+}
+.list_label .label {
+  background-color: #dcf2ff;
+  padding: 7px 0px;
+  font-size: 13px;
+  font-family: GothamMedium;
+  /* box-shadow: 0 0 8px #0000000f;
+  width: -moz-fit-content;
+  width: fit-content; */
+  margin: 0 auto;
+  border-radius: 8px;
+  width: 100%;
+  border: 1px solid #bae6ff;
+}
+
+.list_listbox:nth-child(2n) {
+  background-color: #fffaf1;
+}
+
+.list_label .list_title {
+  background-color: #ed2024;
+  color: #fff;
+  margin: 0;
+  padding: 7px 40px;
+  position: relative;
+}
+
+.list_label .list_title::after {
+  content: "";
+  background-image: url('/images/toggle_red_arrow.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  float: left;
+  width: 100%;
+  height: 6px;
+  position: absolute;
+  margin: 0 0 0 0;
+  left: 0;
+  transform: rotate(180deg);
+  bottom: -5px;
+}
+
+.list_listbox {
+  padding: 12px 0;
+  font-size: 13px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.list_listbox:hover {
+  background-color: #f3faff;
+}
+
+.d_user_new_details_mainbox {
+  position: relative;
+  z-index: 10;
+}
+
+
+.d_user_new_details_mainbox {
+  position: relative;
+  z-index: 10;
+  padding: 20px;
+  margin: 30px 0 0 0;
+  box-shadow: 2px 2px 12px #0000001f;
+  border-radius: 15px;
+  /* background-color: #feecd157; */
+  background-color: #F4FBFF;
+}
+.d_user_profile_heading {
+  font-family: 'Outfit-SemiBold';
+  font-size: 20px;
+  padding: 0 0 10px 0;
+  margin: 0 0 20px 0;
+  border-bottom: 1px solid #dedede;
+  /* color: #ec2024; */
+}
+.d_user_profile_details_listing_box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.d_user_profile_details_subheading {
+  color: #6e6e6e;
+  margin: 0 0 6px 0;
+}
+/*-------------------------------- RITIKAS CSSS END -----------------------------------------------*/
 
   html {
     font-size: clamp(14px, 1.5vw, 16px);

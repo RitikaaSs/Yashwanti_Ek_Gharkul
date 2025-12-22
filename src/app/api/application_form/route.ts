@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "../../../../utils/db";
 import bcrypt from "bcryptjs";
+import { ResultSetHeader } from "mysql2";
 
 export async function POST(req: NextRequest) {
   try {
@@ -40,7 +41,8 @@ export async function POST(req: NextRequest) {
       VALUES (?, ?, ?, ?, ?, 'user', NOW())
     `;
 
-    const [userResult]: any = await db.query(userInsertQuery, [
+  const [userResult] = await db.query<ResultSetHeader>(userInsertQuery, [
+
       user_name,
       user_email,
       passwordHash,
