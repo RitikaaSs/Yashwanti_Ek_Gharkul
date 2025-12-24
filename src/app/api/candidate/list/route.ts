@@ -5,14 +5,19 @@ import pool from "../../../../../utils/db";
 import { NextResponse } from "next/server";
 import { RowDataPacket } from "mysql2/promise";
 
-interface ElderlyCandidate extends RowDataPacket {}
+type ElderlyCandidate = RowDataPacket;
+
+interface RequestBody {
+  status?: string | number;
+  userId?: number;
+}
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body: RequestBody = await req.json();
     const { status, userId } = body;
 
-    if (status === undefined && !userId) {
+    if (status === undefined && userId === undefined) {
       return NextResponse.json({
         status: 0,
         error: "Either status or userId is required",
@@ -20,14 +25,14 @@ export async function POST(req: Request) {
     }
 
     let query = `SELECT * FROM elderly_candidates WHERE 1=1`;
-    const values: any[] = [];
+    const values: (string | number)[] = [];
 
     if (status !== undefined) {
       query += ` AND status = ?`;
       values.push(status);
     }
 
-    if (userId) {
+    if (userId !== undefined) {
       query += ` AND user_id = ?`;
       values.push(userId);
     }

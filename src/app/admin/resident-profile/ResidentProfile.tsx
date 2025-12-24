@@ -216,7 +216,7 @@ export default function ResidentProfile() {
                                                 <div className="d_user_profile_details_content">{listData?.profession || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Doctor's Note</div>
+                                                <div className="d_user_profile_details_subheading">Doctor&apos;s Note</div>
                                                 <div className="d_user_profile_details_content">{listData?.hobbies || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">

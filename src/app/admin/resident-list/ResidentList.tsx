@@ -1,42 +1,51 @@
 "use client";
 import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
-// import moment from "moment";
-import { useRouter } from "next/navigation";
+import moment from "moment";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 // import { CandidateDataModel } from "../../datamodels/candidateListDataModel";
-interface UserDataModel {
+interface CandidateDataModel {
     id: number
-    full_name: string
-    email: string
-    address: string
-    phone_number: string
+    user_id: number
+    name: string
+    date_of_birth: string
+    age: number
+    gender: string
+    blood_group: string
+    status: string
 }
-export default function UserList() {
-    const [userData, setUserData] = useState<UserDataModel[]>();
+export default function ResidentList() {
+    const [listData, setlistData] = useState<CandidateDataModel[]>();
     const router = useRouter();
+    const searchParams = useSearchParams();
 
+    const userId = searchParams.get("user_id");
     useEffect(() => {
-        async function fetchList() {
+        async function fetchCounts() {
             try {
-                const res = await fetch("/api/user_list", {
+                const body = userId
+                    ? { userId } 
+                    : { status: "Approved" };
+
+                const res = await fetch("/api/candidate/list", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" }
-                    // body: JSON.stringify({ status }),
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify( body ),
                 });
 
                 const data = await res.json();
 
                 if (data.status === 1) {
-                    setUserData(data.data);
+                    setlistData(data.data);
                 }
             } catch (error) {
                 console.error("Error fetching status counts:", error);
             }
         }
 
-        fetchList();
-    }, []);
+        fetchCounts();
+    }, [userId]);
 
 
     return (
@@ -103,7 +112,7 @@ export default function UserList() {
 
                 <main className="main">
                     <div className="card">
-                        <h2>User list</h2>
+                        <h2>Candidate list</h2>
                         <div className="container">
                             <div className="row ">
                                 <div className="col-lg-12">
@@ -115,22 +124,24 @@ export default function UserList() {
                                         <div className="col-lg-12">
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
                                                 <div className="row list_label mb-4">
-                                                    <div className="col-lg-2 text-center"><div className="label">Name</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Email Id</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Contact info</div></div>
-                                                    <div className="col-lg-4 text-center"><div className="label">Address</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Related resident</div></div>
+                                                    <div className="col-lg-3 text-center"><div className="label">Name</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Date of birth</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Age</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Gender</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Blood type</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Action</div></div>
                                                 </div>
 
-                                                {userData && userData.length > 0 &&
-                                                    userData.map((list, index) => (
+                                                {listData && listData.length > 0 &&
+                                                    listData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.phone_number}</div></div>
-                                                            <div className="col-lg-4 text-center"><div className="label">{list.address}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label" onClick={() => {
-                                                                router.push(`/admin/resident-list?user_id=${list.id}`)
+                                                            <div className="col-lg-3 text-center"><div className="label">{list.name}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{moment(list.date_of_birth).format('DD-MM-YYYY')}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.age}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.gender}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.blood_group}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label" onClick={() => {
+                                                                router.push(`/admin/resident-profile?id=${list.id}`)
                                                             }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
                                                         </div>))}
                                             </div>

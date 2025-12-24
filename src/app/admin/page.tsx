@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                   textAlign: "center",
                 }}
               >
-                <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY'S ENQUIRY</h3>
+                <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S ENQUIRY</h3>
                 <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
                   {""}
                 </p>

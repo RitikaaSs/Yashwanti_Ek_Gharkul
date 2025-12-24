@@ -1,5 +1,5 @@
 "use client";
-import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
+// import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
 import moment from "moment";
 import { useRouter } from "next/navigation";
 
@@ -16,7 +16,7 @@ interface EnquiryDataModel {
 }
 export default function EnquiryList() {
     const [enquiryData, setenquiryDataData] = useState<EnquiryDataModel[]>();
-    const router = useRouter();
+    // const router = useRouter();
 
     useEffect(() => {
         async function fetchList() {

@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { RowDataPacket } from "mysql2/promise";
 import pool from "../../../../utils/db";
 
-interface User extends RowDataPacket {}
+type User = RowDataPacket;
 
 export async function POST() {
   try {
