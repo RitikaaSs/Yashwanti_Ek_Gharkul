@@ -1,37 +1,42 @@
 "use client";
 import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
 import moment from "moment";
-import { useRouter, useSearchParams } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// import { CandidateDataModel } from "../../datamodels/candidateListDataModel";
+
 interface CandidateDataModel {
     id: number
     user_id: number
     name: string
     date_of_birth: string
     age: number
+    marital_status: string
     gender: string
     blood_group: string
+    relationship_with_applicant: string
+    address: string
+    education: string
+    profession: string
+    hobbies: string
+    volunteer_interest: number
+    volunteer_details: string
+    health_data: string
     status: string
+    updated_at: string
+    reviewer_id: string
+    approver_id: string
 }
-export default function ResidentList() {
+export default function OnHoldList() {
     const [listData, setlistData] = useState<CandidateDataModel[]>();
     const router = useRouter();
-    const searchParams = useSearchParams();
 
-    const userId = searchParams.get("user_id");
     useEffect(() => {
-        async function fetchCounts() {
+        async function fetchCounts(status: string) {
             try {
-                const body = userId
-                    ? { userId } 
-                    : { status: "Approved" };
-
                 const res = await fetch("/api/candidate/list", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify( body ),
+                    body: JSON.stringify({ status }),
                 });
 
                 const data = await res.json();
@@ -44,8 +49,8 @@ export default function ResidentList() {
             }
         }
 
-        fetchCounts();
-    }, [userId]);
+        fetchCounts("On hold");
+    }, []);
 
 
     return (
@@ -103,7 +108,7 @@ export default function ResidentList() {
                     <nav className="menu">
                         <a href="/admin">Dashboard</a>
                         <a href="/admin/resident-list">Resident List</a>
-                        <a href="/admin/user-list">Users</a>
+                        <a href="#">Users</a>
                         <a href="#">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
                         <a href="#">Logout</a>
@@ -112,7 +117,7 @@ export default function ResidentList() {
 
                 <main className="main">
                     <div className="card">
-                        <h2>Candidate list</h2>
+                        <h2>On Hold Applications</h2>
                         <div className="container">
                             <div className="row ">
                                 <div className="col-lg-12">
@@ -141,7 +146,7 @@ export default function ResidentList() {
                                                             <div className="col-lg-2 text-center"><div className="label">{list.gender}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.blood_group}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label" onClick={() => {
-                                                                router.push(`/admin/resident-profile?id=${list.id}`)
+                                                                router.push(`/admin/onhold-list/profile?id=${list.id}`)
                                                             }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
                                                         </div>))}
                                             </div>

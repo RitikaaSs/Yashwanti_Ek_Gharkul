@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function AdminLayout() {
+export default function AdminDashboard() {
   const [approved, setApproved] = useState(0);
   const [onHold, setOnHold] = useState(0);
   // const [rejected, setRejected] = useState(0);
@@ -28,7 +28,6 @@ export default function AdminLayout() {
     fetchCounts();
   }, []);
 
-// #ececec
   return (
     <div>
       <style>{`
@@ -84,9 +83,9 @@ export default function AdminLayout() {
           <nav className="menu">
             <a href="/admin">Dashboard</a>
             <a href="/admin/resident-list">Resident List</a>
-            <a href="#">Users</a>
+            <a href="/admin/user-list">Users</a>
             <a href="#">Visit requests</a>
-            <a href="#">Enquiries</a>
+            <a href="/admin/enquiries">Enquiries</a>
             <a href="#">Logout</a>
           </nav>
         </aside>
@@ -103,7 +102,7 @@ export default function AdminLayout() {
               }}
             >
               {/* Card 1 */}
-              <a href="/admin/resident_list" style={{ textDecoration: 'none' }}>
+              <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
               <div
                 style={{
                   flex: 1,
@@ -122,7 +121,7 @@ export default function AdminLayout() {
               </a>
 
               {/* Card 2 */}
-              <a href="#" style={{ textDecoration: 'none' }}>
+              <a href="/admin/onhold-list" style={{ textDecoration: 'none' }}>
               <div
                 style={{
                   flex: 1,
@@ -136,6 +135,25 @@ export default function AdminLayout() {
                 <h3 style={{ margin: 0, fontSize: "18px" }}>ON HOLD APPLICATIONS</h3>
                 <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
                   {onHold}
+                </p>
+              </div>
+              </a>
+
+              {/* Card 3 */}
+              <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
+              <div
+                style={{
+                  flex: 1,
+                  background: "#0A6C85",
+                  color: "white",
+                  padding: "20px",
+                  borderRadius: "8px",
+                  textAlign: "center",
+                }}
+              >
+                <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY'S ENQUIRY</h3>
+                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                  {""}
                 </p>
               </div>
               </a>

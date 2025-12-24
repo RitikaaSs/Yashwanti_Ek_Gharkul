@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import ResidentProfile from "./ResidentProfile";
+import OnHoldProfile from "./OnHoldProfile";
 
 export default function ResidentProfilePage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ResidentProfile />
+      <OnHoldProfile />
     </Suspense>
   );
 }

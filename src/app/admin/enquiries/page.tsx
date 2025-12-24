@@ -1,51 +1,43 @@
 "use client";
 import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
 import moment from "moment";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
 // import { CandidateDataModel } from "../../datamodels/candidateListDataModel";
-interface CandidateDataModel {
+interface EnquiryDataModel {
     id: number
-    user_id: number
-    name: string
-    date_of_birth: string
-    age: number
-    gender: string
-    blood_group: string
-    status: string
+    full_name: string
+    email: string
+    subject: string
+    phone_number: string
+    message: string
+    submitted_at: string
 }
-export default function ResidentList() {
-    const [listData, setlistData] = useState<CandidateDataModel[]>();
+export default function EnquiryList() {
+    const [enquiryData, setenquiryDataData] = useState<EnquiryDataModel[]>();
     const router = useRouter();
-    const searchParams = useSearchParams();
 
-    const userId = searchParams.get("user_id");
     useEffect(() => {
-        async function fetchCounts() {
+        async function fetchList() {
             try {
-                const body = userId
-                    ? { userId } 
-                    : { status: "Approved" };
-
-                const res = await fetch("/api/candidate/list", {
+                const res = await fetch("/api/enquiry_form_list", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify( body ),
+                    headers: { "Content-Type": "application/json" }
                 });
 
                 const data = await res.json();
 
                 if (data.status === 1) {
-                    setlistData(data.data);
+                    setenquiryDataData(data.data);
                 }
             } catch (error) {
                 console.error("Error fetching status counts:", error);
             }
         }
 
-        fetchCounts();
-    }, [userId]);
+        fetchList();
+    }, []);
 
 
     return (
@@ -112,7 +104,7 @@ export default function ResidentList() {
 
                 <main className="main">
                     <div className="card">
-                        <h2>Candidate list</h2>
+                        <h2>Enquiries</h2>
                         <div className="container">
                             <div className="row ">
                                 <div className="col-lg-12">
@@ -124,25 +116,23 @@ export default function ResidentList() {
                                         <div className="col-lg-12">
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
                                                 <div className="row list_label mb-4">
-                                                    <div className="col-lg-3 text-center"><div className="label">Name</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Date of birth</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Age</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Gender</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Blood type</div></div>
-                                                    <div className="col-lg-1 text-center"><div className="label">Action</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Name</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Email Id</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Contact info</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Subject</div></div>
+                                                    <div className="col-lg-4 text-center"><div className="label">Message</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Date</div></div>
                                                 </div>
 
-                                                {listData && listData.length > 0 &&
-                                                    listData.map((list, index) => (
+                                                {enquiryData && enquiryData.length > 0 &&
+                                                    enquiryData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
-                                                            <div className="col-lg-3 text-center"><div className="label">{list.name}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{moment(list.date_of_birth).format('DD-MM-YYYY')}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.age}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.gender}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.blood_group}</div></div>
-                                                            <div className="col-lg-1 text-center"><div className="label" onClick={() => {
-                                                                router.push(`/admin/resident-profile?id=${list.id}`)
-                                                            }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.phone_number}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.subject}</div></div>
+                                                            <div className="col-lg-4 text-center"><div className="label">{list.message}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{moment(list.submitted_at).format('DD-MM-YYYY')}</div></div>
                                                         </div>))}
                                             </div>
                                         </div>

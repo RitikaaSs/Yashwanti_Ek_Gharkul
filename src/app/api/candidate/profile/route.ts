@@ -28,9 +28,15 @@ export async function POST(req: Request) {
             `SELECT * FROM medical_records WHERE elderly_id = ?`,
             [id]
         );
+
+        const userId = personal_details[0].user_id;
+        const [user_details] = await pool.query<ElderlyCandidate[]>(
+            `SELECT * FROM users WHERE id = ?`,
+            [userId]
+        );
         return NextResponse.json({
             status: 1,
-            data: { personal_details, medical_record },
+            data: { personal_details, medical_record, user_details },
         });
     } catch (error: unknown) {
         console.error(error);
