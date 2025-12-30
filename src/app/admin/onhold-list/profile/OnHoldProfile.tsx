@@ -135,8 +135,8 @@ const handleStatusChange = async (status: string) => {
                     <nav className="menu">
                         <a href="/admin">Dashboard</a>
                         <a href="/admin/resident-list">Resident List</a>
-                        <a href="/admin/user-list">Users</a>
-                        <a href="#">Visit requests</a>
+                        <a href="/admin/user-list">Relatives</a>
+                        <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
                         <a href="#">Logout</a>
                     </nav>
@@ -149,7 +149,6 @@ const handleStatusChange = async (status: string) => {
                             <div className="col-lg-6" style={{textAlign:"right"}}><button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Approved")}>Approve</button>
                             <button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Disapproved")}>Disapprove</button></div>
                         </div>
-                        
                         <div className="container" id='employement_id'>
                             <div className="row">
                                 <div className="col-lg-12">

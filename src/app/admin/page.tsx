@@ -83,8 +83,8 @@ export default function AdminDashboard() {
           <nav className="menu">
             <a href="/admin">Dashboard</a>
             <a href="/admin/resident-list">Resident List</a>
-            <a href="/admin/user-list">Users</a>
-            <a href="#">Visit requests</a>
+            <a href="/admin/user-list">Relatives</a>
+            <a href="/admin/visit-requests">Visit requests</a>
             <a href="/admin/enquiries">Enquiries</a>
             <a href="#">Logout</a>
           </nav>

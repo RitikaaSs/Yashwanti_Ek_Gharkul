@@ -103,8 +103,8 @@ export default function ResidentList() {
                     <nav className="menu">
                         <a href="/admin">Dashboard</a>
                         <a href="/admin/resident-list">Resident List</a>
-                        <a href="/admin/user-list">Users</a>
-                        <a href="#">Visit requests</a>
+                        <a href="/admin/user-list">Relatives</a>
+                        <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
                         <a href="#">Logout</a>
                     </nav>
@@ -134,7 +134,7 @@ export default function ResidentList() {
 
                                                 {listData && listData.length > 0 &&
                                                     listData.map((list, index) => (
-                                                        <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
+                                                        <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} >
                                                             <div className="col-lg-3 text-center"><div className="label">{list.name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{moment(list.date_of_birth).format('DD-MM-YYYY')}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.age}</div></div>

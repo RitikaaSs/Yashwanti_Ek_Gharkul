@@ -1,9 +1,10 @@
 
 
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
 import moment from "moment";
+import AddMedicalInfoDialog from "@/components/addMedicalInfoDialog";
 interface CandidateDataModel {
     id: number
     user_id: number
@@ -32,34 +33,52 @@ interface userDataModel {
     phone_number: string
     address: string
 }
+interface CandidateMedicalDataModel {
+    diagnosis: string,
+    medications: string,
+    doctor_notes: string,
+    record_date: string,
+}
 export default function ResidentProfile() {
     const [listData, setlistData] = useState<CandidateDataModel>();
     const [userData, setUserData] = useState<userDataModel>();
-    // const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
+    const [showDialog, setShowDialog] = useState(false);
+    const [medicalId, setMedicalId] = useState(0);
+    const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
-    useEffect(() => {
+
+
+    const fetchProfile = useCallback(async () => {
         if (!id) return;
 
-        async function fetchProfile() {
-            const res = await fetch("/api/candidate/profile", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id }),
-            });
+        const res = await fetch("/api/candidate/profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+        });
 
-            const data = await res.json();
+        const data = await res.json();
 
-            if (data.status === 1) {
-                console.log("Profile data:", data);
-                setlistData(data.data.personal_details[0]);
-                setUserData(data.data.user_details[0]);
-                // setMedData(data.medical_record);
-            }
+        if (data.status === 1) {
+            setlistData(data.data.personal_details[0]);
+            setUserData(data.data.user_details[0]);
+            setMedData(data.data.medical_record);
         }
-
-        fetchProfile();
     }, [id]);
+
+    useEffect(() => {
+        fetchProfile();
+    }, [fetchProfile]);
+
+
+    const handleDialogClose = (shouldRefresh: boolean) => {
+        setShowDialog(false);
+
+        if (shouldRefresh) {
+            fetchProfile(); // refresh data
+        }
+    };
 
 
     return (
@@ -117,14 +136,15 @@ export default function ResidentProfile() {
                     <nav className="menu">
                         <a href="/admin">Dashboard</a>
                         <a href="/admin/resident-list">Resident List</a>
-                        <a href="/admin/user-list">Users</a>
-                        <a href="#">Visit requests</a>
+                        <a href="/admin/user-list">Relatives</a>
+                        <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
                         <a href="#">Logout</a>
                     </nav>
                 </aside>
 
                 <main className="main">
+                    {/* <LoadingDialog isLoading={isLoading} /> */}
                     <div className="card">
                         <h2>Candidate Profile</h2>
                         <div className="container" id='employement_id'>
@@ -203,32 +223,42 @@ export default function ResidentProfile() {
                                         </div>
                                     </div>
                                     <div className="d_user_new_details_mainbox">
-                                        <div className="d_user_profile_heading">Medical Records</div>
-
-                                        <div className="d_user_profile_details_listing_box">
-
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Diagnosis	</div>
-                                                <div className="d_user_profile_details_content">{listData?.education || "--"}</div>
-                                            </div>
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Medications</div>
-                                                <div className="d_user_profile_details_content">{listData?.profession || "--"}</div>
-                                            </div>
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Doctor&apos;s Note</div>
-                                                <div className="d_user_profile_details_content">{listData?.hobbies || "--"}</div>
-                                            </div>
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Record Date</div>
-                                                <div className="d_user_profile_details_content">{listData?.user_id || "--"}</div>
+                                        <div className="d_user_profile_heading">
+                                            <div className="row">
+                                                <div className="col-lg-6">Medical Records</div>
+                                                <div className="col-lg-6" style={{ textAlign: "right" }}><button className="btn btn-primary mb-3" onClick={() => { setMedicalId(listData?.id || 0); setShowDialog(true); }}>
+                                                    + Add</button></div>
+                                                {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
                                             </div>
                                         </div>
+                                        {medData && medData.length > 0 ? medData.map((medItem, index) => (
+                                            <div className="d_user_profile_details_listing_box" key={index} style={{ margin: "10px 10px 20px 10px", borderBottom: "2px solid #dedede" }}>
+                                                <div className="d_user_profile_details_listing" >
+                                                    <div className="d_user_profile_details_subheading">Diagnosis</div>
+                                                    <div className="d_user_profile_details_content">{medItem?.diagnosis || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Medications</div>
+                                                    <div className="d_user_profile_details_content">{medItem?.medications || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Doctor&apos;s Note</div>
+                                                    <div className="d_user_profile_details_content">{medItem?.doctor_notes || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Record Date</div>
+                                                    <div className="d_user_profile_details_content">{moment(medItem?.record_date).format('DD-MM-YYYY') || "--"}</div>
+                                                </div>
+                                            </div>)) : <div>No medical records found.</div>}
+
                                     </div>
                                 </div>
                             </div>
 
                         </div>
+                    </div>
+                    <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showDialog && <AddMedicalInfoDialog onClose={handleDialogClose} id={medicalId} />}
                     </div>
                 </main>
             </div>

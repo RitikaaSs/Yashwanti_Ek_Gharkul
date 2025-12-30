@@ -1,7 +1,6 @@
 "use client";
 // import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
 import moment from "moment";
-import { useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
 // import { CandidateDataModel } from "../../datamodels/candidateListDataModel";
@@ -95,8 +94,8 @@ export default function EnquiryList() {
                     <nav className="menu">
                         <a href="/admin">Dashboard</a>
                         <a href="/admin/resident-list">Resident List</a>
-                        <a href="/admin/user-list">Users</a>
-                        <a href="#">Visit requests</a>
+                        <a href="/admin/user-list">Relatives</a>
+                        <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
                         <a href="#">Logout</a>
                     </nav>

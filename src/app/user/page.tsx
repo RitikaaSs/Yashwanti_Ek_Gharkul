@@ -55,7 +55,7 @@ export default function AdminLayout() {
           
           <nav className="menu">
             <a href="#">Dashboard</a>
-            <a href="#">Users</a>
+            <a href="#">Relatives</a>
             <a href="#">Logout</a>
           </nav>
         </aside>

@@ -1,34 +1,35 @@
 "use client";
-import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
-// import moment from "moment";
-import { useRouter } from "next/navigation";
-
+// import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
+import moment from "moment";
 import { useEffect, useState } from "react";
-// import { CandidateDataModel } from "../../datamodels/candidateListDataModel";
-interface UserDataModel {
+
+interface EnquiryDataModel {
     id: number
     full_name: string
     email: string
-    address: string
+    preferred_date: string
     phone_number: string
+    preferred_time_slot: string
+    purpose_of_visit: string
+    number_of_visitors: number
+    created_at: string
 }
-export default function UserList() {
-    const [userData, setUserData] = useState<UserDataModel[]>();
-    const router = useRouter();
+export default function VisitRequestList() {
+    const [visitData, setvisitData] = useState<EnquiryDataModel[]>();
+    // const router = useRouter();
 
     useEffect(() => {
         async function fetchList() {
             try {
-                const res = await fetch("/api/user_list", {
+                const res = await fetch("/api/book_visit_list", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" }
-                    // body: JSON.stringify({ status }),
                 });
 
                 const data = await res.json();
 
                 if (data.status === 1) {
-                    setUserData(data.data);
+                    setvisitData(data.data);
                 }
             } catch (error) {
                 console.error("Error fetching status counts:", error);
@@ -103,7 +104,7 @@ export default function UserList() {
 
                 <main className="main">
                     <div className="card">
-                        <h2>User list</h2>
+                        <h2>Enquiries</h2>
                         <div className="container">
                             <div className="row ">
                                 <div className="col-lg-12">
@@ -117,21 +118,23 @@ export default function UserList() {
                                                 <div className="row list_label mb-4">
                                                     <div className="col-lg-2 text-center"><div className="label">Name</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Email Id</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Contact info</div></div>
-                                                    <div className="col-lg-4 text-center"><div className="label">Address</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Related resident</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Contact info</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Visit date</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Time slot</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Purpose</div></div>
+                                                    <div className="col-lg-2 text-center"><div className="label">Number of visitors</div></div>
                                                 </div>
 
-                                                {userData && userData.length > 0 &&
-                                                    userData.map((list, index) => (
+                                                {visitData && visitData.length > 0 &&
+                                                    visitData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.phone_number}</div></div>
-                                                            <div className="col-lg-4 text-center"><div className="label">{list.address}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label" onClick={() => {
-                                                                router.push(`/admin/resident-list?user_id=${list.id}`)
-                                                            }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.phone_number}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{moment(list.preferred_date).format('DD-MM-YYYY')}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.preferred_time_slot}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.purpose_of_visit}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.number_of_visitors}</div></div>
                                                         </div>))}
                                             </div>
                                         </div>

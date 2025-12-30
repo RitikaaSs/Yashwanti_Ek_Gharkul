@@ -25,7 +25,7 @@ export async function POST(req: Request) {
             [id]
         );
         const [medical_record] = await pool.query<ElderlyCandidate[]>(
-            `SELECT * FROM medical_records WHERE elderly_id = ?`,
+            `SELECT * FROM medical_records WHERE elderly_id = ? order BY record_date DESC`,
             [id]
         );
 

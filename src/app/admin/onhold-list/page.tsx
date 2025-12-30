@@ -108,8 +108,8 @@ export default function OnHoldList() {
                     <nav className="menu">
                         <a href="/admin">Dashboard</a>
                         <a href="/admin/resident-list">Resident List</a>
-                        <a href="#">Users</a>
-                        <a href="#">Visit requests</a>
+                        <a href="/admin/user-list">Relatives</a>
+                        <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
                         <a href="#">Logout</a>
                     </nav>
@@ -125,6 +125,7 @@ export default function OnHoldList() {
                                         <div className="col-lg-12 mb-3">
                                         </div>
                                     </div>
+                                    {listData && listData.length > 0 ? <>
                                     <div className="row mb-5">
                                         <div className="col-lg-12">
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
@@ -137,8 +138,8 @@ export default function OnHoldList() {
                                                     <div className="col-lg-1 text-center"><div className="label">Action</div></div>
                                                 </div>
 
-                                                {listData && listData.length > 0 &&
-                                                    listData.map((list, index) => (
+                                                {/* {listData && listData.length > 0 && */}
+                                                    {listData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
                                                             <div className="col-lg-3 text-center"><div className="label">{list.name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{moment(list.date_of_birth).format('DD-MM-YYYY')}</div></div>
@@ -149,9 +150,11 @@ export default function OnHoldList() {
                                                                 router.push(`/admin/onhold-list/profile?id=${list.id}`)
                                                             }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
                                                         </div>))}
+                                                        {/* } */}
                                             </div>
                                         </div>
                                     </div>
+                                    </> : <div style={{ textAlign: "center", padding: "50px", fontSize: "18px" }}>No on hold applications found.</div>}
                                 </div>
                             </div>
                         </div>
