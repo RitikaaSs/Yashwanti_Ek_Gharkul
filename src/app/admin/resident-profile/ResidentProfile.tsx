@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
 import moment from "moment";
 import AddMedicalInfoDialog from "@/components/addMedicalInfoDialog";
+import { logout } from "@/app/pro_utils/constantFun";
 interface CandidateDataModel {
     id: number
     user_id: number
@@ -139,7 +140,7 @@ export default function ResidentProfile() {
                         <a href="/admin/user-list">Relatives</a>
                         <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
-                        <a href="#">Logout</a>
+                        <a href="#"  onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
                     </nav>
                 </aside>
 
@@ -226,7 +227,8 @@ export default function ResidentProfile() {
                                         <div className="d_user_profile_heading">
                                             <div className="row">
                                                 <div className="col-lg-6">Medical Records</div>
-                                                <div className="col-lg-6" style={{ textAlign: "right" }}><button className="btn btn-primary mb-3" onClick={() => { setMedicalId(listData?.id || 0); setShowDialog(true); }}>
+                                                <div className="col-lg-6" style={{ textAlign: "right" }}>
+                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { setMedicalId(listData?.id || 0); setShowDialog(true); }}>
                                                     + Add</button></div>
                                                 {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
                                             </div>

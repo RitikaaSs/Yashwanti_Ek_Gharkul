@@ -1,7 +1,7 @@
 "use client";
-// import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
+import { logout } from "@/app/pro_utils/constantFun";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface EnquiryDataModel {
     id: number
@@ -14,31 +14,50 @@ interface EnquiryDataModel {
     number_of_visitors: number
     created_at: string
 }
+
 export default function VisitRequestList() {
-    const [visitData, setvisitData] = useState<EnquiryDataModel[]>();
-    // const router = useRouter();
+    const [visitData, setvisitData] = useState<EnquiryDataModel[]>([]);
+    const [purpose, setPurpose] = useState("all");
+    const [date, setDate] = useState("");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+
+    const fetchList = useCallback(async () => {
+        try {
+            const res = await fetch("/api/book_visit_list", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    purpose,
+                    date,
+                    page,
+                    limit: 10,
+                }),
+            });
+
+            const data = await res.json();
+
+            if (data.status === 1) {
+                setvisitData(data.data);
+                setTotalPages(data.pagination.totalPages);
+            }
+        } catch (error) {
+            console.error("Error fetching visit requests:", error);
+        }
+    }, [purpose, date, page]);
+
 
     useEffect(() => {
-        async function fetchList() {
-            try {
-                const res = await fetch("/api/book_visit_list", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" }
-                });
-
-                const data = await res.json();
-
-                if (data.status === 1) {
-                    setvisitData(data.data);
-                }
-            } catch (error) {
-                console.error("Error fetching status counts:", error);
-            }
-        }
-
         fetchList();
-    }, []);
+    }, [fetchList]);
 
+
+    const resetFilters = () => {
+        setPurpose("all");
+        setDate("");
+        setPage(1);
+    };
 
     return (
         <div>
@@ -98,20 +117,63 @@ export default function VisitRequestList() {
                         <a href="/admin/user-list">Relatives</a>
                         <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
-                        <a href="#">Logout</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
                     </nav>
                 </aside>
 
                 <main className="main">
                     <div className="card">
-                        <h2>Enquiries</h2>
+                        <h2>Visit Requests</h2>
                         <div className="container">
                             <div className="row ">
                                 <div className="col-lg-12">
-                                    <div className="row" id="top">
-                                        <div className="col-lg-12 mb-3">
+                                    <div className="row mb-4">
+                                        <div className="col-lg-12" style={{ textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
+                                            <div className="row">
+                                                <div className="col-lg-4">
+                                                    <select
+                                                        className="form-control"
+                                                        value={purpose}
+                                                        onChange={(e) => {
+                                                            setPurpose(e.target.value);
+                                                            setPage(1);
+                                                        }}
+                                                    >
+                                                        <option value="all">All Purpose</option>
+                                                        <option value="Family">Family</option>
+                                                        <option value="Visit">Visit</option>
+                                                        <option value="Resident Admission Inquiry">Resident Admission Inquiry</option>
+                                                        <option value="Volunteering">Volunteering</option>
+                                                        <option value="Donation">Donation</option>
+                                                        <option value="CSR Partnership">CSR Partnership</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+
+                                                <div className="col-lg-4">
+                                                    <input
+                                                        type="date"
+                                                        className="form-control"
+                                                        value={date}
+                                                        max={new Date().toISOString().split("T")[0]}
+                                                        onChange={(e) => {
+                                                            setDate(e.target.value);
+                                                            setPage(1);
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                <div className="col-lg-4">
+                                                    <button className="btn btn-secondary w-100" onClick={resetFilters}>
+                                                        Reset
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                         </div>
+
                                     </div>
+
                                     <div className="row mb-5">
                                         <div className="col-lg-12">
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
@@ -124,8 +186,7 @@ export default function VisitRequestList() {
                                                     <div className="col-lg-2 text-center"><div className="label">Purpose</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Number of visitors</div></div>
                                                 </div>
-
-                                                {visitData && visitData.length > 0 &&
+                                                {visitData && visitData.length > 0 ?
                                                     visitData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
@@ -135,9 +196,32 @@ export default function VisitRequestList() {
                                                             <div className="col-lg-1 text-center"><div className="label">{list.preferred_time_slot}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.purpose_of_visit}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.number_of_visitors}</div></div>
-                                                        </div>))}
+                                                        </div>)) :
+                                                    <>No Visits Available</>
+                                                }
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="d-flex justify-content-end mt-4 gap-2" style={{ fontSize: "12px" }}>
+                                        <button
+                                            className="btn btn-outline-primary"
+                                            disabled={page === 1}
+                                            onClick={() => setPage(page - 1)}
+                                            style={{ fontSize: "12px" }}>
+                                            Previous
+                                        </button>
+
+                                        <span className="align-self-center">
+                                            Page {page} of {totalPages}
+                                        </span>
+
+                                        <button
+                                            className="btn btn-outline-primary"
+                                            disabled={page === totalPages}
+                                            onClick={() => setPage(page + 1)}
+                                            style={{ fontSize: "12px" }}>
+                                            Next
+                                        </button>
                                     </div>
                                 </div>
                             </div>

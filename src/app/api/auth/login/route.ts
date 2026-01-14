@@ -19,10 +19,10 @@ export async function POST(req: NextRequest) {
       password
     } = body
     // Fetch user
-   const [rows] = await db.query<UserRow[]>(
-  "SELECT * FROM users WHERE email = ? LIMIT 1",
-  [email]
-);
+    const [rows] = await db.query<UserRow[]>(
+      "SELECT * FROM users WHERE email = ? LIMIT 1",
+      [email]
+    );
 
 
     if (!rows || rows.length === 0) {
@@ -57,15 +57,22 @@ export async function POST(req: NextRequest) {
         status: 1,
         message: "Login successful",
         role: user.role,
+        id: user.id,
       },
       { status: 200 }
     );
 
-    response.cookies.set("auth_token", token, {
+    // response.cookies.set("auth_token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   path: "/",
+    //   maxAge: 60 * 60 * 24 * 7,
+    // });
+    response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7,
     });
 
     return response;

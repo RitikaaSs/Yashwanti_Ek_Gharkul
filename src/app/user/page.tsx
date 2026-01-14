@@ -1,6 +1,57 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { logout } from "../pro_utils/constantFun";
+
+interface CandidateDataModel {
+  id: number
+  user_id: number
+  name: string
+  date_of_birth: string
+  age: number
+  gender: string
+  blood_group: string
+  status: string
+}
 
 export default function AdminLayout() {
+  const [listData, setlistData] = useState<CandidateDataModel[]>();
+  const [userId, setUserId] = useState<number | null>(null);
+  const router = useRouter();
+useEffect(() => {
+  async function getUser() {
+    const res = await fetch("/api/auth/me");
+    const data = await res.json();
+    setUserId(data.id); 
+  }
+  getUser();
+}, []);
+
+useEffect(() => {
+  if (userId) {
+    fetchCounts(userId);
+  }
+}, [userId]);
+
+  async function fetchCounts(id: number | null) {
+    try {
+      const body = { userId: id };
+
+      const res = await fetch("/api/candidate/list", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (data.status === 1) {
+        setlistData(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching status counts:", error);
+    }
+  }
   return (
     <div>
       <style>{`
@@ -51,19 +102,51 @@ export default function AdminLayout() {
 
       <div className="layout">
         <aside className="sidebar">
-          <div style={{"padding": '0 3.75rem'}}><img src="/assets/images/home/footer-logo.webp" alt="Logo" className="img-fluid" /></div>
-          
+          <div style={{ "padding": '0 3.75rem' }}><img src="/assets/images/home/footer-logo.webp" alt="Logo" className="img-fluid" /></div>
+
           <nav className="menu">
-            <a href="#">Dashboard</a>
-            <a href="#">Relatives</a>
-            <a href="#">Logout</a>
+            <a href="/user">Dashboard</a>
+            <a href="/user/my-profile">My Profile</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); logout("user"); }}>Logout</a>
           </nav>
         </aside>
 
         <main className="main">
           <div className="card">
             <h1>Welcome to User Profile</h1>
-            <p>This is a simple user panel layout using inline CSS styles in Next.js.</p>
+            <p>View profile of your relatives</p>
+            <div
+              style={{
+                display: "flex",
+                gap: "20px",
+                marginTop: "20px",
+              }}
+            >
+              {listData && listData.length > 0 ?
+              listData.map((candidate, index) => (
+              // <a href="/user/resident-list?id=${listData.id}" style={{ textDecoration: 'none' }} key={index}>
+              <>
+                <div
+                  style={{
+                    flex: 1,
+                    background: "#0A6C85",
+                    color: "white",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                    textDecoration: 'none'
+                  }}
+               onClick={() => router.push(`/user/resident-profile?id=${candidate.id}`)} key={index} >
+                  <h3 style={{ margin: 0, fontSize: "18px" }}>{candidate.name}</h3>
+                  <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                    view
+                  </p>
+                </div>
+              {/* // </a> */}
+              </>
+            )): <p>No candidate data available.</p>}
+              
+            </div>
           </div>
         </main>
       </div>

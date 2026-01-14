@@ -1,4 +1,5 @@
 "use client";
+import { logout } from "@/app/pro_utils/constantFun";
 import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
 import moment from "moment";
 import { useRouter } from "next/navigation";
@@ -111,7 +112,7 @@ export default function OnHoldList() {
                         <a href="/admin/user-list">Relatives</a>
                         <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
-                        <a href="#">Logout</a>
+                        <a href="#"  onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
                     </nav>
                 </aside>
 

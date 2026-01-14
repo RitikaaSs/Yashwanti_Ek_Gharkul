@@ -1,8 +1,6 @@
-
-
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from 'next/navigation';
 import moment from "moment";
 import { logout } from "@/app/pro_utils/constantFun";
 interface CandidateDataModel {
@@ -27,58 +25,43 @@ interface CandidateDataModel {
     reviewer_id: string
     approver_id: string
 }
-export default function OnHoldProfile() {
+
+interface CandidateMedicalDataModel {
+    diagnosis: string,
+    medications: string,
+    doctor_notes: string,
+    record_date: string,
+}
+export default function ProfileResident() {
     const [listData, setlistData] = useState<CandidateDataModel>();
-    // const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
-        const router = useRouter();
+    const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
-    useEffect(() => {
+
+
+    const fetchProfile = useCallback(async () => {
         if (!id) return;
 
-        async function fetchProfile() {
-            const res = await fetch("/api/candidate/profile", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id }),
-            });
-
-            const data = await res.json();
-
-            if (data.status === 1) {
-                console.log("Profile data:", data);
-                setlistData(data.data.personal_details[0]);
-                // setMedData(data.medical_record);
-            }
-        }
-
-        fetchProfile();
-    }, [id]);
-
-const handleStatusChange = async (status: string) => {
-    if (!id) return;
-
-    try {
-        const res = await fetch("/api/candidate/edit_status", {
+        const res = await fetch("/api/candidate/profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ candidate_id: id, status }),
+            body: JSON.stringify({ id }),
         });
 
         const data = await res.json();
 
         if (data.status === 1) {
-            alert("Status updated successfully");
-           router.push(`/admin/onhold-list)`);
-        } else {
-            alert("Failed to update status");
+            setlistData(data.data.personal_details[0]);
+            setMedData(data.data.medical_record);
         }
-    } catch (error) {
-        console.error("Error updating status:", error);
-        alert("An error occurred while updating status");
-    }
-};
-//
+    }, [id]);
+
+    useEffect(() => {
+        fetchProfile();
+    }, [fetchProfile]);
+
+
+
 
 
     return (
@@ -134,22 +117,16 @@ const handleStatusChange = async (status: string) => {
                     <div style={{ "padding": '0 3.75rem' }}><img src="/assets/images/home/footer-logo.webp" alt="Logo" className="img-fluid" /></div>
 
                     <nav className="menu">
-                        <a href="/admin">Dashboard</a>
-                        <a href="/admin/resident-list">Resident List</a>
-                        <a href="/admin/user-list">Relatives</a>
-                        <a href="/admin/visit-requests">Visit requests</a>
-                        <a href="/admin/enquiries">Enquiries</a>
-                        <a href="#" onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
+                        <a href="/user">Dashboard</a>
+                        <a href="/user/my-profile">My Profile</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); logout("user"); }}>Logout</a>
                     </nav>
                 </aside>
 
                 <main className="main">
+                    {/* <LoadingDialog isLoading={isLoading} /> */}
                     <div className="card">
-                        <div className="row">
-                            <div className="col-lg-6"><h2>Candidate Profile</h2></div>
-                            <div className="col-lg-6" style={{textAlign:"right"}}><button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Approved")}>Approve</button>
-                            <button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Disapproved")}>Disapprove</button></div>
-                        </div>
+                        <h2>Candidate Profile</h2>
                         <div className="container" id='employement_id'>
                             <div className="row">
                                 <div className="col-lg-12">
@@ -203,31 +180,43 @@ const handleStatusChange = async (status: string) => {
                                         </div>
                                     </div>
                                     <div className="d_user_new_details_mainbox">
-                                        <div className="d_user_profile_heading">Medical Records</div>
-                                        <div className="d_user_profile_details_listing_box">
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Diagnosis	</div>
-                                                <div className="d_user_profile_details_content">{listData?.education || "--"}</div>
-                                            </div>
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Medications</div>
-                                                <div className="d_user_profile_details_content">{listData?.profession || "--"}</div>
-                                            </div>
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Doctor&apos;s Note</div>
-                                                <div className="d_user_profile_details_content">{listData?.hobbies || "--"}</div>
-                                            </div>
-                                            <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Record Date</div>
-                                                <div className="d_user_profile_details_content">{listData?.user_id || "--"}</div>
+                                        <div className="d_user_profile_heading">
+                                            <div className="row">
+                                                <div className="col-lg-6">Medical Records</div>
+                                                {/* <div className="col-lg-6" style={{ textAlign: "right" }}><button className="btn btn-primary mb-3" onClick={() => { setMedicalId(listData?.id || 0); setShowDialog(true); }}>
+                                                    + Add</button></div> */}
+                                                {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
                                             </div>
                                         </div>
+                                        {medData && medData.length > 0 ? medData.map((medItem, index) => (
+                                            <div className="d_user_profile_details_listing_box" key={index} style={{ margin: "10px 10px 20px 10px", borderBottom: "2px solid #dedede" }}>
+                                                <div className="d_user_profile_details_listing" >
+                                                    <div className="d_user_profile_details_subheading">Diagnosis</div>
+                                                    <div className="d_user_profile_details_content">{medItem?.diagnosis || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Medications</div>
+                                                    <div className="d_user_profile_details_content">{medItem?.medications || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Doctor&apos;s Note</div>
+                                                    <div className="d_user_profile_details_content">{medItem?.doctor_notes || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Record Date</div>
+                                                    <div className="d_user_profile_details_content">{moment(medItem?.record_date).format('DD-MM-YYYY') || "--"}</div>
+                                                </div>
+                                            </div>)) : <div>No medical records found.</div>}
+
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
+                    {/* <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showDialog && <AddMedicalInfoDialog onClose={handleDialogClose} id={medicalId} />}
+                    </div> */}
                 </main>
             </div>
         </div>

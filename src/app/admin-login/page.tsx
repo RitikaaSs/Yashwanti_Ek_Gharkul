@@ -25,10 +25,10 @@ export default function LoginPage() {
 
       if (data.status === 1) {
         // Redirect based on role
-        if (data.role === "user")
-          router.push("/user");
+        if (data.role === "admin")
+          router.push("/admin");
         else
-          alert("Access denied. Not a user.");
+          alert("Access denied. Not an admin.");
       } else {
         setError(data.message);
       }

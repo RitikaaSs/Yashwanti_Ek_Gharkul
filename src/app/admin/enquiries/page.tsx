@@ -1,9 +1,7 @@
 "use client";
-// import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
+import { logout } from "@/app/pro_utils/constantFun";
 import moment from "moment";
-
 import { useEffect, useState } from "react";
-// import { CandidateDataModel } from "../../datamodels/candidateListDataModel";
 interface EnquiryDataModel {
     id: number
     full_name: string
@@ -15,28 +13,41 @@ interface EnquiryDataModel {
 }
 export default function EnquiryList() {
     const [enquiryData, setenquiryDataData] = useState<EnquiryDataModel[]>();
-    // const router = useRouter();
+    const [search, setSearch] = useState("");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         async function fetchList() {
             try {
+
                 const res = await fetch("/api/enquiry_form_list", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" }
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        search,
+                        page,
+                    }),
                 });
 
                 const data = await res.json();
 
                 if (data.status === 1) {
                     setenquiryDataData(data.data);
+                    setTotalPages(data.pagination.totalPages);
                 }
             } catch (error) {
-                console.error("Error fetching status counts:", error);
+                console.error(error);
             }
         }
 
         fetchList();
-    }, []);
+    }, [search, page]);
+
+    const resetFilters = () => {
+        setSearch("");
+        setPage(1);
+    };
 
 
     return (
@@ -97,7 +108,8 @@ export default function EnquiryList() {
                         <a href="/admin/user-list">Relatives</a>
                         <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
-                        <a href="#">Logout</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
+
                     </nav>
                 </aside>
 
@@ -107,10 +119,31 @@ export default function EnquiryList() {
                         <div className="container">
                             <div className="row ">
                                 <div className="col-lg-12">
-                                    <div className="row" id="top">
-                                        <div className="col-lg-12 mb-3">
+                                    <div className="row mb-4">
+
+                                        <div className="col-lg-12" style={{ textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
+                                            <div className="row"  >
+                                                <div className="col-lg-8">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        placeholder="Search by subject"
+                                                        value={search}
+                                                        onChange={(e) => {
+                                                            setSearch(e.target.value);
+                                                            setPage(1);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="col-lg-4">
+                                                    <button className="btn btn-secondary w-100" onClick={resetFilters}>
+                                                        Reset
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div className="row mb-5">
                                         <div className="col-lg-12">
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
@@ -135,6 +168,27 @@ export default function EnquiryList() {
                                                         </div>))}
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="d-flex justify-content-end mt-4 gap-2" style={{ fontSize: "12px" }}>
+                                        <button
+                                            className="btn btn-outline-primary"
+                                            disabled={page === 1}
+                                            onClick={() => setPage(page - 1)}
+                                            style={{ fontSize: "12px" }}>
+                                            Previous
+                                        </button>
+
+                                        <span className="align-self-center">
+                                            Page {page} of {totalPages}
+                                        </span>
+
+                                        <button
+                                            className="btn btn-outline-primary"
+                                            disabled={page === totalPages}
+                                            onClick={() => setPage(page + 1)}
+                                            style={{ fontSize: "12px" }}>
+                                            Next
+                                        </button>
                                     </div>
                                 </div>
                             </div>

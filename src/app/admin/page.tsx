@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
+import { logout } from "../pro_utils/constantFun";
 
 export default function AdminDashboard() {
   const [approved, setApproved] = useState(0);
   const [onHold, setOnHold] = useState(0);
-  // const [rejected, setRejected] = useState(0);
 
   useEffect(() => {
     async function fetchCounts() {
@@ -12,9 +12,7 @@ export default function AdminDashboard() {
         const res = await fetch("/api/candidate/total_count", {
           method: "POST",
         });
-
         const data = await res.json();
-
         if (data.status === 1) {
           setApproved(data.approved);
           setOnHold(data.on_hold);
@@ -86,7 +84,7 @@ export default function AdminDashboard() {
             <a href="/admin/user-list">Relatives</a>
             <a href="/admin/visit-requests">Visit requests</a>
             <a href="/admin/enquiries">Enquiries</a>
-            <a href="#">Logout</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
           </nav>
         </aside>
         <main className="main">
@@ -153,13 +151,30 @@ export default function AdminDashboard() {
               >
                 <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S ENQUIRY</h3>
                 <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {""}
+                  {"--"}
+                </p>
+              </div>
+              </a>
+              {/* visits card */}
+              <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
+              <div
+                style={{
+                  flex: 1,
+                  background: "#0A6C85",
+                  color: "white",
+                  padding: "20px",
+                  borderRadius: "8px",
+                  textAlign: "center",
+                }}
+              >
+                <h3 style={{ margin: 0, fontSize: "18px" }}>UPCOMING VISITS</h3>
+                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                  {"-or todays-"}
                 </p>
               </div>
               </a>
             </div>
           </div>
-
         </main>
       </div>
     </div>
