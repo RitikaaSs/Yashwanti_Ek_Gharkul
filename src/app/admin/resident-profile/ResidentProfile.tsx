@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import moment from "moment";
 import AddMedicalInfoDialog from "@/components/addMedicalInfoDialog";
 import { logout } from "@/app/pro_utils/constantFun";
+import EditProfileDialog from "@/components/editProfileDialog";
 interface CandidateDataModel {
     id: number
     user_id: number
@@ -44,6 +45,7 @@ export default function ResidentProfile() {
     const [listData, setlistData] = useState<CandidateDataModel>();
     const [userData, setUserData] = useState<userDataModel>();
     const [showDialog, setShowDialog] = useState(false);
+    const [showEditDialog, setShowEditDialog] = useState(false);
     const [medicalId, setMedicalId] = useState(0);
     const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
     const searchParams = useSearchParams();
@@ -80,7 +82,13 @@ export default function ResidentProfile() {
             fetchProfile(); // refresh data
         }
     };
+const handledEditDialogClose = (shouldRefresh: boolean) => {
+        setShowEditDialog(false);
 
+        if (shouldRefresh) {
+            fetchProfile(); // refresh data
+        }
+    };
 
     return (
         <div>
@@ -152,7 +160,15 @@ export default function ResidentProfile() {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="d_user_new_details_mainbox">
-                                        <div className="d_user_profile_heading">Basic Details</div>
+                                        <div className="d_user_profile_heading">
+                                            <div className="row">
+                                                <div className="col-lg-6">Basic Details</div>
+                                                <div className="col-lg-6" style={{ textAlign: "right" }}>
+                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { id; setShowEditDialog(true); }}>
+                                                    Edit</button></div>
+                                                {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
+                                            </div>
+                                        </div>
                                         <div className="d_user_profile_details_listing_box">
                                             <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Name</div>
@@ -186,10 +202,10 @@ export default function ResidentProfile() {
                                                 <div className="d_user_profile_details_subheading">Hobbies</div>
                                                 <div className="d_user_profile_details_content">{listData?.hobbies || "--"}</div>
                                             </div>
-                                            <div className="d_user_profile_details_listing">
+                                            {/* <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Guardian</div>
                                                 <div className="d_user_profile_details_content">{listData?.user_id || "--"}</div>
-                                            </div>
+                                            </div> */}
                                             <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Address</div>
                                                 <div className="d_user_profile_details_content">{listData?.address || "--"}</div>
@@ -261,6 +277,9 @@ export default function ResidentProfile() {
                     </div>
                     <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
                         {showDialog && <AddMedicalInfoDialog onClose={handleDialogClose} id={medicalId} />}
+                    </div>
+                    <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showDialog && <EditProfileDialog onClose={handledEditDialogClose} id={medicalId} />}
                     </div>
                 </main>
             </div>
