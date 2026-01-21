@@ -110,7 +110,7 @@ const EnquiryForm = () => {
                     inner_banner_alt="Services Banner"
                     breadcrumbs={[
                         { label: "Home", href: "/" },
-                        { label: "Enquiry Form", active: true },
+                        { label: "Enquire Now", active: true },
                     ]}
                 />
 
@@ -121,7 +121,7 @@ const EnquiryForm = () => {
                             <div className="col-lg-12">
                                 <div className="enquiry_form_mainbox">
                                     <div className="enquiry_form_leftbox">
-                                        <h2 className="sub_heading">Enquiry Now</h2>
+                                        <h2 className="sub_heading">Enquire Now</h2>
                                         <p>
                                             For any questions, feedback, suggestions, or general communication.
                                         </p>
@@ -221,7 +221,7 @@ const EnquiryForm = () => {
                                                 {/* Submit */}
                                                 <div className="form_submit">
                                                     <button className="submite_btn" type="submit">
-                                                        Submit <span>Enquiry</span>
+                                                        Submit Enquiry
                                                     </button>
                                                 </div>
                                                 {msg && <p>{msg}</p>}

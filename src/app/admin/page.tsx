@@ -138,7 +138,7 @@ export default function AdminDashboard() {
               </a>
 
               {/* Card 3 */}
-              <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
+              <a href="/admin/enquiries" style={{ textDecoration: 'none' }}>
               <div
                 style={{
                   flex: 1,
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
               </div>
               </a>
               {/* visits card */}
-              <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
+              <a href="/admin/visit-requests" style={{ textDecoration: 'none' }}>
               <div
                 style={{
                   flex: 1,

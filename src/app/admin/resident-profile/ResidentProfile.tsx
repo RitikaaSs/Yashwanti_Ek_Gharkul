@@ -47,6 +47,7 @@ export default function ResidentProfile() {
     const [showDialog, setShowDialog] = useState(false);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [medicalId, setMedicalId] = useState(0);
+    const [userId, setUserId] = useState(0);
     const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
@@ -164,8 +165,8 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                                             <div className="row">
                                                 <div className="col-lg-6">Basic Details</div>
                                                 <div className="col-lg-6" style={{ textAlign: "right" }}>
-                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { id; setShowEditDialog(true); }}>
-                                                    Edit</button></div>
+                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { setUserId(listData?.id||0); setShowEditDialog(true); }}>
+                                                    Update</button></div>
                                                 {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
                                             </div>
                                         </div>
@@ -278,8 +279,8 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                     <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
                         {showDialog && <AddMedicalInfoDialog onClose={handleDialogClose} id={medicalId} />}
                     </div>
-                    <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
-                        {showDialog && <EditProfileDialog onClose={handledEditDialogClose} id={medicalId} />}
+                    <div className={showEditDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showEditDialog && <EditProfileDialog onClose={handledEditDialogClose} id={userId} />}
                     </div>
                 </main>
             </div>

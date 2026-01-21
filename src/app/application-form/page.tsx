@@ -166,7 +166,7 @@ const ApplicationForm = () => {
                             <div className="col-lg-10">
                                 <div className="enquiry_form_mainbox">
                                     <div className="enquiry_form_leftbox">
-                                        <h2 className="sub_heading text-center">Admission Form</h2>
+                                        <h2 className="sub_heading text-center">Application Form</h2>
                                         <div className="enquiry_formbox application_formbox">
                                             <form onSubmit={handleSubmit}>
                                                 <div className="form_group_main_heading">From</div>

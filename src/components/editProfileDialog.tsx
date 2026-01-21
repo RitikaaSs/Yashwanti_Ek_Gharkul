@@ -1,11 +1,12 @@
 
 'use client'
-import React, { useState } from 'react'
+import moment from 'moment'
+import React, { useEffect, useState, useCallback } from 'react'
 interface CandidateDataModel {
     id: number
     name: string
     date_of_birth: string
-    age: number
+    age: string
     marital_status: string
     gender: string
     blood_group: string
@@ -13,27 +14,25 @@ interface CandidateDataModel {
     education: string
     profession: string
     hobbies: string
-    health_data: string
 }
 
 
 const EditProfileDialog = ({ onClose, id }: { onClose: (fetchData: boolean) => void, id: number }) => {
-const [listData, setlistData] = useState<CandidateDataModel>();
+    // const [listData, setlistData] = useState<CandidateDataModel>();
     // const [isLoading, setLoading] = useState(true);
     const [errors, setErrors] = useState<Partial<CandidateDataModel>>({});
     const [formValues, setFormValues] = useState<CandidateDataModel>({
         id: 0,
         name: "",
         date_of_birth: "",
-        age: 0,
+        age: "",
         marital_status: "",
         gender: "",
         blood_group: "",
         address: "",
         education: "",
         profession: "",
-        hobbies: "",
-        health_data: "",
+        hobbies: ""
 
     });
 
@@ -49,43 +48,66 @@ const [listData, setlistData] = useState<CandidateDataModel>();
         const data = await res.json();
 
         if (data.status === 1) {
-            setlistData(data.data.personal_details[0]);
+            setFormValues(data.data.personal_details[0]);
         }
     }, [id]);
 
     useEffect(() => {
         fetchProfile();
     }, [fetchProfile]);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormValues((prev) => ({ ...prev, [name]: value }));
-    }
+
+        if (name === "date_of_birth") {
+            const age = value ? calculateAge(value) : "";
+            setFormValues((prev) => ({
+                ...prev,
+                date_of_birth: value,
+                age: age,
+            }));
+        } else {
+            setFormValues((prev) => ({ ...prev, [name]: value }));
+        }
+    };
 
     const validate = () => {
         const newErrors: Partial<CandidateDataModel> = {};
-        if (!formValues.diagnosis) newErrors.diagnosis = "required";
-        if (!formValues.medications) newErrors.medications = "required";
-        if (!formValues.doctor_notes) newErrors.doctor_notes = "required";
-        if (!formValues.record_date) newErrors.record_date = "required";
+        if (!formValues.name) newErrors.name = "required";
+        if (!formValues.date_of_birth) newErrors.date_of_birth = "required";
+        if (!formValues.age) newErrors.age = "required";
+        if (!formValues.marital_status) newErrors.marital_status = "required";
+        if (!formValues.gender) newErrors.gender = "required";
+        if (!formValues.blood_group) newErrors.blood_group = "required";
+        if (!formValues.address) newErrors.address = "required";
+        if (!formValues.education) newErrors.education = "required";
+        if (!formValues.profession) newErrors.profession = "required";
+        if (!formValues.hobbies) newErrors.hobbies = "required";
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleUpdate = async (e: React.FormEvent) => {
 
         e.preventDefault();
         if (!validate()) return;
 
         const formData = {
-            elderly_id: id,
-            diagnosis: formValues.diagnosis,
-            medications: formValues.medications,
-            doctor_notes: formValues.doctor_notes,
-            record_date: formValues.record_date
+            id: id,
+            name: formValues.name,
+            date_of_birth: formValues.date_of_birth,
+            age: formValues.age,
+            marital_status: formValues.marital_status,
+            gender: formValues.gender,
+            blood_group: formValues.blood_group,
+            address: formValues.address,
+            education: formValues.education,
+            profession: formValues.profession,
+            hobbies: formValues.hobbies
         };
 
-        const res = await fetch("/api/add_medical_info", {
+        const res = await fetch("/api/candidate/update_profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
@@ -98,7 +120,19 @@ const [listData, setlistData] = useState<CandidateDataModel>();
             alert(data.error || "Something went wrong!");
         }
 
-        // reset();
+    };
+
+    const calculateAge = (dob: string) => {
+        const birthDate = new Date(dob);
+        const today = new Date();
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age.toString();
     };
 
 
@@ -117,47 +151,118 @@ const [listData, setlistData] = useState<CandidateDataModel>();
                 </div> */}
             </div>
             <div className="row">
-                <div className="col-lg-12 mb-4 inner_heading25">Add Medical records</div>
+                <div className="col-lg-12 mb-4 inner_heading25">Update Personal details</div>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleUpdate}>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-6">
                         <div className="form_box mb-3">
-                            <label htmlFor="exampleFormControlInput1" className="form-label">Diagosis:  </label>
-                            <input type="text" className="form-control" id="diagnosis" value={formValues.diagnosis} name="diagnosis" onChange={handleInputChange} />
-                            {errors.diagnosis && <span className="error" style={{ color: "red" }}>{errors.diagnosis}</span>}
-
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Name:  </label>
+                            <input type="text" className="form-control" id="name" value={formValues.name} name="name" onChange={handleInputChange} />
+                            {errors.name && <span className="error" style={{ color: "red" }}>{errors.name}</span>}
                         </div>
                     </div>
-
-                    <div className="col-md-12">
+                    <div className="col-md-6">
                         <div className="form_box mb-3">
-                            <label htmlFor="exampleFormControlInput1" className="form-label">Medications:  </label>
-                            <input type="text" className="form-control" id="medications" value={formValues.medications} name="medications" onChange={handleInputChange} />
-                            {errors.medications && <span className="error" style={{ color: "red" }}>{errors.medications}</span>}
-
-                        </div>
-                    </div>
-                    <div className="col-md-12">
-                        <div className="form_box mb-3">
-                            <label htmlFor="exampleFormControlInput1" className="form-label">Doctor&apos;s note: </label>
-                            <input type="text" className="form-control" id="doctor_notes" value={formValues.doctor_notes} name="doctor_notes" onChange={handleInputChange} />
-                            {errors.doctor_notes && <span className="error" style={{ color: "red" }}>{errors.doctor_notes}</span>}
+                            <label htmlFor="exampleFormControlInput1" className="form-label">DOB:  </label>
+                            {/* <input type="text" className="form-control" id="date_of_birth" value={moment(formValues.date_of_birth).format('DD-MM-YYYY')} name="date_of_birth" onChange={handleInputChange} /> */}
+                            <input type="date" className="form-control" id="date_of_birth" name="date_of_birth" value={formValues.date_of_birth} onChange={handleInputChange} />
+                            {errors.date_of_birth && <span className="error" style={{ color: "red" }}>{errors.date_of_birth}</span>}
                         </div>
                     </div>
                 </div>
-                <div className="col-md-12">
-                    <div className="form_box mb-3">
-                        <label htmlFor="exampleFormControlInput1" className="form-label">Record date:</label>
-                        {/* <input type="text" className="form-control" id="record_date" value={formValues.record_date} name="record_date" onChange={handleInputChange} /> */}
-                        <input className="form-control" type="date" name="record_date" id="record_date" placeholder="Enter date" onChange={handleInputChange} />
-                        {errors.record_date && <span className="error" style={{ color: "red" }}>{errors.record_date}</span>}
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Age:  </label>
+                            <input type="text" className="form-control" id="age" value={formValues.age} name="age" readOnly />
+                            {errors.age && <span className="error" style={{ color: "red" }}>{errors.age}</span>}
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Marital Status:  </label>
+                            <select
+                                className="form-control"
+                                id="marital_status"
+                                name="marital_status"
+                                value={formValues.marital_status}
+                                onChange={handleInputChange}
+                            >
+                                <option value="">Select Status</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Widowed">Widowed</option>
+                            </select>
+
+                            {/* <input type="text" className="form-control" id="marital_status" value={formValues.marital_status} name="marital_status" onChange={handleInputChange} /> */}
+                            {errors.marital_status && <span className="error" style={{ color: "red" }}>{errors.marital_status}</span>}
+                        </div>
                     </div>
                 </div>
-
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Gender:  </label>
+                            <select
+                                className="form-control"
+                                id="gender"
+                                name="gender"
+                                value={formValues.gender}
+                                onChange={handleInputChange}
+                            >
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            {/* <input type="text" className="form-control" id="gender" value={formValues.gender} name="gender" onChange={handleInputChange} /> */}
+                            {errors.gender && <span className="error" style={{ color: "red" }}>{errors.gender}</span>}
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Blood group:  </label>
+                            <input type="text" className="form-control" id="blood_group" value={formValues.blood_group} name="blood_group" onChange={handleInputChange} />
+                            {errors.blood_group && <span className="error" style={{ color: "red" }}>{errors.blood_group}</span>}
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Address:  </label>
+                            <input type="text" className="form-control" id="address" value={formValues.address} name="address" onChange={handleInputChange} />
+                            {errors.address && <span className="error" style={{ color: "red" }}>{errors.address}</span>}
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Education:  </label>
+                            <input type="text" className="form-control" id="education" value={formValues.education} name="education" onChange={handleInputChange} />
+                            {errors.education && <span className="error" style={{ color: "red" }}>{errors.education}</span>}
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Profession:  </label>
+                            <input type="text" className="form-control" id="profession" value={formValues.profession} name="profession" onChange={handleInputChange} />
+                            {errors.profession && <span className="error" style={{ color: "red" }}>{errors.profession}</span>}
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Hobbies:  </label>
+                            <input type="text" className="form-control" id="hobbies" value={formValues.hobbies} name="hobbies" onChange={handleInputChange} />
+                            {errors.hobbies && <span className="error" style={{ color: "red" }}>{errors.hobbies}</span>}
+                        </div>
+                    </div>
+                </div>
                 <div className="row mb-5">
                     <div className="col-lg-12 ">
-                        <input type='submit' value="Add" className="red_button" />
+                        <input type='submit' value="Update" className="red_button" />
                     </div>
                 </div>
             </form>

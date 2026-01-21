@@ -209,7 +209,7 @@ const EnquiryForm = () => {
                                                 {/* Submit */}
                                                 <div className="form_submit">
                                                     <button className="submite_btn" type="submit">
-                                                        Schedule <span>Now</span>
+                                                        Schedule Now
                                                     </button>
                                                 </div>
 
