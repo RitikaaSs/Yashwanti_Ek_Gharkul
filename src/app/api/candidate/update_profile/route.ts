@@ -17,15 +17,16 @@ export async function POST(req: Request) {
       address,
       education,
       profession,
-      hobbies
+      hobbies, 
+      room_no
     } = await req.json();
 
     if (!id) {
       return NextResponse.json({ status: 0, error: "Candidate ID required" });
     }
-const formattedDOB = date_of_birth
-  ? new Date(date_of_birth).toISOString().split("T")[0]
-  : null;
+    const formattedDOB = date_of_birth
+      ? new Date(date_of_birth).toISOString().split("T")[0]
+      : null;
     const [result] = await pool.query<ResultSetHeader>(
       `UPDATE elderly_candidates SET
         name = ?,
@@ -37,7 +38,8 @@ const formattedDOB = date_of_birth
         address = ?,
         education = ?,
         profession = ?,
-        hobbies = ?
+        hobbies = ?,
+        room_no = ?
       WHERE id = ?`,
       [
         name,
@@ -50,6 +52,7 @@ const formattedDOB = date_of_birth
         education,
         profession,
         hobbies,
+        room_no,
         id,
       ]
     );

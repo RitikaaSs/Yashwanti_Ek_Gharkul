@@ -14,6 +14,7 @@ interface CandidateDataModel {
     gender: string
     blood_group: string
     status: string
+    room_no: string
 }
 export default function ResidentList() {
     const [listData, setlistData] = useState<CandidateDataModel[]>();
@@ -210,8 +211,9 @@ export default function ResidentList() {
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
                                                 <div className="row list_label mb-4">
                                                     <div className="col-lg-3 text-center"><div className="label">Name</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Room no.</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Date of birth</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Age</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Age</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Gender</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Blood type</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Action</div></div>
@@ -220,9 +222,10 @@ export default function ResidentList() {
                                                 {listData && listData.length > 0 ?
                                                     listData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} >
-                                                            <div className="col-lg-3 text-center"><div className="label">{list.name}</div></div>
+                                                            <div className="col-lg-3 text-center"><div className="label">{list.name || "--"}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.room_no}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{moment(list.date_of_birth).format('DD-MM-YYYY')}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.age}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.age}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.gender}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.blood_group}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label" onClick={() => {

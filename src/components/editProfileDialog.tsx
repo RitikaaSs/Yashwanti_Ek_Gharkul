@@ -14,6 +14,7 @@ interface CandidateDataModel {
     education: string
     profession: string
     hobbies: string
+    room_no: string
 }
 
 
@@ -32,8 +33,8 @@ const EditProfileDialog = ({ onClose, id }: { onClose: (fetchData: boolean) => v
         address: "",
         education: "",
         profession: "",
-        hobbies: ""
-
+        hobbies: "",
+        room_no: ""
     });
 
     const fetchProfile = useCallback(async () => {
@@ -83,7 +84,7 @@ const EditProfileDialog = ({ onClose, id }: { onClose: (fetchData: boolean) => v
         if (!formValues.education) newErrors.education = "required";
         if (!formValues.profession) newErrors.profession = "required";
         if (!formValues.hobbies) newErrors.hobbies = "required";
-
+        if (!formValues.room_no) newErrors.room_no = "required";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -104,7 +105,8 @@ const EditProfileDialog = ({ onClose, id }: { onClose: (fetchData: boolean) => v
             address: formValues.address,
             education: formValues.education,
             profession: formValues.profession,
-            hobbies: formValues.hobbies
+            hobbies: formValues.hobbies,
+            room_no: formValues.room_no
         };
 
         const res = await fetch("/api/candidate/update_profile", {
@@ -257,6 +259,15 @@ const EditProfileDialog = ({ onClose, id }: { onClose: (fetchData: boolean) => v
                             <label htmlFor="exampleFormControlInput1" className="form-label">Hobbies:  </label>
                             <input type="text" className="form-control" id="hobbies" value={formValues.hobbies} name="hobbies" onChange={handleInputChange} />
                             {errors.hobbies && <span className="error" style={{ color: "red" }}>{errors.hobbies}</span>}
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form_box mb-3">
+                            <label htmlFor="exampleFormControlInput1" className="form-label">Room no:  </label>
+                            <input type="text" className="form-control" id="room_no" value={formValues.room_no} name="room_no" onChange={handleInputChange} />
+                            {errors.room_no && <span className="error" style={{ color: "red" }}>{errors.room_no}</span>}
                         </div>
                     </div>
                 </div>

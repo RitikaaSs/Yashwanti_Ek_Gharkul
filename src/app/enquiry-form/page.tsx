@@ -168,6 +168,8 @@ const EnquiryForm = () => {
                                                         type="text"
                                                         placeholder="Enter phone number"
                                                         // {...register("phone")}
+                                                        maxLength={10}
+                                                        minLength={10}
                                                         onChange={handleInputChange}
                                                     />
                                                     {errors.phone_number && <span className="error_msg" style={{ color: "red" }}>{errors.phone_number}</span>}

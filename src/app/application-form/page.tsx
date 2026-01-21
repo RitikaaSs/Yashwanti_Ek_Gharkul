@@ -200,7 +200,8 @@ const ApplicationForm = () => {
                                                     </div>
                                                     <div className="form_group">
                                                         <label htmlFor="">Date of Birth</label>
-                                                        <input className="form-control" type="date" name="date_of_birth"  id="date_of_birth" placeholder="Enter dob" onChange={handleInputChange}/>
+                                                        <input className="form-control" type="date" name="date_of_birth"  id="date_of_birth" placeholder="Enter dob" 
+                                                        max={new Date().toISOString().split("T")[0]} onChange={handleInputChange}/>
                                                         {errors.date_of_birth && <span className="error_msg" style={{ color: "red" }}>{errors.date_of_birth}</span>}
                                                     </div>
                                                     <div className="form_group">
@@ -342,7 +343,7 @@ const ApplicationForm = () => {
                                                 {/* Submit */}
                                                 <div className="form_submit">
                                                     <button className="submite_btn" type="submit">
-                                                        Schedule Now
+                                                        Submit Now
                                                     </button>
                                                 </div>
                                             </form>

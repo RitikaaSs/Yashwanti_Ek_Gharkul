@@ -155,7 +155,7 @@ export default function VisitRequestList() {
                                                         type="date"
                                                         className="form-control"
                                                         value={date}
-                                                        max={new Date().toISOString().split("T")[0]}
+                                                        // max={new Date().toISOString().split("T")[0]}
                                                         onChange={(e) => {
                                                             setDate(e.target.value);
                                                             setPage(1);

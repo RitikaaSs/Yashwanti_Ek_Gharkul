@@ -28,6 +28,7 @@ interface CandidateDataModel {
     updated_at: string
     reviewer_id: string
     approver_id: string
+    room_no: string
 }
 interface userDataModel {
     full_name: string
@@ -214,6 +215,10 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                                             <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Health Data</div>
                                                 <div className="d_user_profile_details_content">{listData?.health_data || "--"}</div>
+                                            </div>
+                                            <div className="d_user_profile_details_listing">
+                                                <div className="d_user_profile_details_subheading">Room no.</div>
+                                                <div className="d_user_profile_details_content">{listData?.room_no || "--"}</div>
                                             </div>
                                         </div>
                                     </div>

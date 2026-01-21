@@ -149,7 +149,9 @@ const EnquiryForm = () => {
 
                                                 {/* Phone number */}
                                                 <div className="form_group">
-                                                    <input className="form-control" id="phone_number" name="phone_number" type="text" placeholder="Phone Number" onChange={handleInputChange} />
+                                                    <input className="form-control" id="phone_number" name="phone_number" type="text" placeholder="Phone Number"
+                                                        maxLength={10}
+                                                        minLength={10} onChange={handleInputChange} />
                                                     {/* {errors.visitphone && (
                                                         <span className="error_msg">{errors.visitphone.message}</span>
                                                     )} */}
@@ -158,7 +160,8 @@ const EnquiryForm = () => {
 
                                                 {/* Date */}
                                                 <div className="form_group">
-                                                    <input className="form-control" id="preferred_date" name="preferred_date" type="date" placeholder="Preferred Date of Visit" onChange={handleInputChange} />
+                                                    <input className="form-control" id="preferred_date" name="preferred_date" type="date" placeholder="Preferred Date of Visit"
+                                                        min={new Date().toISOString().split("T")[0]} onChange={handleInputChange} />
                                                     {/* {errors.visitdate && (
                                                         <span className="error_msg">{errors.visitdate.message}</span>
                                                     )} */}
@@ -200,7 +203,8 @@ const EnquiryForm = () => {
 
                                                 {/* Visitors */}
                                                 <div className="form_group">
-                                                    <input className="form-control" type="text" id="number_of_visitors" name="number_of_visitors" placeholder="Number of Visitors" onChange={handleInputChange} />
+                                                    <input className="form-control" type="text" id="number_of_visitors" name="number_of_visitors"
+                                                    maxLength={2} placeholder="Number of Visitors" onChange={handleInputChange} />
                                                     {/* {errors.visitvisitors && (
                                                         <span className="error_msg">{errors.visitvisitors.message}</span>
                                                     )} */}

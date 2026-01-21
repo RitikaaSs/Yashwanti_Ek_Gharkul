@@ -13,7 +13,8 @@ interface EnquiryDataModel {
 }
 export default function EnquiryList() {
     const [enquiryData, setenquiryDataData] = useState<EnquiryDataModel[]>();
-    const [search, setSearch] = useState("");
+    // const [search, setSearch] = useState("");
+    const [subject, setSubject] = useState("all");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
@@ -25,7 +26,7 @@ export default function EnquiryList() {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        search,
+                        subject,
                         page,
                     }),
                 });
@@ -42,10 +43,10 @@ export default function EnquiryList() {
         }
 
         fetchList();
-    }, [search, page]);
+    }, [subject, page]);
 
     const resetFilters = () => {
-        setSearch("");
+        setSubject("all");
         setPage(1);
     };
 
@@ -123,19 +124,23 @@ export default function EnquiryList() {
 
                                         <div className="col-lg-12" style={{ textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
                                             <div className="row"  >
-                                                <div className="col-lg-8">
-                                                    <input
-                                                        type="text"
+                                                <div className="col-lg-6">
+                                                    <select
                                                         className="form-control"
-                                                        placeholder="Search by subject"
-                                                        value={search}
+                                                        value={subject}
                                                         onChange={(e) => {
-                                                            setSearch(e.target.value);
+                                                            setSubject(e.target.value);
                                                             setPage(1);
                                                         }}
-                                                    />
+                                                    >
+                                                        <option value="all">Select subject</option>
+                                                        <option value="General Query">General Query</option>
+                                                        <option value="Feedback">Feedback</option>
+                                                        <option value="Collaboration">Collaboration</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
                                                 </div>
-                                                <div className="col-lg-4">
+                                                <div className="col-lg-6">
                                                     <button className="btn btn-secondary w-100" onClick={resetFilters}>
                                                         Reset
                                                     </button>

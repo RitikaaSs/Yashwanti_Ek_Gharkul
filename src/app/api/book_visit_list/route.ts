@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 
     // Single date filter
     if (date) {
-      whereConditions.push("DATE(created_at) = ?");
+      whereConditions.push("DATE(preferred_date) = ?");
       values.push(date); // YYYY-MM-DD
     }
 
