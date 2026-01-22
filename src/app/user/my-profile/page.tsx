@@ -2,6 +2,7 @@
 
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
+import EditProfileDialog from "@/components/editProfileDialog";
 import { useEffect, useState } from "react";
 
 interface userDataModel {
@@ -12,7 +13,9 @@ interface userDataModel {
 }
 export default function ResidentProfile() {
     const [userData, setUserData] = useState<userDataModel>();
+        const [uId, setUId] = useState(0);
     const [userId, setUserId] = useState<number | null>(null);
+        const [showEditDialog, setShowEditDialog] = useState(false);
     useEffect(() => {
         async function getUser() {
             const res = await fetch("/api/auth/me");
@@ -28,11 +31,16 @@ export default function ResidentProfile() {
         }
     }, [userId]);
 
+const handledEditDialogClose = (shouldRefresh: boolean) => {
+        setShowEditDialog(false);
 
+        if (shouldRefresh) {
+            fetchProfile(userId); // refresh data
+        }
+    };
     async function fetchProfile(id: number | null) {
         try {
             
-
             const res = await fetch("/api/user_profile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -115,6 +123,15 @@ export default function ResidentProfile() {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="d_user_new_details_mainbox">
+                                        <div className="d_user_profile_heading">
+                                            <div className="row">
+                                                {/* <div className="col-lg-6">Basic Details</div> */}
+                                                <div className="col-lg-12" style={{ textAlign: "right" }}>
+                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { setUId(userId || 0); setShowEditDialog(true); }}>
+                                                    Update</button></div>
+                                                {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
+                                            </div>
+                                        </div>
                                         {/* <div className="d_user_profile_heading">User/Guardian Details</div> */}
                                         <div className="d_user_profile_details_listing_box">
                                             <div className="d_user_profile_details_listing">
@@ -138,6 +155,9 @@ export default function ResidentProfile() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className={showEditDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showEditDialog && <EditProfileDialog onClose={handledEditDialogClose} id={uId} role={"user"} />}
                     </div>
                 </main>
             </div>

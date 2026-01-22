@@ -1,5 +1,3 @@
-
-
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
@@ -285,7 +283,7 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                         {showDialog && <AddMedicalInfoDialog onClose={handleDialogClose} id={medicalId} />}
                     </div>
                     <div className={showEditDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
-                        {showEditDialog && <EditProfileDialog onClose={handledEditDialogClose} id={userId} />}
+                        {showEditDialog && <EditProfileDialog onClose={handledEditDialogClose} id={userId} role={"admin"} />}
                     </div>
                 </main>
             </div>
