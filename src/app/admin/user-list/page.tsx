@@ -1,3 +1,5 @@
+// from admin side the password must be reset for the user, after reset the new password will be the users current contact number, want alert message for the admin once reset is done thru "reset password" text
+// want a reset api too
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
 import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
@@ -151,7 +153,7 @@ export default function UserList() {
                                                     <div className="col-lg-2 text-center"><div className="label">Name</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Email Id</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Contact info</div></div>
-                                                    <div className="col-lg-4 text-center"><div className="label">Address</div></div>
+                                                    <div className="col-lg-3 text-center"><div className="label">Address</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Related resident</div></div>
                                                 </div>
 
@@ -161,22 +163,52 @@ export default function UserList() {
                                                             <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.phone_number}</div></div>
-                                                            <div className="col-lg-4 text-center"><div className="label">{list.address}</div></div>
+                                                            <div className="col-lg-3 text-center"><div className="label">{list.address}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label" onClick={() => {
                                                                 router.push(`/admin/resident-list?user_id=${list.id}`)
                                                             }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
+                                                            <div
+                                                                className="col-lg-1 text-center"
+                                                                style={{ color: "red", cursor: "pointer" }}
+                                                                onClick={async (e) => {
+                                                                    e.stopPropagation();
+
+                                                                    const confirmReset = confirm(
+                                                                        `Reset password for ${list.full_name}?`
+                                                                    );
+
+                                                                    if (!confirmReset) return;
+
+                                                                    const res = await fetch("/api/reset_user_password", {
+                                                                        method: "POST",
+                                                                        headers: { "Content-Type": "application/json" },
+                                                                        body: JSON.stringify({ user_id: list.id }),
+                                                                    });
+
+                                                                    const data = await res.json();
+
+                                                                    if (data.status === 1) {
+                                                                        alert("Password reset successfully");
+                                                                    } else {
+                                                                        alert(data.error || "Failed to reset password");
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <div className="label">Reset password</div>
+                                                            </div>
+
                                                         </div>))
-                                                        : <>No User available</>
-                                                        }
+                                                    : <>No User available</>
+                                                }
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="d-flex justify-content-end mt-4 gap-2" style={{fontSize: "12px"}}>
+                                    <div className="d-flex justify-content-end mt-4 gap-2" style={{ fontSize: "12px" }}>
                                         <button
                                             className="btn btn-outline-primary"
                                             disabled={page === 1}
                                             onClick={() => setPage(page - 1)}
-                                        style={{fontSize: "12px"}}>
+                                            style={{ fontSize: "12px" }}>
                                             Previous
                                         </button>
 
@@ -188,7 +220,7 @@ export default function UserList() {
                                             className="btn btn-outline-primary"
                                             disabled={page === totalPages}
                                             onClick={() => setPage(page + 1)}
-                                        style={{fontSize: "12px"}}>
+                                            style={{ fontSize: "12px" }}>
                                             Next
                                         </button>
                                     </div>

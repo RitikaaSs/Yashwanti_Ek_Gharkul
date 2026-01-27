@@ -5,6 +5,9 @@ import { logout } from "../pro_utils/constantFun";
 export default function AdminDashboard() {
   const [approved, setApproved] = useState(0);
   const [onHold, setOnHold] = useState(0);
+  const [disapproved, setDisapproved] = useState(0);
+  const [tEnquiry, setEnquiry] = useState(0);
+  const [tVisits, setVisits] = useState(0);
 
   useEffect(() => {
     async function fetchCounts() {
@@ -16,6 +19,9 @@ export default function AdminDashboard() {
         if (data.status === 1) {
           setApproved(data.approved);
           setOnHold(data.on_hold);
+          setDisapproved(data.disapproved);
+          setEnquiry(data.enquiries);
+          setVisits(data.visits);
           // setRejected(data.rejected);
         }
       } catch (error) {
@@ -151,7 +157,7 @@ export default function AdminDashboard() {
               >
                 <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S ENQUIRY</h3>
                 <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {"--"}
+                  {tEnquiry}
                 </p>
               </div>
               </a>
@@ -167,9 +173,27 @@ export default function AdminDashboard() {
                   textAlign: "center",
                 }}
               >
-                <h3 style={{ margin: 0, fontSize: "18px" }}>UPCOMING VISITS</h3>
+                <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S VISITS</h3>
                 <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {"-or todays-"}
+                  {tVisits}
+                </p>
+              </div>
+              </a>
+              
+              <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
+              <div
+                style={{
+                  flex: 1,
+                  background: "#0A6C85",
+                  color: "white",
+                  padding: "20px",
+                  borderRadius: "8px",
+                  textAlign: "center",
+                }}
+              >
+                <h3 style={{ margin: 0, fontSize: "18px" }}>Rejected Applicants</h3>
+                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                  {disapproved}
                 </p>
               </div>
               </a>

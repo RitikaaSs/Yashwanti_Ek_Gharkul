@@ -21,7 +21,8 @@ interface UserDataModel {
     email: string
     phone_number: string
     address: string
-
+    new_password?: string
+    confirm_password?: string
 }
 
 const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean) => void, id: number, role: string }) => {
@@ -79,7 +80,7 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
             }
         }
 
-    }, [id]);
+    }, [id, role]);
 
     useEffect(() => {
         fetchProfile();
@@ -128,6 +129,21 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
         if (!userformValues.email) newErrors.email = "required";
         if (!userformValues.address) newErrors.address = "required";
         if (!userformValues.phone_number) newErrors.phone_number = "required";
+        if (userformValues.new_password || userformValues.confirm_password) {
+            if (!userformValues.new_password)
+                newErrors.new_password = "required";
+
+            if (!userformValues.confirm_password)
+                newErrors.confirm_password = "required";
+
+            if (
+                userformValues.new_password &&
+                userformValues.confirm_password &&
+                userformValues.new_password !== userformValues.confirm_password
+            ) {
+                newErrors.confirm_password = "Passwords do not match";
+            }
+        }
         setErrorsUser(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -176,7 +192,9 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
             full_name: userformValues.full_name,
             address: userformValues.address,
             email: userformValues.email,
-            phone_number: userformValues.phone_number
+            phone_number: userformValues.phone_number,
+            new_password: userformValues.new_password,
+            confirm_password: userformValues.confirm_password,
         };
 
         const res = await fetch("/api/user_profile_edit", {
@@ -378,6 +396,40 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                                     </div>
                                 </div>
                             </div>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="form_box mb-3">
+                                        <label className="form-label">New Password:</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            name="new_password"
+                                            value={userformValues.new_password || ""}
+                                            onChange={handleUserInputChange}
+                                        />
+                                        {errorsUser.new_password && (
+                                            <span style={{ color: "red" }}>{errorsUser.new_password}</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                    <div className="form_box mb-3">
+                                        <label className="form-label">Confirm Password:</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            name="confirm_password"
+                                            value={userformValues.confirm_password || ""}
+                                            onChange={handleUserInputChange}
+                                        />
+                                        {errorsUser.confirm_password && (
+                                            <span style={{ color: "red" }}>{errorsUser.confirm_password}</span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="row mb-5">
                                 <div className="col-lg-12 ">
                                     <input type='submit' value="Update" className="red_button" />
@@ -385,7 +437,6 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                             </div>
                         </form></>)
             }
-
         </div>
     )
 }

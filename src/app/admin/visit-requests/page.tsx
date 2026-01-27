@@ -12,6 +12,7 @@ interface EnquiryDataModel {
     preferred_time_slot: string
     purpose_of_visit: string
     number_of_visitors: number
+    status: string
     created_at: string
 }
 
@@ -46,6 +47,32 @@ export default function VisitRequestList() {
             console.error("Error fetching visit requests:", error);
         }
     }, [purpose, date, page]);
+
+    const handleStatus = async (id: number, status: string) => {
+        try {
+            const res = await fetch("/api/book_visit_status", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, status }),
+            });
+
+            const data = await res.json();
+
+            if (data.status === 1) {
+                // update UI instantly
+                setvisitData(prev =>
+                    prev.map(item =>
+                        item.id === id ? { ...item, status } : item
+                    )
+                );
+            } else {
+                alert(data.error || "Something went wrong!");
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+        }
+    };
+
 
 
     useEffect(() => {
@@ -155,7 +182,6 @@ export default function VisitRequestList() {
                                                         type="date"
                                                         className="form-control"
                                                         value={date}
-                                                        // max={new Date().toISOString().split("T")[0]}
                                                         onChange={(e) => {
                                                             setDate(e.target.value);
                                                             setPage(1);
@@ -184,7 +210,8 @@ export default function VisitRequestList() {
                                                     <div className="col-lg-2 text-center"><div className="label">Visit date</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Time slot</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Purpose</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Number of visitors</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Visitors</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Status</div></div>
                                                 </div>
                                                 {visitData && visitData.length > 0 ?
                                                     visitData.map((list, index) => (
@@ -195,7 +222,27 @@ export default function VisitRequestList() {
                                                             <div className="col-lg-2 text-center"><div className="label">{moment(list.preferred_date).format('DD-MM-YYYY')}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label">{list.preferred_time_slot}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.purpose_of_visit}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.number_of_visitors}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.number_of_visitors}</div></div>
+                                                            <div className="col-lg-1 text-center">
+                                                                {list.status ? (
+                                                                    <div className="label">{list.status}</div>
+                                                                ) : (
+                                                                    <select
+                                                                        className="form-control"
+                                                                        defaultValue=""
+                                                                        onChange={(e) => {
+                                                                            const value = e.target.value;
+                                                                            if (value) {
+                                                                                handleStatus(list.id, value);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <option value="">Status</option>
+                                                                        <option value="Visited">Visited</option>
+                                                                        <option value="Not visited">Not visited</option>
+                                                                    </select>
+                                                                )}
+                                                            </div>
                                                         </div>)) :
                                                     <>No Visits Available</>
                                                 }

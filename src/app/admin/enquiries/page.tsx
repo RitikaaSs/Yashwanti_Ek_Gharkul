@@ -9,11 +9,11 @@ interface EnquiryDataModel {
     subject: string
     phone_number: string
     message: string
+    status: string
     submitted_at: string
 }
 export default function EnquiryList() {
-    const [enquiryData, setenquiryDataData] = useState<EnquiryDataModel[]>();
-    // const [search, setSearch] = useState("");
+    const [enquiryData, setenquiryDataData] = useState<EnquiryDataModel[]>([]);
     const [subject, setSubject] = useState("all");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -49,7 +49,30 @@ export default function EnquiryList() {
         setSubject("all");
         setPage(1);
     };
+    const handleStatus = async (id: number, status: string) => {
+        try {
+            const res = await fetch("/api/book_visit_status", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, status }),
+            });
 
+            const data = await res.json();
+
+            if (data.status === 1) {
+                // update UI instantly
+                setenquiryDataData(prev =>
+                    prev.map(item =>
+                        item.id === id ? { ...item, status } : item
+                    )
+                );
+            } else {
+                alert(data.error || "Something went wrong!");
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+        }
+    };
 
     return (
         <div>
@@ -157,20 +180,43 @@ export default function EnquiryList() {
                                                     <div className="col-lg-2 text-center"><div className="label">Email Id</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Contact info</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Subject</div></div>
-                                                    <div className="col-lg-4 text-center"><div className="label">Message</div></div>
+                                                    <div className="col-lg-3 text-center"><div className="label">Message</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Date</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Status</div></div>
                                                 </div>
 
-                                                {enquiryData && enquiryData.length > 0 &&
+                                                {enquiryData && enquiryData.length > 0 ?
                                                     enquiryData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label">{list.phone_number}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.subject}</div></div>
-                                                            <div className="col-lg-4 text-center"><div className="label">{list.message}</div></div>
+                                                            <div className="col-lg-3 text-center"><div className="label">{list.message}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label">{moment(list.submitted_at).format('DD-MM-YYYY')}</div></div>
-                                                        </div>))}
+                                                            <div className="col-lg-1 text-center">
+                                                                {list.status!= "New" ? (
+                                                                    <div className="label">{list.status}</div>
+                                                                ) : (
+                                                                    <select
+                                                                        className="form-control"
+                                                                        defaultValue=""
+                                                                        onChange={(e) => {
+                                                                            const value = e.target.value;
+                                                                            if (value) {
+                                                                                handleStatus(list.id, value);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <option value="New">New</option>
+                                                                        <option value="Contacted">Contacted</option>
+                                                                        {/* <option value="Not visited">Not visited</option> */}
+                                                                    </select>
+                                                                )}
+                                                            </div>
+
+                                                        </div>)) : <>No Visits Available</>
+                                                        }
                                             </div>
                                         </div>
                                     </div>
