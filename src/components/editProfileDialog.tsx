@@ -26,8 +26,6 @@ interface UserDataModel {
 }
 
 const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean) => void, id: number, role: string }) => {
-    // const [listData, setlistData] = useState<CandidateDataModel>();
-    // const [isLoading, setLoading] = useState(true);
     const [errors, setErrors] = useState<Partial<CandidateDataModel>>({});
     const [errorsUser, setErrorsUser] = useState<Partial<UserDataModel>>({});
     const [formValues, setFormValues] = useState<CandidateDataModel>({
@@ -110,6 +108,9 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
     const validate = () => {
         const newErrors: Partial<CandidateDataModel> = {};
         if (!formValues.name) newErrors.name = "required";
+        if (!/^[A-Za-z\s]+$/.test(formValues.name)) {
+            newErrors.name = "Name is required. Only alphabets are allowed";
+        }
         if (!formValues.date_of_birth) newErrors.date_of_birth = "required";
         if (!formValues.age) newErrors.age = "required";
         if (!formValues.marital_status) newErrors.marital_status = "required";
@@ -126,6 +127,9 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
     const validateUser = () => {
         const newErrors: Partial<UserDataModel> = {};
         if (!userformValues.full_name) newErrors.full_name = "required";
+        if (!/^[A-Za-z\s]+$/.test(userformValues.full_name)) {
+            newErrors.full_name = "Name is required. Only alphabets are allowed";
+        }
         if (!userformValues.email) newErrors.email = "required";
         if (!userformValues.address) newErrors.address = "required";
         if (!userformValues.phone_number) newErrors.phone_number = "required";
@@ -275,10 +279,11 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                                         onChange={handleInputChange}
                                     >
                                         <option value="">Select Status</option>
-                                        <option value="Single">Single</option>
                                         <option value="Married">Married</option>
+                                        <option value="Unmarried">Unmarried</option>
+                                        <option value="Widower/Widow">Widower/Widow</option>
                                         <option value="Divorced">Divorced</option>
-                                        <option value="Widowed">Widowed</option>
+                                        <option value="Separated">Separated</option>
                                     </select>
 
                                     {/* <input type="text" className="form-control" id="marital_status" value={formValues.marital_status} name="marital_status" onChange={handleInputChange} /> */}

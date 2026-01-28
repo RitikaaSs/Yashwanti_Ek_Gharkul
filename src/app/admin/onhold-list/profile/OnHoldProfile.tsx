@@ -1,10 +1,11 @@
 
 
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import moment from "moment";
 import { logout } from "@/app/pro_utils/constantFun";
+import StatusDisapprovedDialog from "@/components/statusDisapproveDialog";
 interface CandidateDataModel {
     id: number
     user_id: number
@@ -27,59 +28,72 @@ interface CandidateDataModel {
     reviewer_id: string
     approver_id: string
 }
+interface userDataModel {
+    full_name: string
+    email: string
+    phone_number: string
+    address: string
+}
 export default function OnHoldProfile() {
     const [listData, setlistData] = useState<CandidateDataModel>();
-    // const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
-        const router = useRouter();
+    const [userData, setUserData] = useState<userDataModel>();
+    const [showDialog, setShowDialog] = useState(false);
+    const [userId, setUserId] = useState(0);
+    const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
-    useEffect(() => {
+
+
+    const fetchProfile = useCallback(async () => {
         if (!id) return;
 
-        async function fetchProfile() {
-            const res = await fetch("/api/candidate/profile", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id }),
-            });
-
-            const data = await res.json();
-
-            if (data.status === 1) {
-                console.log("Profile data:", data);
-                setlistData(data.data.personal_details[0]);
-                // setMedData(data.medical_record);
-            }
-        }
-
-        fetchProfile();
-    }, [id]);
-
-const handleStatusChange = async (status: string) => {
-    if (!id) return;
-
-    try {
-        const res = await fetch("/api/candidate/edit_status", {
+        const res = await fetch("/api/candidate/profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ candidate_id: id, status }),
+            body: JSON.stringify({ id }),
         });
 
         const data = await res.json();
 
         if (data.status === 1) {
-            alert("Status updated successfully");
-           router.push(`/admin/onhold-list)`);
-        } else {
-            alert("Failed to update status");
+            setlistData(data.data.personal_details[0]);
+            setUserData(data.data.user_details[0]);
         }
-    } catch (error) {
-        console.error("Error updating status:", error);
-        alert("An error occurred while updating status");
-    }
-};
-//
+    }, [id]);
+    useEffect(() => {
+        fetchProfile();
+    }, [fetchProfile]);
+    const handleStatusChange = async (status: string) => {
+        if (!id) return;
 
+        try {
+            const res = await fetch("/api/candidate/edit_status", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ candidate_id: id, status }),
+            });
+
+            const data = await res.json();
+
+            if (data.status === 1) {
+                alert("Status updated successfully");
+                router.push(`/admin/onhold-list`);
+            } else {
+                alert("Failed to update status");
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+            alert("An error occurred while updating status");
+        }
+    };
+
+    const handleDialogClose = (shouldRefresh: boolean) => {
+        setShowDialog(false);
+
+        if (shouldRefresh) {
+            fetchProfile(); // refresh data
+        }
+    };
 
     return (
         <div>
@@ -147,8 +161,8 @@ const handleStatusChange = async (status: string) => {
                     <div className="card">
                         <div className="row">
                             <div className="col-lg-6"><h2>Candidate Profile</h2></div>
-                            <div className="col-lg-6" style={{textAlign:"right"}}><button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Approved")}>Approve</button>
-                            <button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Disapproved")}>Disapprove</button></div>
+                            <div className="col-lg-6" style={{ textAlign: "right" }}><button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Approved")}>Approve</button>
+                                <button className="btn btn-primary mb-3" onClick={() => { setUserId(listData?.id || 0); setShowDialog(true); }}>Disapprove</button></div>
                         </div>
                         <div className="container" id='employement_id'>
                             <div className="row">
@@ -165,12 +179,24 @@ const handleStatusChange = async (status: string) => {
                                                 <div className="d_user_profile_details_content">{listData?.age || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
+                                                <div className="d_user_profile_details_subheading">Gender</div>
+                                                <div className="d_user_profile_details_content">{listData?.gender || "--"}</div>
+                                            </div>
+                                            <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">DOB</div>
                                                 <div className="d_user_profile_details_content">{moment(listData?.date_of_birth).format('DD-MM-YYYY') || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Marital Status</div>
-                                                <div className="d_user_profile_details_content">{listData?.marital_status || "--"}</div>
+                                                <div className="d_user_profile_details_content">{
+                                                    listData?.marital_status === "Widower/Widow"
+                                                        ? listData?.gender === "Male"
+                                                            ? "Widower"
+                                                            : listData?.gender === "Female"
+                                                                ? "Widow"
+                                                                : "Widowed"
+                                                        : listData?.marital_status
+                                                }</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Blood group</div>
@@ -203,23 +229,25 @@ const handleStatusChange = async (status: string) => {
                                         </div>
                                     </div>
                                     <div className="d_user_new_details_mainbox">
-                                        <div className="d_user_profile_heading">Medical Records</div>
+                                        <div className="d_user_profile_heading">User/Guardian Details</div>
+
                                         <div className="d_user_profile_details_listing_box">
+
                                             <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Diagnosis	</div>
-                                                <div className="d_user_profile_details_content">{listData?.education || "--"}</div>
+                                                <div className="d_user_profile_details_subheading">Name	</div>
+                                                <div className="d_user_profile_details_content">{userData?.full_name || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Medications</div>
-                                                <div className="d_user_profile_details_content">{listData?.profession || "--"}</div>
+                                                <div className="d_user_profile_details_subheading">Email ID</div>
+                                                <div className="d_user_profile_details_content">{userData?.email || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Doctor&apos;s Note</div>
-                                                <div className="d_user_profile_details_content">{listData?.hobbies || "--"}</div>
+                                                <div className="d_user_profile_details_subheading">Contact info</div>
+                                                <div className="d_user_profile_details_content">{userData?.phone_number || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Record Date</div>
-                                                <div className="d_user_profile_details_content">{listData?.user_id || "--"}</div>
+                                                <div className="d_user_profile_details_subheading">Address</div>
+                                                <div className="d_user_profile_details_content">{userData?.address || "--"}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -227,6 +255,9 @@ const handleStatusChange = async (status: string) => {
                             </div>
 
                         </div>
+                    </div>
+                    <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showDialog && <StatusDisapprovedDialog onClose={handleDialogClose} id={userId} />}
                     </div>
                 </main>
             </div>

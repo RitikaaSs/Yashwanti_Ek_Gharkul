@@ -107,96 +107,96 @@ export default function AdminDashboard() {
             >
               {/* Card 1 */}
               <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
-              <div
-                style={{
-                  flex: 1,
-                  background: "#0A6C85",
-                  color: "white",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                }}
-              >
-                <h3 style={{ margin: 0, fontSize: "18px" }}>TOTAL RESIDENTS</h3>
-                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {approved}
-                </p>
-              </div>
+                <div
+                  style={{
+                    flex: 1,
+                    background: "#0A6C85",
+                    color: "white",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  <h3 style={{ margin: 0, fontSize: "18px" }}>TOTAL RESIDENTS</h3>
+                  <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                    {approved}
+                  </p>
+                </div>
               </a>
 
               {/* Card 2 */}
               <a href="/admin/onhold-list" style={{ textDecoration: 'none' }}>
-              <div
-                style={{
-                  flex: 1,
-                  background: "#0A6C85",
-                  color: "white",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                }}
-              >
-                <h3 style={{ margin: 0, fontSize: "18px" }}>ON HOLD APPLICATIONS</h3>
-                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {onHold}
-                </p>
-              </div>
+                <div
+                  style={{
+                    flex: 1,
+                    background: "#0A6C85",
+                    color: "white",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  <h3 style={{ margin: 0, fontSize: "18px" }}>RECEIVED APPLICATIONS</h3>
+                  <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                    {onHold}
+                  </p>
+                </div>
               </a>
-
+              <a href="/admin/disapproved-list" style={{ textDecoration: 'none' }}>
+                <div
+                  style={{
+                    flex: 1,
+                    background: "#0A6C85",
+                    color: "white",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  <h3 style={{ margin: 0, fontSize: "18px" }}>REJECTED APPLICATIONS</h3>
+                  <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                    {disapproved}
+                  </p>
+                </div>
+              </a>
               {/* Card 3 */}
               <a href="/admin/enquiries" style={{ textDecoration: 'none' }}>
-              <div
-                style={{
-                  flex: 1,
-                  background: "#0A6C85",
-                  color: "white",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                }}
-              >
-                <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S ENQUIRY</h3>
-                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {tEnquiry}
-                </p>
-              </div>
+                <div
+                  style={{
+                    flex: 1,
+                    background: "#0A6C85",
+                    color: "white",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S ENQUIRY</h3>
+                  <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                    {tEnquiry}
+                  </p>
+                </div>
               </a>
               {/* visits card */}
               <a href="/admin/visit-requests" style={{ textDecoration: 'none' }}>
-              <div
-                style={{
-                  flex: 1,
-                  background: "#0A6C85",
-                  color: "white",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                }}
-              >
-                <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S VISITS</h3>
-                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {tVisits}
-                </p>
-              </div>
+                <div
+                  style={{
+                    flex: 1,
+                    background: "#0A6C85",
+                    color: "white",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  <h3 style={{ margin: 0, fontSize: "18px" }}>TODAY&apos;S VISITS</h3>
+                  <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
+                    {tVisits}
+                  </p>
+                </div>
               </a>
-              
-              <a href="/admin/resident-list" style={{ textDecoration: 'none' }}>
-              <div
-                style={{
-                  flex: 1,
-                  background: "#0A6C85",
-                  color: "white",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                }}
-              >
-                <h3 style={{ margin: 0, fontSize: "18px" }}>Rejected Applicants</h3>
-                <p style={{ margin: "10px 0 0 0", fontSize: "22px", fontWeight: "bold" }}>
-                  {disapproved}
-                </p>
-              </div>
-              </a>
+
+
             </div>
           </div>
         </main>

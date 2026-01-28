@@ -36,7 +36,7 @@ const AboutUs = () => {
                                         <div className="inner_about_para">
                                             {/* Always visible content */}
                                             <p>
-                                                Samipya Foundation is committed to creating meaningful change across different social causes, with a special focus on elder care. We work hand in hand with organizations that support vulnerable seniors, providing financial aid and other forms of help to bring them comfort, dignity, and companionship.
+                                                <span className="about_heighlight_text">Samipya Foundation</span> is committed to creating meaningful change across different social causes, with a special focus on elder care. We work hand in hand with organizations that support vulnerable seniors, providing financial aid and other forms of help to bring them comfort, dignity, and companionship.
                                             </p>
                                             <p>
                                                 Staying true to this mission, we started Yashwanti Ek Gharkul — the cornerstone initiative of Samipya Welfare Foundation. It’s a heartfelt effort to give seniors not just a roof over their heads, but a warm, caring, and fulfilling place they can truly call home.
@@ -74,7 +74,8 @@ const AboutUs = () => {
                                             <img src="/assets/images/about/about-us-yellow-pattern.webp" alt="Pattern image" className="img-fluid" />
                                         </div>
                                         <div className="inner_about_right_img_box">
-                                            <img src="/assets/images/about/about-us-name-plate.webp" alt="Gate image" className="img-fluid" />
+                                            {/* <img src="/assets/images/about/about-us-name-plate.webp" alt="Gate image" className="img-fluid" /> */}
+                                            <img src="/assets/images/about/name-plate.webp" alt="Gate image" className="img-fluid" />
                                         </div>
                                         <div className="inner_about_slogan_box">
                                             A Project by <br /><span>Samipya Welfare Foundation</span>

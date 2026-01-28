@@ -152,14 +152,14 @@ export default function LoginPage() {
             </span>
           </div>
 
-          <div style={{ textAlign: "right", marginBottom: "18px" }}>
+          {/* <div style={{ textAlign: "right", marginBottom: "18px" }}>
             <a
               href="/forgot-password"
               style={{ color: "#0A6C85", fontSize: "14px", fontWeight: "500" }}
             >
               Forgot Password?
             </a>
-          </div>
+          </div> */}
 
           <button
             type="submit"

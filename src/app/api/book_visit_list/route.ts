@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       SELECT *
       FROM visit_requests
       ${whereClause}
-      ORDER BY created_at DESC
+      ORDER BY preferred_date DESC
       LIMIT ? OFFSET ?
       `,
       [...values, limit, offset]

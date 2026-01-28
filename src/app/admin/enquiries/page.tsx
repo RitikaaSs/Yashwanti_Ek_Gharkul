@@ -51,7 +51,7 @@ export default function EnquiryList() {
     };
     const handleStatus = async (id: number, status: string) => {
         try {
-            const res = await fetch("/api/book_visit_status", {
+            const res = await fetch("/api/enquiry_form_status", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id, status }),
@@ -209,13 +209,12 @@ export default function EnquiryList() {
                                                                         }}
                                                                     >
                                                                         <option value="New">New</option>
-                                                                        <option value="Contacted">Contacted</option>
-                                                                        {/* <option value="Not visited">Not visited</option> */}
+                                                                        <option value="Contacted"> </option>
                                                                     </select>
                                                                 )}
                                                             </div>
 
-                                                        </div>)) : <>No Visits Available</>
+                                                        </div>)) : <>No Enquiries Available</>
                                                         }
                                             </div>
                                         </div>

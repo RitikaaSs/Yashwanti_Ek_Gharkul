@@ -21,7 +21,7 @@ export default function Home() {
               <source src="/assets/videos/hero-video.mp4" type="video/mp4" />
             </video>
           </div>
-          <div className="home_banner_imgbox_gredient">
+          <div className="home_banner_imgbox_gredient d-none">
             {/* <img src="/assets/images/home/banner-gredient.webp" alt="Banner gredient image" className="img-fluid" /> */}
           </div>
           <div className="container">
@@ -29,15 +29,15 @@ export default function Home() {
               <div className="col-lg-6 col-md-8 col-sm-10 col-12">
                 <div className="home_banner_content_box">
                   <h1 className="heading">Our Home of Care,<br /> <span>Dignity</span>, and <span>Togetherness</span></h1>
-                  <div className="banner_para_home">
+                  <div className="banner_para_home d-none">
                     <p>
                       A sanctuary of comfort, care, and dignity
                       Built on the values of family, community, and compassion.
                     </p>
                   </div>
-                  <div className="home_banner_btnbox">
+                  <div className="home_banner_btnbox d-none">
                     <div className="my_btn_box call_btn">
-                      <a href="/enquiry-form">
+                      <a href="">
                         <div>
                           <svg width="25" height="25" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_646_47)">
@@ -51,31 +51,30 @@ export default function Home() {
                           </svg>
 
                         </div>
-                        <div>Enquire Now</div>
+                        <div>Call Now</div>
                       </a>
                     </div>
-                    <div className="my_btn_box appointment_btn">
-                    <a href="/book-visit">
-                      <div>
-                        <svg width="25" height="25" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M13.3954 15.9608C13.6491 15.9608 13.8972 15.8855 14.1081 15.7446C14.3191 15.6036 14.4836 15.4032 14.5807 15.1688C14.6778 14.9344 14.7032 14.6764 14.6537 14.4275C14.6042 14.1787 14.482 13.9501 14.3025 13.7706C14.1231 13.5912 13.8945 13.469 13.6457 13.4195C13.3968 13.37 13.1388 13.3954 12.9044 13.4925C12.67 13.5896 12.4696 13.7541 12.3286 13.9651C12.1877 14.176 12.1124 14.4241 12.1124 14.6778C12.1124 15.0181 12.2476 15.3444 12.4882 15.585C12.7288 15.8256 13.0551 15.9608 13.3954 15.9608ZM19.8101 15.9608C20.0638 15.9608 20.3119 15.8855 20.5229 15.7446C20.7338 15.6036 20.8983 15.4032 20.9954 15.1688C21.0925 14.9344 21.1179 14.6764 21.0684 14.4275C21.0189 14.1787 20.8967 13.9501 20.7173 13.7706C20.5379 13.5912 20.3093 13.469 20.0604 13.4195C19.8115 13.37 19.5536 13.3954 19.3191 13.4925C19.0847 13.5896 18.8843 13.7541 18.7434 13.9651C18.6024 14.176 18.5271 14.4241 18.5271 14.6778C18.5271 15.0181 18.6623 15.3444 18.9029 15.585C19.1435 15.8256 19.4698 15.9608 19.8101 15.9608ZM13.3954 21.0926C13.6491 21.0926 13.8972 21.0173 14.1081 20.8763C14.3191 20.7354 14.4836 20.535 14.5807 20.3006C14.6778 20.0661 14.7032 19.8082 14.6537 19.5593C14.6042 19.3104 14.482 19.0818 14.3025 18.9024C14.1231 18.723 13.8945 18.6008 13.6457 18.5513C13.3968 18.5018 13.1388 18.5272 12.9044 18.6243C12.67 18.7214 12.4696 18.8859 12.3286 19.0968C12.1877 19.3078 12.1124 19.5559 12.1124 19.8096C12.1124 20.1499 12.2476 20.4762 12.4882 20.7168C12.7288 20.9574 13.0551 21.0926 13.3954 21.0926ZM19.8101 21.0926C20.0638 21.0926 20.3119 21.0173 20.5229 20.8763C20.7338 20.7354 20.8983 20.535 20.9954 20.3006C21.0925 20.0661 21.1179 19.8082 21.0684 19.5593C21.0189 19.3104 20.8967 19.0818 20.7173 18.9024C20.5379 18.723 20.3093 18.6008 20.0604 18.5513C19.8115 18.5018 19.5536 18.5272 19.3191 18.6243C19.0847 18.7214 18.8843 18.8859 18.7434 19.0968C18.6024 19.3078 18.5271 19.5559 18.5271 19.8096C18.5271 20.1499 18.6623 20.4762 18.9029 20.7168C19.1435 20.9574 19.4698 21.0926 19.8101 21.0926ZM6.98064 15.9608C7.23439 15.9608 7.48243 15.8855 7.69341 15.7446C7.90439 15.6036 8.06883 15.4032 8.16593 15.1688C8.26303 14.9344 8.28844 14.6764 8.23894 14.4275C8.18943 14.1787 8.06725 13.9501 7.88782 13.7706C7.7084 13.5912 7.4798 13.469 7.23093 13.4195C6.98207 13.37 6.72411 13.3954 6.48968 13.4925C6.25525 13.5896 6.05489 13.7541 5.91391 13.9651C5.77294 14.176 5.6977 14.4241 5.6977 14.6778C5.6977 15.0181 5.83287 15.3444 6.07346 15.585C6.31406 15.8256 6.64039 15.9608 6.98064 15.9608ZM22.376 3.13132H21.093V1.84837C21.093 1.50812 20.9579 1.18179 20.7173 0.941196C20.4767 0.700597 20.1504 0.56543 19.8101 0.56543C19.4698 0.56543 19.1435 0.700597 18.9029 0.941196C18.6623 1.18179 18.5271 1.50812 18.5271 1.84837V3.13132H8.26359V1.84837C8.26359 1.50812 8.12842 1.18179 7.88782 0.941196C7.64722 0.700597 7.3209 0.56543 6.98064 0.56543C6.64039 0.56543 6.31406 0.700597 6.07346 0.941196C5.83287 1.18179 5.6977 1.50812 5.6977 1.84837V3.13132H4.41475C3.39398 3.13132 2.41501 3.53682 1.69322 4.25862C0.971419 4.98041 0.565918 5.95938 0.565918 6.98015V22.3755C0.565918 23.3963 0.971419 24.3752 1.69322 25.097C2.41501 25.8188 3.39398 26.2243 4.41475 26.2243H22.376C23.3968 26.2243 24.3757 25.8188 25.0975 25.097C25.8193 24.3752 26.2248 23.3963 26.2248 22.3755V6.98015C26.2248 5.95938 25.8193 4.98041 25.0975 4.25862C24.3757 3.53682 23.3968 3.13132 22.376 3.13132ZM23.6589 22.3755C23.6589 22.7158 23.5238 23.0421 23.2832 23.2827C23.0426 23.5233 22.7162 23.6584 22.376 23.6584H4.41475C4.07449 23.6584 3.74817 23.5233 3.50757 23.2827C3.26698 23.0421 3.13181 22.7158 3.13181 22.3755V10.829H23.6589V22.3755ZM23.6589 8.2631H3.13181V6.98015C3.13181 6.6399 3.26698 6.31357 3.50757 6.07298C3.74817 5.83238 4.07449 5.69721 4.41475 5.69721H22.376C22.7162 5.69721 23.0426 5.83238 23.2832 6.07298C23.5238 6.31357 23.6589 6.6399 23.6589 6.98015V8.2631ZM6.98064 21.0926C7.23439 21.0926 7.48243 21.0173 7.69341 20.8763C7.90439 20.7354 8.06883 20.535 8.16593 20.3006C8.26303 20.0661 8.28844 19.8082 8.23894 19.5593C8.18943 19.3104 8.06725 19.0818 7.88782 18.9024C7.7084 18.723 7.4798 18.6008 7.23093 18.5513C6.98207 18.5018 6.72411 18.5272 6.48968 18.6243C6.25525 18.7214 6.05489 18.8859 5.91391 19.0968C5.77294 19.3078 5.6977 19.5559 5.6977 19.8096C5.6977 20.1499 5.83287 20.4762 6.07346 20.7168C6.31406 20.9574 6.64039 21.0926 6.98064 21.0926Z" fill="white" />
-                        </svg>
-                      </div>
-                      <div>Book a Visit</div>
-                    </a>
-                  </div>
-                    
-                  </div>
-                  <div className="my_btn_box whatsapp_btn">
-                      <a href="/application-form" target="_blank">
+                    <div className="my_btn_box whatsapp_btn">
+                      <a href="https://wa.me/" target="_blank">
                         <div>
                           <svg width="25" height="25" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M2.69849 11.6806C2.69849 6.7199 6.71997 2.69842 11.6807 2.69842C16.6414 2.69842 20.6629 6.7199 20.6629 11.6806C20.6629 16.6414 16.6414 20.6629 11.6807 20.6629C9.91362 20.6629 8.26878 20.1537 6.88099 19.2744C6.62271 19.1108 6.30623 19.0671 6.01327 19.1545L2.97078 20.0625L4.11632 17.382C4.25172 17.0652 4.22417 16.7023 4.04249 16.4096C3.19059 15.0368 2.69849 13.4178 2.69849 11.6806ZM11.6807 0.584961C5.55273 0.584961 0.585029 5.55267 0.585029 11.6806C0.585029 13.623 1.08501 15.4514 1.96367 17.0411L0.141677 21.3043C-0.0193917 21.6812 0.0520031 22.1172 0.324862 22.4231C0.59772 22.729 1.02283 22.8494 1.41559 22.7321L6.17026 21.3133C7.7945 22.2443 9.6768 22.7763 11.6807 22.7763C17.8087 22.7763 22.7764 17.8086 22.7764 11.6806C22.7764 5.55267 17.8087 0.584961 11.6807 0.584961ZM14.1032 13.9868L12.7145 14.9651C12.0641 14.5946 11.345 14.0774 10.6236 13.3561C9.87378 12.6062 9.31785 11.8321 8.90795 11.1219L9.79051 10.3728C10.1692 10.0514 10.2729 9.50941 10.0396 9.07081L8.91505 6.95735C8.76362 6.67276 8.49058 6.47286 8.17355 6.41446C7.85651 6.35608 7.53017 6.44559 7.28729 6.65756L6.95388 6.94854C6.15211 7.6483 5.67792 8.79819 6.07093 9.9625C6.47838 11.1695 7.34791 13.0692 9.12923 14.8505C11.0457 16.767 12.9924 17.5217 14.1308 17.8149C15.0481 18.0509 15.9161 17.7344 16.5277 17.2361L17.1528 16.7267C17.4201 16.5089 17.5644 16.1743 17.5392 15.8303C17.5139 15.4864 17.3225 15.1763 17.0262 14.9997L15.2526 13.943C14.8944 13.7296 14.4442 13.7468 14.1032 13.9868Z" fill="white" />
                           </svg>
                         </div>
-                        <div>Application Form</div>
+                        <div>WhatsApp</div>
                       </a>
                     </div>
+                  </div>
+                  <div className="my_btn_box appointment_btn d-none">
+                    <a href="">
+                      <div>
+                        <svg width="25" height="25" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13.3954 15.9608C13.6491 15.9608 13.8972 15.8855 14.1081 15.7446C14.3191 15.6036 14.4836 15.4032 14.5807 15.1688C14.6778 14.9344 14.7032 14.6764 14.6537 14.4275C14.6042 14.1787 14.482 13.9501 14.3025 13.7706C14.1231 13.5912 13.8945 13.469 13.6457 13.4195C13.3968 13.37 13.1388 13.3954 12.9044 13.4925C12.67 13.5896 12.4696 13.7541 12.3286 13.9651C12.1877 14.176 12.1124 14.4241 12.1124 14.6778C12.1124 15.0181 12.2476 15.3444 12.4882 15.585C12.7288 15.8256 13.0551 15.9608 13.3954 15.9608ZM19.8101 15.9608C20.0638 15.9608 20.3119 15.8855 20.5229 15.7446C20.7338 15.6036 20.8983 15.4032 20.9954 15.1688C21.0925 14.9344 21.1179 14.6764 21.0684 14.4275C21.0189 14.1787 20.8967 13.9501 20.7173 13.7706C20.5379 13.5912 20.3093 13.469 20.0604 13.4195C19.8115 13.37 19.5536 13.3954 19.3191 13.4925C19.0847 13.5896 18.8843 13.7541 18.7434 13.9651C18.6024 14.176 18.5271 14.4241 18.5271 14.6778C18.5271 15.0181 18.6623 15.3444 18.9029 15.585C19.1435 15.8256 19.4698 15.9608 19.8101 15.9608ZM13.3954 21.0926C13.6491 21.0926 13.8972 21.0173 14.1081 20.8763C14.3191 20.7354 14.4836 20.535 14.5807 20.3006C14.6778 20.0661 14.7032 19.8082 14.6537 19.5593C14.6042 19.3104 14.482 19.0818 14.3025 18.9024C14.1231 18.723 13.8945 18.6008 13.6457 18.5513C13.3968 18.5018 13.1388 18.5272 12.9044 18.6243C12.67 18.7214 12.4696 18.8859 12.3286 19.0968C12.1877 19.3078 12.1124 19.5559 12.1124 19.8096C12.1124 20.1499 12.2476 20.4762 12.4882 20.7168C12.7288 20.9574 13.0551 21.0926 13.3954 21.0926ZM19.8101 21.0926C20.0638 21.0926 20.3119 21.0173 20.5229 20.8763C20.7338 20.7354 20.8983 20.535 20.9954 20.3006C21.0925 20.0661 21.1179 19.8082 21.0684 19.5593C21.0189 19.3104 20.8967 19.0818 20.7173 18.9024C20.5379 18.723 20.3093 18.6008 20.0604 18.5513C19.8115 18.5018 19.5536 18.5272 19.3191 18.6243C19.0847 18.7214 18.8843 18.8859 18.7434 19.0968C18.6024 19.3078 18.5271 19.5559 18.5271 19.8096C18.5271 20.1499 18.6623 20.4762 18.9029 20.7168C19.1435 20.9574 19.4698 21.0926 19.8101 21.0926ZM6.98064 15.9608C7.23439 15.9608 7.48243 15.8855 7.69341 15.7446C7.90439 15.6036 8.06883 15.4032 8.16593 15.1688C8.26303 14.9344 8.28844 14.6764 8.23894 14.4275C8.18943 14.1787 8.06725 13.9501 7.88782 13.7706C7.7084 13.5912 7.4798 13.469 7.23093 13.4195C6.98207 13.37 6.72411 13.3954 6.48968 13.4925C6.25525 13.5896 6.05489 13.7541 5.91391 13.9651C5.77294 14.176 5.6977 14.4241 5.6977 14.6778C5.6977 15.0181 5.83287 15.3444 6.07346 15.585C6.31406 15.8256 6.64039 15.9608 6.98064 15.9608ZM22.376 3.13132H21.093V1.84837C21.093 1.50812 20.9579 1.18179 20.7173 0.941196C20.4767 0.700597 20.1504 0.56543 19.8101 0.56543C19.4698 0.56543 19.1435 0.700597 18.9029 0.941196C18.6623 1.18179 18.5271 1.50812 18.5271 1.84837V3.13132H8.26359V1.84837C8.26359 1.50812 8.12842 1.18179 7.88782 0.941196C7.64722 0.700597 7.3209 0.56543 6.98064 0.56543C6.64039 0.56543 6.31406 0.700597 6.07346 0.941196C5.83287 1.18179 5.6977 1.50812 5.6977 1.84837V3.13132H4.41475C3.39398 3.13132 2.41501 3.53682 1.69322 4.25862C0.971419 4.98041 0.565918 5.95938 0.565918 6.98015V22.3755C0.565918 23.3963 0.971419 24.3752 1.69322 25.097C2.41501 25.8188 3.39398 26.2243 4.41475 26.2243H22.376C23.3968 26.2243 24.3757 25.8188 25.0975 25.097C25.8193 24.3752 26.2248 23.3963 26.2248 22.3755V6.98015C26.2248 5.95938 25.8193 4.98041 25.0975 4.25862C24.3757 3.53682 23.3968 3.13132 22.376 3.13132ZM23.6589 22.3755C23.6589 22.7158 23.5238 23.0421 23.2832 23.2827C23.0426 23.5233 22.7162 23.6584 22.376 23.6584H4.41475C4.07449 23.6584 3.74817 23.5233 3.50757 23.2827C3.26698 23.0421 3.13181 22.7158 3.13181 22.3755V10.829H23.6589V22.3755ZM23.6589 8.2631H3.13181V6.98015C3.13181 6.6399 3.26698 6.31357 3.50757 6.07298C3.74817 5.83238 4.07449 5.69721 4.41475 5.69721H22.376C22.7162 5.69721 23.0426 5.83238 23.2832 6.07298C23.5238 6.31357 23.6589 6.6399 23.6589 6.98015V8.2631ZM6.98064 21.0926C7.23439 21.0926 7.48243 21.0173 7.69341 20.8763C7.90439 20.7354 8.06883 20.535 8.16593 20.3006C8.26303 20.0661 8.28844 19.8082 8.23894 19.5593C8.18943 19.3104 8.06725 19.0818 7.88782 18.9024C7.7084 18.723 7.4798 18.6008 7.23093 18.5513C6.98207 18.5018 6.72411 18.5272 6.48968 18.6243C6.25525 18.7214 6.05489 18.8859 5.91391 19.0968C5.77294 19.3078 5.6977 19.5559 5.6977 19.8096C5.6977 20.1499 5.83287 20.4762 6.07346 20.7168C6.31406 20.9574 6.64039 21.0926 6.98064 21.0926Z" fill="white" />
+                        </svg>
+                      </div>
+                      <div>Schedule an Appointment</div>
+                    </a>
+                  </div>
                 </div>
               </div>
               <div className="col-lg-6"></div>
@@ -97,8 +96,11 @@ export default function Home() {
                 <div className="section_home_about_mainbox">
                   <h2 className="sub_heading">Because Age Deserves Grace, <br /> Care & Companionship</h2>
                   <div className="home_about_para">
-                    <p>
+                    {/* <p>
                       At Yashwanti Ek Gharkul, we offer more than just care — we create a sanctuary of warmth, safety, and grace for our elders. Thoughtfully designed with compassion at its core, our home blends comfort, dignity, and a sense of belonging. With dedicated caregivers, medical support, enriching activities, and attentive daily assistance, every resident is nurtured, respected, and truly celebrated.
+                    </p> */}
+                    <p>
+                      Gharkul meaning - The word &quot;Gharkul&quot; (घरकुल) in Marathi is made of two parts &quot;Ghar&quot; (घर) = Home &quot;Kul&quot; (कुल) = Family / Close-Knit Space. &quot;Gharkul&quot; is more than a house, it&apos;s a warm, safe, loving home where bonds are cherished and life feels secure.
                     </p>
                   </div>
                   <div className="home_about_second_para">
@@ -309,7 +311,7 @@ export default function Home() {
                           <div className="step_heading">Thoughtful Review</div>
                         </div>
                         <div className="step_textBox">
-                          <div className="step_text">Our team listens carefully to understand your needs.</div>
+                          <div className="step_text">Our team listens carefully to understand you.</div>
                           <div className="step_img">
                             <img src="/assets/images/home/step2.svg" alt="Thoughtful Review" className="img-fluid" />
                           </div>
@@ -345,10 +347,10 @@ export default function Home() {
                       <div className="step_contentBox">
                         <div className="step_headingBox">
                           <div className="step_number">4</div>
-                          <div className="step_heading">Begin Your Journey</div>
+                          <div className="step_heading">Warm Welcome</div>
                         </div>
                         <div className="step_textBox">
-                          <div className="step_text">Fill the admission form and share your story.</div>
+                          <div className="step_text">Receive confirmation and get set to embrace your new family.</div>
                           <div className="step_img">
                             <img src="/assets/images/home/step1.svg" alt="Begin Your Journey" className="img-fluid" />
                           </div>
@@ -364,10 +366,10 @@ export default function Home() {
                       <div className="step_contentBox">
                         <div className="step_headingBox">
                           <div className="step_number">5</div>
-                          <div className="step_heading">Thoughtful Review</div>
+                          <div className="step_heading">Start Your Chapter</div>
                         </div>
                         <div className="step_textBox">
-                          <div className="step_text">Our team listens carefully to understand your needs.</div>
+                          <div className="step_text">Complete formalities and come live with us.</div>
                           <div className="step_img">
                             <img src="/assets/images/home/step2.svg" alt="Thoughtful Review" className="img-fluid" />
                           </div>
@@ -375,7 +377,7 @@ export default function Home() {
                       </div>
                     </div>
                   </SwiperSlide>
-                  <SwiperSlide>
+                  {/* <SwiperSlide>
                     <div className="step_listing step_brown_violate">
                       <div className="step_arrow">
                         <img src="/assets/images/home/arrow.svg" alt="arrows" className="img-fluid" />
@@ -394,7 +396,7 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </SwiperSlide>
+                  </SwiperSlide> */}
                   {/* Custom Navigation Buttons */}
                   <div className="custom_navigation_mainbox">
                     <div className="custom-prev">
@@ -519,7 +521,7 @@ export default function Home() {
                           <img src="/assets/images/home/home-location.webp" alt="Location icon" className="img-fluid" loading="lazy" />
                         </div>
                         <div className="home_contact_listing_content">
-                          <p className="m-0">Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016</p>
+                          <p className="m-0">Yashwanti Ek Gharkul, Next to Gajanan School, Desai Wada, Gandhinagar, Pat, Taluka- Kudal, District- Sindhudurg, Maharashtra</p>
                         </div>
                       </div>
                       <div className="home_contact_listing">
@@ -528,7 +530,7 @@ export default function Home() {
                         </div>
                         <div className="home_contact_listing_content">
                           <p className="m-0">
-                            <a href="tel:+919898989898">9898989898</a> / <a href="tel:+918989898989">8989898989</a>
+                            <a href="tel:+919867098712">9867098712</a>
                           </p>
                         </div>
                       </div>
@@ -538,7 +540,7 @@ export default function Home() {
                         </div>
                         <div className="home_contact_listing_content">
                           <p className="m-0">
-                            <a href="mailto:yashwantiekgharkul@gmail.com">yashwantiekgharkul@gmail.com</a>
+                            <a href="mailto:info@samipyafoundation.org">info@samipyafoundation.org</a>
                           </p>
                         </div>
                       </div>

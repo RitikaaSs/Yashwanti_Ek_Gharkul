@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Link from "next/link";
 
 const Footer = () => {
     return (
@@ -25,10 +26,10 @@ const Footer = () => {
                                     <h6 className="footer_heading">Quick links</h6>
                                     <div className="footer_quick_links">
                                         <ul>
-                                            <li><a href="">About</a></li>
-                                            <li><a href="">Services</a></li>
-                                            <li><a href="">Contact</a></li>
-                                            <li><a href="">Blog</a></li>
+                                            <li><Link href="/about-us">About</Link></li>
+                                            <li><Link href="/services">Services</Link></li>
+                                            <li><Link href="/gallery">Gallery</Link></li>
+                                            <li><Link href="/contact-us">Contact</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -82,6 +83,17 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="new__right_button_box">
+                <div className="new__right_button_listing">
+                    <Link href="/book-visit">Book a visit</Link>
+                </div>
+                <div className="new__right_button_listing">
+                    <Link href="/enquiry-form">Enquire now</Link>
+                </div>
+                <div className="new__right_button_listing">
+                    <Link href="/application-form">Register</Link>
                 </div>
             </div>
         </footer>

@@ -47,7 +47,8 @@ const Header = () => {
                                             <li><Link href="/">Home</Link></li>
                                             <li><Link href="/about-us">About Us</Link></li>
                                             <li><Link href="/services">Services</Link></li>
-                                            <li><Link href="/blog">Blog</Link></li>
+                                            <li><Link href="/gallery">Gallery</Link></li>
+                                            {/* <li><Link href="/blog">Blog</Link></li> */}
                                             <li><Link href="/contact-us">Contact Us</Link></li>
                                             <li>
                                                 <Link href="/login" className="header_login_btn">
@@ -74,7 +75,7 @@ const Header = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="header_absoluate_logobox">
-                            <img src="/assets/images/home/logo.webp" alt="Logo" className="img-fluid" />
+                            <img src="/assets/images/home/new-logo.png" alt="Logo" className="img-fluid" />
                         </div>
                     </div>
                 </div>

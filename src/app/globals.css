@@ -343,6 +343,10 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
   color: #fff;
   background-color: #000;
 }
+.req_text {
+  float: none;
+  color: #ff0000;
+}
 /*-------------------------------- RITIKAS CSSS END -----------------------------------------------*/
 
   html {
@@ -584,8 +588,8 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
   }
 
   .header_absoluate_logobox img {
-      max-width: 200px;
-    }
+    max-width: 200px;
+  }
 
   /* Header section ends */
   /* Banner section start */
@@ -621,9 +625,16 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
       margin: 0 0 1.875rem 0;
     }
 
-    /* .home_banner_content_box {
-      padding: 100px 0 0 0;
-    } */
+    .home_banner_content_box {
+      padding: 20px;
+      border-radius: 20px;
+      background-color: #0000008c;
+      margin: 0 0 20px 20px;
+    }
+
+    .home_banner_content_box .heading {
+      margin: 0;
+    }
 
     .home_banner_imgbox {
       width: 100%;
@@ -640,7 +651,7 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
     .container {
       position: relative;
       z-index: 10;
-      align-self: center;
+      align-self: end;
     }
 
     .home_banner_imgbox_gredient {
@@ -676,7 +687,8 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
 
     .home_about_para p {
       font-family: 'Poppins-Light';
-      margin: 3.75rem 0 0 0;
+      /* margin: 3.75rem 0 0 0; */
+      margin: 40px 0 0 0;
       text-align: center;
     }
 
@@ -687,7 +699,8 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
     }
 
     .home_about_imagebox {
-      margin: -100px 0 0 0;
+      /* margin: -100px 0 0 0; */
+      margin: -40px 0 0 0;
       position: relative;
       z-index: -1;
     }
@@ -1258,7 +1271,7 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
 
     .inner_about_mainbox {
       display: grid;
-      grid-template-columns: 1fr 0.9fr;
+      grid-template-columns: 1fr 0.8fr;
       gap: 40px;
     }
 
@@ -1312,6 +1325,16 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
 
     .sub_heading {
       text-align: start;
+    }
+
+    .inner_about_right_img_box img {
+      border-radius: 100%;
+    }
+
+    .about_heighlight_text {
+      font-size: 25px;
+      font-family: 'Poppins-SemiBold';
+      color: var(--color-brown);
     }
   }
 
@@ -1732,7 +1755,7 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
     }
 
     .contact_info_listing {
-      padding: 80px 60px;
+      padding: 80px 40px;
       background-color: var(--color-white);
       display: flex;
       flex-direction: column;
@@ -1832,15 +1855,86 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
     }
   }
 
+  .distance_from_gharkul_section {
+    padding: 100px 0 0 0;
+
+    .distance_from_gharkul_mainbox {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 20px;
+      gap: 20px;
+      padding: 40px;
+      background-color: #fff;
+      border-radius: 20px;
+    }
+
+    .distance_from_gharkul_listing {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 15px;
+      border-right: 1px solid #d9d9d9;
+      align-items: center;
+    }
+
+    .distance_from_gharkul_heading {
+      font-size: 25px;
+      font-family: 'Poppins-SemiBold';
+    }
+
+    .distance_from_gharkul_listing:last-child {
+      border-right: none;
+    }
+
+    .distance_from_gharkul_subheading {
+      font-size: 14px;
+    }
+
+    .distance_from_gharkul_icon svg {
+      width: 50px;
+      height: 50px;
+      opacity: 0.3;
+    }
+  }
+
 
   /* ===================CONTACT US PAGE ENDS ===================== */
+
+  .new__right_button_box {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    z-index: 9999;
+  }
+
+  .new__right_button_listing a {
+    writing-mode: sideways-lr;
+    -webkit-text-orientation: mixed;
+    text-orientation: mixed;
+    padding: 12px 6px;
+    background-color: var(--color-green);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px 0 0 10px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    line-height: 1;
+  }
+
+  .new__right_button_listing a:hover {
+    background-color: #a07744;
+  }
+
 
   /* Media quairy start */
   @media (max-width: 1440px) {
     .home_banner_section {
-      .home_banner_content_box {
+      /* .home_banner_content_box {
         padding: 80px 0 0 0;
-      }
+      } */
 
       .banner_para_home p {
         margin: 0 0 1.563rem 0;
@@ -1884,9 +1978,9 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
     }
 
     .home_banner_section {
-      .home_banner_content_box {
+      /* .home_banner_content_box {
         padding: 60px 0 0 0;
-      }
+      } */
 
       .banner_para_home p {
         margin: 0 0 1.25rem 0;
@@ -2020,9 +2114,9 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
         font-size: 2.188rem;
       }
 
-      .home_banner_content_box {
+      /* .home_banner_content_box {
         padding: 40px 0 0 0;
-      }
+      } */
 
       .home_banner_corner_img_one img,
       .home_banner_corner_img_two img {
@@ -2074,6 +2168,40 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
     .gallery_section {
       .gallery_mainbox {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    .contact_info_section {
+      .contact_info_listing_box {
+        gap: 20px;
+      }
+
+      .contact_info_listing {
+        padding: 30px 30px;
+      }
+    }
+
+    .distance_from_gharkul_section {
+      .distance_from_gharkul_icon svg {
+        width: 40px;
+        height: 40px;
+      }
+
+      .distance_from_gharkul_listing {
+        grid-template-columns: 40px 1fr;
+        gap: 10px;
+      }
+
+      .distance_from_gharkul_mainbox {
+        padding: 30px;
+      }
+
+      .distance_from_gharkul_subheading {
+        font-size: 12px;
+      }
+
+      .distance_from_gharkul_heading {
+        font-size: 20px;
       }
     }
   }
@@ -2369,6 +2497,32 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       }
     }
+
+    .contact_info_section {
+      padding: 60px 0 0 0;
+    }
+
+    .contact_info_section {
+      .contact_info_listing_box {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+    .distance_from_gharkul_section {
+      padding: 60px 0 0 0;
+
+      .distance_from_gharkul_mainbox {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .distance_from_gharkul_listing {
+        border: 0;
+      }
+    }
+
+    .contact_map_section {
+      padding: 60px 0 0 0;
+    }
   }
 
   @media (max-width: 767.98px) {
@@ -2481,6 +2635,37 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
       .gallery_mainbox {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       }
+    }
+
+    .new__right_button_box {
+      top: auto;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      transform: none;
+      flex-direction: row;
+      justify-content: center;
+      gap: 10px;
+      background-color: var(--color-white);
+      padding: 15px 0;
+    }
+
+    .new__right_button_listing a {
+      writing-mode: unset;
+      -webkit-text-orientation: unset;
+      text-orientation: unset;
+      padding: 6px 12px;
+      border-radius: 40px;
+    }
+
+    .home_banner_section {
+      .home_banner_imgbox {
+        height: 60vh;
+      }
+    }
+
+    .footer_bottom_box {
+      padding: 0 0 40px 0;
     }
   }
 
@@ -2597,6 +2782,51 @@ body:has(.user_black_overlay_main .rightpoupopen) .nw_user_offcanvas .overlay_of
     .gallery_section {
       .gallery_mainbox {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+    }
+
+    .home_banner_section {
+      .home_banner_content_box {
+        margin: 0 0 20px 0px;
+      }
+
+      .home_banner_corner_img_one,
+      .home_banner_corner_img_two {
+        display: none;
+      }
+    }
+
+    .contact_info_section {
+      .contact_info_iconbox {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    .distance_from_gharkul_section {
+      .distance_from_gharkul_mainbox {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .distance_from_gharkul_listing {
+        border-bottom: 1px solid #d9d9d9;
+        padding: 15px 0;
+      }
+
+      .distance_from_gharkul_listing:last-child {
+        border-bottom: none;
+        padding: 15px 0 0 0;
+      }
+
+      .distance_from_gharkul_listing:first-child {
+        padding: 0 0 15px 0;
+      }
+    }
+
+    .contact_map_section {
+      iframe {
+        height: 350px;
       }
     }
 

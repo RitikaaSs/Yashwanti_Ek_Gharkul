@@ -1,10 +1,8 @@
 "use client";
-
 import React, { useState } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import InnerBanner from "../../components/InnerBanner";
-import { useRouter } from "next/navigation";
 
 interface FormValues {
     full_name: string,
@@ -17,14 +15,6 @@ interface FormValues {
 }
 
 const EnquiryForm = () => {
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     // formState: { errors },
-    //     reset
-    // } = useForm<VisitorFormData>({
-    //     resolver: zodResolver(visitorSchema),
-    // });
 
     const [formValues, setFormValues] = useState<FormValues>({
         full_name: '',
@@ -35,10 +25,18 @@ const EnquiryForm = () => {
         purpose_of_visit: '',
         number_of_visitors: ''
     });
-
+    const resetForm = () => {
+        setFormValues({
+            full_name: '',
+            email: '',
+            phone_number: '',
+            preferred_date: '',
+            preferred_time_slot: '',
+            purpose_of_visit: '',
+            number_of_visitors: ''
+        });
+    };
     const [errors, setErrors] = useState<Partial<FormValues>>({});
-    const router = useRouter();
-    const [msg, setMsg] = useState("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -48,14 +46,14 @@ const EnquiryForm = () => {
     const validate = () => {
         const phoneRegex = /^[6-9]\d{9}$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
         const newErrors: Partial<FormValues> = {};
         if (!formValues.full_name) newErrors.full_name = "required";
-        // if (!formValues.email) newErrors.email = "required";
+        if (!/^[A-Za-z\s]+$/.test(formValues.full_name)) {
+            newErrors.full_name = "Name is required. Only alphabets are allowed";
+        }
         if (!formValues.email && !emailRegex.test(formValues.email)) {
             newErrors.email = "Personal email is required";
         }
-        // if (!formValues.phone_number) newErrors.phone_number = "required";
         if (formValues.phone_number && !phoneRegex.test(formValues.phone_number)) {
             newErrors.phone_number = "Valid contact number is required";
         }
@@ -69,7 +67,6 @@ const EnquiryForm = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        // console.log("Form Submitted:", data);
         e.preventDefault();
         if (!validate()) return;
 
@@ -91,13 +88,11 @@ const EnquiryForm = () => {
 
         const data = await res.json();
         if (data.status == 1) {
-            setMsg("Form submitted successfully!");
-            // e.target.reset();
-            router.refresh();
+            alert("Book visit form submitted successfully!");
+            resetForm();
         } else {
-            setMsg(data.error || "Something went wrong!");
+            alert(data.error || "Something went wrong!");
         }
-        // reset();
     };
 
     return (
@@ -115,7 +110,6 @@ const EnquiryForm = () => {
                     ]}
                 />
 
-                {/* Enquiry form start */}
                 <section className="enquiry_form_section">
                     <div className="container">
                         <div className="row justify-content-center">
@@ -131,61 +125,51 @@ const EnquiryForm = () => {
 
                                                 {/* Full Name */}
                                                 <div className="form_group">
-                                                    <input className="form-control" id="full_name" name="full_name" type="text" placeholder="Full Name" onChange={handleInputChange} />
-                                                    {/* {errors.visitname && (
-                                                        <span className="error_msg">{errors.visitname.message}</span>
-                                                    )} */}
+                                                    <input className="form-control" id="full_name" name="full_name" type="text" placeholder="Full Name" value={formValues.full_name} onChange={handleInputChange} />
+                                                  
                                                     {errors.full_name && <span className="error_msg" style={{ color: "red" }}>{errors.full_name}</span>}
                                                 </div>
 
                                                 {/* Email */}
                                                 <div className="form_group">
-                                                    <input className="form-control" id="email" name="email" type="email" placeholder="Email Address" onChange={handleInputChange} />
-                                                    {/* {errors.visitemail && (
-                                                        <span className="error_msg">{errors.visitemail.message}</span>
-                                                    )} */}
+                                                    <input className="form-control" id="email" name="email" type="email" placeholder="Email Address" value={formValues.email} onChange={handleInputChange} />
+                                                  
                                                     {errors.email && <span className="error_msg" style={{ color: "red" }}>{errors.email}</span>}
                                                 </div>
 
                                                 {/* Phone number */}
                                                 <div className="form_group">
-                                                    <input className="form-control" id="phone_number" name="phone_number" type="text" placeholder="Phone Number"
+                                                    <input className="form-control" id="phone_number" name="phone_number" type="text" placeholder="Phone Number" value={formValues.phone_number}
                                                         maxLength={10}
                                                         minLength={10} onChange={handleInputChange} />
-                                                    {/* {errors.visitphone && (
-                                                        <span className="error_msg">{errors.visitphone.message}</span>
-                                                    )} */}
+                                                    
                                                     {errors.phone_number && <span className="error_msg" style={{ color: "red" }}>{errors.phone_number}</span>}
                                                 </div>
 
                                                 {/* Date */}
                                                 <div className="form_group">
-                                                    <input className="form-control" id="preferred_date" name="preferred_date" type="date" placeholder="Preferred Date of Visit"
+                                                    <input className="form-control" id="preferred_date" name="preferred_date" type="date" placeholder="Preferred Date of Visit" value={formValues.preferred_date}
                                                         min={new Date().toISOString().split("T")[0]} onChange={handleInputChange} />
-                                                    {/* {errors.visitdate && (
-                                                        <span className="error_msg">{errors.visitdate.message}</span>
-                                                    )} */}
+                                                   
                                                     {errors.preferred_date && <span className="error_msg" style={{ color: "red" }}>{errors.preferred_date}</span>}
                                                 </div>
 
                                                 {/* Time slot */}
                                                 <div className="form_group">
-                                                    <select className="form-select" id="preferred_time_slot" name="preferred_time_slot" onChange={handleInputChange}>
+                                                    <select className="form-select" id="preferred_time_slot" name="preferred_time_slot" value={formValues.preferred_time_slot} onChange={handleInputChange}>
                                                         <option value="">Preferred Time Slot</option>
                                                         <option value="10–11 AM">10–11 AM</option>
                                                         <option value="12–1 PM">12–1 PM</option>
                                                         <option value="3–4 PM">3–4 PM</option>
 
                                                     </select>
-                                                    {/* {errors.visitslote && (
-                                                        <span className="error_msg">{errors.visitslote.message}</span>
-                                                    )} */}
+                                                   
                                                     {errors.preferred_time_slot && <span className="error_msg" style={{ color: "red" }}>{errors.preferred_time_slot}</span>}
                                                 </div>
 
                                                 {/* Purpose */}
                                                 <div className="form_group">
-                                                    <select className="form-select" id="purpose_of_visit" name="purpose_of_visit" onChange={handleInputChange}>
+                                                    <select className="form-select" id="purpose_of_visit" name="purpose_of_visit" value={formValues.purpose_of_visit} onChange={handleInputChange}>
                                                         <option value="">Purpose of Visit</option>
                                                         <option value="Family">Family</option>
                                                         <option value="Visit">Visit</option>
@@ -195,19 +179,15 @@ const EnquiryForm = () => {
                                                         <option value="CSR Partnership">CSR Partnership</option>
                                                         <option value="Other">Other</option>
                                                     </select>
-                                                    {/* {errors.visitpurpose && (
-                                                        <span className="error_msg">{errors.visitpurpose.message}</span>
-                                                    )} */}
+                                                   
                                                     {errors.purpose_of_visit && <span className="error_msg" style={{ color: "red" }}>{errors.purpose_of_visit}</span>}
                                                 </div>
 
                                                 {/* Visitors */}
                                                 <div className="form_group">
-                                                    <input className="form-control" type="text" id="number_of_visitors" name="number_of_visitors"
-                                                    maxLength={2} placeholder="Number of Visitors" onChange={handleInputChange} />
-                                                    {/* {errors.visitvisitors && (
-                                                        <span className="error_msg">{errors.visitvisitors.message}</span>
-                                                    )} */}
+                                                    <input className="form-control" type="text" id="number_of_visitors" name="number_of_visitors" value={formValues.number_of_visitors}
+                                                        maxLength={2} placeholder="Number of Visitors" onChange={handleInputChange} />
+                                                  
                                                     {errors.number_of_visitors && <span className="error_msg" style={{ color: "red" }}>{errors.number_of_visitors}</span>}
                                                 </div>
                                                 {/* Submit */}
@@ -217,7 +197,7 @@ const EnquiryForm = () => {
                                                     </button>
                                                 </div>
 
-                                                {msg && <p>{msg}</p>}
+
                                             </form>
                                         </div>
                                     </div>

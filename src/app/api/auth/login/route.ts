@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     if (!rows || rows.length === 0) {
       return NextResponse.json(
-        { status: 0, message: "Invalid email or password" },
+        { status: 0, message: "Invalid email or password. Contact admin" },
         { status: 200 }
       );
     }
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     if (!validPass) {
       return NextResponse.json(
-        { status: 0, message: "Invalid email or password" },
+        { status: 0, message: "Invalid email or password. Contact admin" },
         { status: 200 }
       );
     }

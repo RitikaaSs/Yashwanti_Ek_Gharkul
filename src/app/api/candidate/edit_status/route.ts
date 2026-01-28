@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { candidate_id, status } = body;
+    const { candidate_id, status, remark } = body;
 
     if (!candidate_id || !status) {
       return NextResponse.json(
@@ -19,11 +19,11 @@ export async function POST(req: NextRequest) {
     // status can be 'approved' or 'rejected'
     const updateQuery = `
       UPDATE elderly_candidates
-      SET status = ?
+      SET status = ?, remark = ?
       WHERE id = ?
     `;
 
-    await db.query(updateQuery, [status, candidate_id]);
+    await db.query(updateQuery, [status, remark, candidate_id]);
 
     return NextResponse.json(
       { status: 1, message: "Candidate status updated successfully" },

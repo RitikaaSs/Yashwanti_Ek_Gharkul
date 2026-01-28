@@ -22,20 +22,30 @@ const Gallery = () => {
         "/assets/images/gallery/gallery-2.webp",
         "/assets/images/gallery/gallery-3.webp",
         "/assets/images/gallery/gallery-4.webp",
-        "/assets/images/gallery/gallery-1.webp",
-        "/assets/images/gallery/gallery-2.webp",
-        "/assets/images/gallery/gallery-3.webp",
-        "/assets/images/gallery/gallery-4.webp",
-        "/assets/images/gallery/gallery-1.webp",
-        "/assets/images/gallery/gallery-2.webp",
-        "/assets/images/gallery/gallery-3.webp",
-        "/assets/images/gallery/gallery-4.webp",
-        "/assets/images/gallery/gallery-1.webp",
-        "/assets/images/gallery/gallery-2.webp",
-        "/assets/images/gallery/gallery-3.webp",
-        "/assets/images/gallery/gallery-4.webp",
-        "/assets/images/gallery/gallery-1.webp",
-        "/assets/images/gallery/gallery-2.webp",
+        "/assets/images/gallery/gallery-5.webp",
+        "/assets/images/gallery/gallery-6.webp",
+        "/assets/images/gallery/gallery-7.webp",
+        "/assets/images/gallery/gallery-8.webp",
+        "/assets/images/gallery/gallery-9.webp",
+        "/assets/images/gallery/gallery-10.webp",
+        "/assets/images/gallery/gallery-11.webp",
+        "/assets/images/gallery/gallery-12.webp",
+        "/assets/images/gallery/gallery-13.webp",
+        "/assets/images/gallery/gallery-14.webp",
+        "/assets/images/gallery/gallery-15.webp",
+        "/assets/images/gallery/gallery-16.webp",
+        "/assets/images/gallery/gallery-17.webp",
+        "/assets/images/gallery/gallery-18.webp",
+        "/assets/images/gallery/gallery-19.webp",
+        "/assets/images/gallery/gallery-20.webp",
+        "/assets/images/gallery/gallery-21.webp",
+        "/assets/images/gallery/gallery-22.webp",
+        "/assets/images/gallery/gallery-23.webp",
+        "/assets/images/gallery/gallery-24.webp",
+        "/assets/images/gallery/gallery-25.webp",
+        "/assets/images/gallery/gallery-26.webp",
+        "/assets/images/gallery/gallery-27.webp",
+        "/assets/images/gallery/gallery-28.webp",
     ];
     return (
         <div className="gallery_page">
@@ -58,17 +68,17 @@ const Gallery = () => {
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="gallery_mainbox">
-                                    {images.map((src, index) => (
-                                        <div className="gallery_listing"  key={index}>
+                                    {images.map((src, i) => (
+                                        <div className="gallery_listing" key={i}>
                                             <a
-                                               
+                                                key={i}
                                                 data-fancybox="gallery"
                                                 href={src}                // full image
                                             >
                                                 <img
                                                     src={src}               // thumbnail
                                                     className="rounded"
-                                                    alt={`Gallery image ${index + 1}`}
+                                                    alt={`Gallery image ${i + 1}`}
                                                 />
                                             </a>
                                         </div>

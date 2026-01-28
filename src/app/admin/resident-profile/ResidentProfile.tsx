@@ -82,7 +82,7 @@ export default function ResidentProfile() {
             fetchProfile(); // refresh data
         }
     };
-const handledEditDialogClose = (shouldRefresh: boolean) => {
+    const handledEditDialogClose = (shouldRefresh: boolean) => {
         setShowEditDialog(false);
 
         if (shouldRefresh) {
@@ -148,7 +148,7 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                         <a href="/admin/user-list">Relatives</a>
                         <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
-                        <a href="#"  onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
                     </nav>
                 </aside>
 
@@ -164,8 +164,8 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                                             <div className="row">
                                                 <div className="col-lg-6">Basic Details</div>
                                                 <div className="col-lg-6" style={{ textAlign: "right" }}>
-                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { setUserId(listData?.id||0); setShowEditDialog(true); }}>
-                                                    Update</button></div>
+                                                    <button className="btn btn-primary mb-3" style={{ background: "#0A6C85" }} onClick={() => { setUserId(listData?.id || 0); setShowEditDialog(true); }}>
+                                                        Update</button></div>
                                                 {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
                                             </div>
                                         </div>
@@ -179,12 +179,24 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                                                 <div className="d_user_profile_details_content">{listData?.age || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
+                                                <div className="d_user_profile_details_subheading">Gender</div>
+                                                <div className="d_user_profile_details_content">{listData?.gender || "--"}</div>
+                                            </div>
+                                            <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">DOB</div>
                                                 <div className="d_user_profile_details_content">{moment(listData?.date_of_birth).format('DD-MM-YYYY') || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Marital Status</div>
-                                                <div className="d_user_profile_details_content">{listData?.marital_status || "--"}</div>
+                                                <div className="d_user_profile_details_content">{
+                                                    listData?.marital_status === "Widower/Widow"
+                                                        ? listData?.gender === "Male"
+                                                            ? "Widower"
+                                                            : listData?.gender === "Female"
+                                                                ? "Widow"
+                                                                : "Widowed"
+                                                        : listData?.marital_status
+                                                }</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
                                                 <div className="d_user_profile_details_subheading">Blood group</div>
@@ -248,8 +260,8 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                                             <div className="row">
                                                 <div className="col-lg-6">Medical Records</div>
                                                 <div className="col-lg-6" style={{ textAlign: "right" }}>
-                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { setMedicalId(listData?.id || 0); setShowDialog(true); }}>
-                                                    + Add</button></div>
+                                                    <button className="btn btn-primary mb-3" style={{ background: "#0A6C85" }} onClick={() => { setMedicalId(listData?.id || 0); setShowDialog(true); }}>
+                                                        + Add</button></div>
                                                 {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
                                             </div>
                                         </div>

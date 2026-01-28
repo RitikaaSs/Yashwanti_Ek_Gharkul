@@ -40,11 +40,11 @@ const ContactUs = () => {
                                                 <div className="contact_info_heading">Email Address</div>
                                                 <div className="contact_info_content">
                                                     <div className="contact_info_anchore mb-1">
-                                                        <a href="mailto:yashwantiekgharkul@gmail.com">yashwantiekgharkul@gmail.com</a>
+                                                        <a href="mailto:info@samipyafoundation.org">info@samipyafoundation.org</a>
                                                     </div>
-                                                    <div className="contact_info_anchore">
+                                                    {/* <div className="contact_info_anchore">
                                                         <a href="mailto:">testing@gmail.com</a>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -60,10 +60,7 @@ const ContactUs = () => {
                                                 <div className="contact_info_heading">Phone Number</div>
                                                 <div className="contact_info_content">
                                                     <div className="contact_info_anchore mb-1">
-                                                        <a href="tel:+919898989898">9898989898</a>
-                                                    </div>
-                                                    <div className="contact_info_anchore">
-                                                        <a href="tel:+918989898989">8989898989</a>
+                                                        <a href="tel:+919867098712">9867098712</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -79,7 +76,7 @@ const ContactUs = () => {
                                                 <div className="contact_info_heading">Office Address</div>
                                                 <div className="contact_info_content">
                                                     <div className="contact_info_anchore">
-                                                        Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016
+                                                        Yashwanti Ek Gharkul, Next to Gajanan School, Desai Wada, Gandhinagar, Pat, Taluka- Kudal, District- Sindhudurg, Maharashtra
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,6 +89,60 @@ const ContactUs = () => {
                 </section>
                 {/* Contact Us - Contact info section ends  */}
 
+                {/* Contact Us - Distance from Gharkul section ends  */}
+                <section className="distance_from_gharkul_section">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <h2 className="sub_heading text-center">Distance Of The Major Transport Facility From Yashwanti</h2>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <div className="distance_from_gharkul_mainbox">
+                                    <div className="distance_from_gharkul_listing">
+                                        <div className="distance_from_gharkul_icon">
+                                            <svg width="50" height="50" x="0" y="0" viewBox="0 0 32 32"><g transform="matrix(1.1199999999999997,0,0,1.1199999999999997,-1.9199999999999946,-1.9215787124633756)"><path d="M26 19V7a5.006 5.006 0 0 0-5-5H11a5.006 5.006 0 0 0-5 5v12a5.006 5.006 0 0 0 3.955 4.886l-2.808 4.593a1 1 0 1 0 1.706 1.042L9.784 28h12.433l.93 1.521a1 1 0 1 0 1.706-1.042l-2.808-4.593A5.006 5.006 0 0 0 26 19zm-15 1a1 1 0 1 1 1-1 1 1 0 0 1-1 1zm.007 6 1.223-2h7.541l1.223 2zM20 19a1 1 0 1 1 1 1 1 1 0 0 1-1-1zm3-6a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" data-name="Railway Station" fill="#a07744" opacity="1" data-original="#000000"></path></g></svg>
+                                        </div>
+                                        <div className="distance_from_gharkul_content">
+                                            <div className="distance_from_gharkul_heading">16.5 km</div>
+                                            <div className="distance_from_gharkul_subheading">Kudal Railway Station</div>
+                                        </div>
+                                    </div>
+                                    <div className="distance_from_gharkul_listing">
+                                        <div className="distance_from_gharkul_icon">
+                                            <svg width="50" height="50" x="0" y="0" viewBox="0 0 45.437 45.437"><g><path d="M41.403 11.11c-.371-3.627-.962-6.451-1.897-7.561-3.855-4.564-30.859-4.898-33.925 0-.75 1.2-1.276 4.014-1.629 7.567a2.287 2.287 0 0 0-2.026 2.267v4.443a2.29 2.29 0 0 0 1.5 2.146c-.207 6.998-.039 14.299.271 17.93 0 2.803 1.883 2.338 1.883 2.338h1.765v3.026c0 1.2 1.237 2.171 2.761 2.171 1.526 0 2.763-.971 2.763-2.171V40.24h20.534v3.026c0 1.2 1.236 2.171 2.762 2.171 1.524 0 2.761-.971 2.761-2.171V40.24h.58s2.216.304 2.358-1.016c0-3.621.228-11.646.04-19.221a2.28 2.28 0 0 0 1.607-2.177v-4.443a2.284 2.284 0 0 0-2.108-2.273zM12.176 4.2h20.735v3.137H12.176V4.2zm.296 32.467a2.947 2.947 0 1 1 0-5.895 2.947 2.947 0 0 1 0 5.895zm20.328 0a2.948 2.948 0 1 1-.002-5.892 2.948 2.948 0 0 1 .002 5.892zm3.747-12.9H8.54V9.077h28.007v14.69z" fill="#a07744" opacity="1" data-original="#000000"></path></g></svg>
+                                        </div>
+                                        <div className="distance_from_gharkul_content">
+                                            <div className="distance_from_gharkul_heading">18 km</div>
+                                            <div className="distance_from_gharkul_subheading">Kudal Bus Stand</div>
+                                        </div>
+                                    </div>
+                                    <div className="distance_from_gharkul_listing">
+                                        <div className="distance_from_gharkul_icon">
+                                            <svg width="50" height="50" x="0" y="0" viewBox="0 0 64 64"><g transform="matrix(1.0999999999999999,0,0,1.0999999999999999,-3.1999999999999957,-3.1999999999999957)"><path d="M12 60h40a8 8 0 0 0 8-8V12a8 8 0 0 0-8-8H12a8 8 0 0 0-8 8v40a8 8 0 0 0 8 8zM9 34l20-9V12a3 3 0 0 1 6 0v13l20 9v4l-20-5v14l4 3v5l-7-4-7 4v-5l4-3V33L9 38z" fill="#a07744" opacity="1" data-original="#000000"></path></g></svg>
+                                        </div>
+                                        <div className="distance_from_gharkul_content">
+                                            <div className="distance_from_gharkul_heading">116 km</div>
+                                            <div className="distance_from_gharkul_subheading">Dabolim Airport, Goa</div>
+                                        </div>
+                                    </div>
+                                    <div className="distance_from_gharkul_listing">
+                                        <div className="distance_from_gharkul_icon">
+                                            <svg width="50" height="50" x="0" y="0" viewBox="0 0 64 64"><g transform="matrix(1.0999999999999999,0,0,1.0999999999999999,-3.1999999999999957,-3.1999999999999957)"><path d="M12 60h40a8 8 0 0 0 8-8V12a8 8 0 0 0-8-8H12a8 8 0 0 0-8 8v40a8 8 0 0 0 8 8zM9 34l20-9V12a3 3 0 0 1 6 0v13l20 9v4l-20-5v14l4 3v5l-7-4-7 4v-5l4-3V33L9 38z" fill="#a07744" opacity="1" data-original="#000000"></path></g></svg>
+                                        </div>
+                                        <div className="distance_from_gharkul_content">
+                                            <div className="distance_from_gharkul_heading">7.5 km</div>
+                                            <div className="distance_from_gharkul_subheading">Sindhudurg Airport</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* Contact Us - Distance from Gharkul section ends  */}
+
                 {/* Contact Us - Map section start  */}
                 <section className="contact_map_section">
                     <div className="container">
@@ -100,7 +151,7 @@ const ContactUs = () => {
                                 <div className="contact_map_mainbox">
                                     <iframe
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7671.694570699371!2d73.5662173157595!3d15.969349542000481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc0070065711503%3A0x4b052ddee8b813c7!2sYashwanti%20Ek%20Gharkul!5e0!3m2!1sen!2sin!4v1761819592100!5m2!1sen!2sin"
-                                        
+
                                         style={{ border: 0 }}
                                         allowFullScreen
                                         loading="lazy"
