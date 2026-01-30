@@ -14,18 +14,25 @@ const AddMedicalInfoDialog = ({ onClose, id }: { onClose: (fetchData: boolean) =
 
     // const [isLoading, setLoading] = useState(true);
     const [errors, setErrors] = useState<Partial<FormValues>>({});
-   const [formValues, setFormValues] = useState<FormValues>({
-           diagnosis: '',
-           medications: '',
-           doctor_notes: '',
-           record_date: ''
-          
-       });
- const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const [formValues, setFormValues] = useState<FormValues>({
+        diagnosis: '',
+        medications: '',
+        doctor_notes: '',
+        record_date: ''
+
+    });
+    const [attachment, setAttachment] = useState<File | null>(null);
+
+    const [isUploading, setIsUploading] = useState(false)
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormValues((prev) => ({ ...prev, [name]: value }));
     }
-
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setAttachment(e.target.files[0])
+        }
+    }
     const validate = () => {
         const newErrors: Partial<FormValues> = {};
         if (!formValues.diagnosis) newErrors.diagnosis = "required";
@@ -38,42 +45,75 @@ const AddMedicalInfoDialog = ({ onClose, id }: { onClose: (fetchData: boolean) =
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-    
-                e.preventDefault();
-                if (!validate()) return;
-        
-                const formData = {
-                    elderly_id: id,
-                    diagnosis: formValues.diagnosis,
-                    medications: formValues.medications,
-                    doctor_notes: formValues.doctor_notes,
-                    record_date: formValues.record_date
-                };
-        
-                const res = await fetch("/api/add_medical_info", {
+        e.preventDefault()
+        if (!validate()) return
+
+        try {
+            setIsUploading(true)
+
+            let attachmentUrl: string | null = null
+
+            // ✅ STEP 1: upload attachment (if exists)
+            if (attachment) {
+                const uploadForm = new FormData()
+                uploadForm.append("file", attachment)
+                uploadForm.append("user_id", String(id))
+
+                const uploadRes = await fetch("/api/uploads_file", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData),
-                });
-        
-                const data = await res.json();
-                if (data.status == 1) {
-                    onClose(true)
-                } else {
-                    alert(data.error || "Something went wrong!");
+                    body: uploadForm
+                })
+                const uploadData = await uploadRes.json();
+                attachmentUrl = uploadData.documentURL;
+
+                if (uploadData.status !== 1) {
+                    alert("Attachment upload failed")
+                    return
                 }
-        
-                // reset();
-            };
+
+                // attachmentUrl = uploadData.documentURL
+            }
+
+            // ✅ STEP 2: submit medical record
+            const formData = {
+                elderly_id: id,
+                diagnosis: formValues.diagnosis,
+                medications: formValues.medications,
+                doctor_notes: formValues.doctor_notes,
+                record_date: formValues.record_date,
+                attachment: attachmentUrl
+            }
+
+            const res = await fetch("/api/add_medical_info", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            })
+
+            const data = await res.json()
+
+            if (data.status === 1) {
+                onClose(true)
+            } else {
+                alert(data.message || "Something went wrong!")
+            }
+
+        } catch (err) {
+            console.error(err)
+            alert("Something went wrong")
+        } finally {
+            setIsUploading(false)
+        }
+    }
 
 
     return (
-       <div className="">
+        <div className="">
             {/* <LoadingDialog isLoading={loading} /> */}
 
-           
-            <div className='rightpoup_close' onClick={()=>onClose(false)}>
-                <img src={ "/images/close_white.png"} alt="close" title='Close' />
+
+            <div className='rightpoup_close' onClick={() => onClose(false)}>
+                <img src={"/images/close_white.png"} alt="close" title='Close' />
             </div>
             <div className="row">
                 {/* <div className="col-lg-12" style={{textAlign: "right"}}>
@@ -110,19 +150,43 @@ const AddMedicalInfoDialog = ({ onClose, id }: { onClose: (fetchData: boolean) =
                             {errors.doctor_notes && <span className="error" style={{ color: "red" }}>{errors.doctor_notes}</span>}
                         </div>
                     </div>
-                </div>
+
                     <div className="col-md-12">
                         <div className="form_box mb-3">
                             <label htmlFor="exampleFormControlInput1" className="form-label">Record date:</label>
                             {/* <input type="text" className="form-control" id="record_date" value={formValues.record_date} name="record_date" onChange={handleInputChange} /> */}
-                            <input className="form-control" type="date" name="record_date"  id="record_date" placeholder="Enter date" onChange={handleInputChange}/>
+                            <input className="form-control" type="date" name="record_date" id="record_date" placeholder="Enter date" onChange={handleInputChange} />
                             {errors.record_date && <span className="error" style={{ color: "red" }}>{errors.record_date}</span>}
                         </div>
                     </div>
+                    <div className="col-md-12">
+                        <div className="form_box mb-3">
+                            <label className="form-label">Attachment (optional):</label>
+                            {/* <input
+                                type="file"
+                                className="form-control"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                                onChange={handleFileChange}
+                            /> */}
+                            <input
+                                type="file"
+                                accept="image/*,.pdf"
+                                onChange={(e) => setAttachment(e.target.files?.[0] || null)}
+                            />
 
+                            {attachment && (
+                                <small className="text-muted">
+                                    Selected: {attachment.name}
+                                </small>
+                            )}
+                        </div>
+                    </div>
+                </div>
                 <div className="row mb-5">
                     <div className="col-lg-12 ">
-                        <input type='submit' value="Add" className="red_button" />
+                        <input type='submit' value={isUploading ? "Uploading..." : "Add"}
+                            className="red_button"
+                            disabled={isUploading} />
                     </div>
                 </div>
             </form>

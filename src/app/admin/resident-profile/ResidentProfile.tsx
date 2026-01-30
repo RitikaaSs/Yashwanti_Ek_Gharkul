@@ -51,7 +51,6 @@ export default function ResidentProfile() {
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
 
-
     const fetchProfile = useCallback(async () => {
         if (!id) return;
 
@@ -73,7 +72,6 @@ export default function ResidentProfile() {
     useEffect(() => {
         fetchProfile();
     }, [fetchProfile]);
-
 
     const handleDialogClose = (shouldRefresh: boolean) => {
         setShowDialog(false);

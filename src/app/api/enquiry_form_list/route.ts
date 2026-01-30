@@ -1,30 +1,20 @@
-
 // fetch enquiry form list
-//. in this api i want search filter for subject and date filter for submitted_at which is in format YYYY-MM-DD HH:mm:ss and pagination
+// in this api i want search filter for subject and date filter for submitted_at which is in format YYYY-MM-DD HH:mm:ss and pagination
 
 import { NextResponse } from "next/server";
 import { RowDataPacket } from "mysql2/promise";
 import pool from "../../../../utils/db";
 
-interface Enquiry extends RowDataPacket {
-  id: number;
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  submitted_at: string;
-}
-
-
-interface RequestBody {
-  subject?: string;
-  page?: number;
+interface VisitRequest extends RowDataPacket {
+  total: number;
 }
 
 export async function POST(req: Request) {
   try {
-    const body: RequestBody = await req.json();
+    const body = await req.json();
     const {
+      date,
+      status,
       subject,
       page = 1,
     } = body;
@@ -39,12 +29,20 @@ export async function POST(req: Request) {
       whereConditions.push("subject LIKE ?");
       values.push(`%${subject}%`);
     }
+    if (status && status !== "all") {
+      whereConditions.push("status = ?");
+      values.push(status);
+    }
+    if (date) {
+      whereConditions.push("DATE(submitted_at) = ?");
+      values.push(date); // YYYY-MM-DD
+    }
     const whereQuery =
       whereConditions.length > 0
         ? `WHERE ${whereConditions.join(" AND ")}`
         : "";
 
-    // 🔹 Count query
+    //  Count query
     const [countRows] = await pool.query<RowDataPacket[]>(
       `
       SELECT COUNT(*) AS total
@@ -57,8 +55,8 @@ export async function POST(req: Request) {
     const total = countRows[0].total;
     const totalPages = Math.ceil(total / limit);
 
-    // 🔹 Data query
-    const [rows] = await pool.query<Enquiry[]>(
+    //  Data query
+    const [rows] = await pool.query<VisitRequest[]>(
 
       `
       SELECT *

@@ -16,6 +16,8 @@ export default function EnquiryList() {
     const [enquiryData, setenquiryDataData] = useState<EnquiryDataModel[]>([]);
     const [subject, setSubject] = useState("all");
     const [page, setPage] = useState(1);
+    const [status, setStatus] = useState("all");
+    const [date, setDate] = useState("");
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
@@ -27,6 +29,8 @@ export default function EnquiryList() {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         subject,
+                        status,
+                        date,
                         page,
                     }),
                 });
@@ -43,10 +47,12 @@ export default function EnquiryList() {
         }
 
         fetchList();
-    }, [subject, page]);
+    }, [subject, status, date, page]);
 
     const resetFilters = () => {
         setSubject("all");
+        setStatus("all");
+        setDate("");
         setPage(1);
     };
     const handleStatus = async (id: number, status: string) => {
@@ -144,26 +150,50 @@ export default function EnquiryList() {
                             <div className="row ">
                                 <div className="col-lg-12">
                                     <div className="row mb-4">
-
                                         <div className="col-lg-12" style={{ textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
                                             <div className="row"  >
-                                                <div className="col-lg-6">
+                                                <div className="col-lg-4">
                                                     <select
-                                                        className="form-control"
+                                                        className="form-select"
                                                         value={subject}
                                                         onChange={(e) => {
                                                             setSubject(e.target.value);
                                                             setPage(1);
                                                         }}
                                                     >
-                                                        <option value="all">Select subject</option>
+                                                        <option value="all">Subject</option>
                                                         <option value="General Query">General Query</option>
                                                         <option value="Feedback">Feedback</option>
                                                         <option value="Collaboration">Collaboration</option>
                                                         <option value="Other">Other</option>
                                                     </select>
                                                 </div>
-                                                <div className="col-lg-6">
+                                                <div className="col-lg-3">
+                                                    <select
+                                                        className="form-select"
+                                                        value={status}
+                                                        onChange={(e) => {
+                                                            setStatus(e.target.value);
+                                                            setPage(1);
+                                                        }}
+                                                    >
+                                                        <option value="all"> Status</option>
+                                                        <option value="New">New</option>
+                                                        <option value="Contacted">Contacted</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-lg-3">
+                                                    <input
+                                                        type="date"
+                                                        className="form-control"
+                                                        value={date}
+                                                        onChange={(e) => {
+                                                            setDate(e.target.value);
+                                                            setPage(1);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="col-lg-2">
                                                     <button className="btn btn-secondary w-100" onClick={resetFilters}>
                                                         Reset
                                                     </button>
@@ -171,7 +201,6 @@ export default function EnquiryList() {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div className="row mb-5">
                                         <div className="col-lg-12">
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
@@ -184,7 +213,6 @@ export default function EnquiryList() {
                                                     <div className="col-lg-1 text-center"><div className="label">Date</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Status</div></div>
                                                 </div>
-
                                                 {enquiryData && enquiryData.length > 0 ?
                                                     enquiryData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
@@ -195,7 +223,7 @@ export default function EnquiryList() {
                                                             <div className="col-lg-3 text-center"><div className="label">{list.message}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label">{moment(list.submitted_at).format('DD-MM-YYYY')}</div></div>
                                                             <div className="col-lg-1 text-center">
-                                                                {list.status!= "New" ? (
+                                                                {list.status != "New" ? (
                                                                     <div className="label">{list.status}</div>
                                                                 ) : (
                                                                     <select
@@ -209,13 +237,13 @@ export default function EnquiryList() {
                                                                         }}
                                                                     >
                                                                         <option value="New">New</option>
-                                                                        <option value="Contacted"> </option>
+                                                                        <option value="Contacted">Contacted</option>
                                                                     </select>
                                                                 )}
                                                             </div>
 
                                                         </div>)) : <>No Enquiries Available</>
-                                                        }
+                                                }
                                             </div>
                                         </div>
                                     </div>

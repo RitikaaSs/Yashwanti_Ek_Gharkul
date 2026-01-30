@@ -2,6 +2,7 @@
 import { logout } from "@/app/pro_utils/constantFun";
 import moment from "moment";
 import { useEffect, useState, useCallback } from "react";
+import { set } from "zod";
 
 interface EnquiryDataModel {
     id: number
@@ -20,9 +21,9 @@ export default function VisitRequestList() {
     const [visitData, setvisitData] = useState<EnquiryDataModel[]>([]);
     const [purpose, setPurpose] = useState("all");
     const [date, setDate] = useState("");
+    const [status, setStatus] = useState("all");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
 
     const fetchList = useCallback(async () => {
         try {
@@ -32,6 +33,7 @@ export default function VisitRequestList() {
                 body: JSON.stringify({
                     purpose,
                     date,
+                    status,
                     page,
                     limit: 10,
                 }),
@@ -46,7 +48,7 @@ export default function VisitRequestList() {
         } catch (error) {
             console.error("Error fetching visit requests:", error);
         }
-    }, [purpose, date, page]);
+    }, [purpose, status, date, page]);
 
     const handleStatus = async (id: number, status: string) => {
         try {
@@ -73,16 +75,14 @@ export default function VisitRequestList() {
         }
     };
 
-
-
     useEffect(() => {
         fetchList();
     }, [fetchList]);
 
-
     const resetFilters = () => {
         setPurpose("all");
         setDate("");
+        setStatus("all");
         setPage(1);
     };
 
@@ -137,7 +137,6 @@ export default function VisitRequestList() {
             <div className="layout">
                 <aside className="sidebar">
                     <div style={{ "padding": '0 3.75rem' }}><img src="/assets/images/home/footer-logo.webp" alt="Logo" className="img-fluid" /></div>
-
                     <nav className="menu">
                         <a href="/admin">Dashboard</a>
                         <a href="/admin/resident-list">Resident List</a>
@@ -157,16 +156,15 @@ export default function VisitRequestList() {
                                     <div className="row mb-4">
                                         <div className="col-lg-12" style={{ textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
                                             <div className="row">
-                                                <div className="col-lg-4">
+                                                <div className="col-lg-3">
                                                     <select
-                                                        className="form-control"
+                                                        className="form-select"
                                                         value={purpose}
                                                         onChange={(e) => {
                                                             setPurpose(e.target.value);
                                                             setPage(1);
-                                                        }}
-                                                    >
-                                                        <option value="all">All Purpose</option>
+                                                        }} >
+                                                        <option value="all">Purpose</option>
                                                         <option value="Family">Family</option>
                                                         <option value="Visit">Visit</option>
                                                         <option value="Resident Admission Inquiry">Resident Admission Inquiry</option>
@@ -176,8 +174,21 @@ export default function VisitRequestList() {
                                                         <option value="Other">Other</option>
                                                     </select>
                                                 </div>
-
-                                                <div className="col-lg-4">
+                                                <div className="col-lg-3">
+                                                    <select
+                                                        className="form-select"
+                                                        value={status}
+                                                        onChange={(e) => {
+                                                            setStatus(e.target.value);
+                                                            setPage(1);
+                                                        }}
+                                                    >
+                                                        <option value="all"> Status</option>
+                                                        <option value="Visited">Visited</option>
+                                                        <option value="Not visited">Not visited</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-lg-3">
                                                     <input
                                                         type="date"
                                                         className="form-control"
@@ -188,18 +199,14 @@ export default function VisitRequestList() {
                                                         }}
                                                     />
                                                 </div>
-
-                                                <div className="col-lg-4">
+                                                <div className="col-lg-3">
                                                     <button className="btn btn-secondary w-100" onClick={resetFilters}>
                                                         Reset
                                                     </button>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
-
                                     <div className="row mb-5">
                                         <div className="col-lg-12">
                                             <div className="grey_box" style={{ backgroundColor: "#fff" }} >
@@ -228,7 +235,7 @@ export default function VisitRequestList() {
                                                                     <div className="label">{list.status}</div>
                                                                 ) : (
                                                                     <select
-                                                                        className="form-control"
+                                                                        className="form-select" style={{padding: ".3rem .2rem .1rem .1rem"}}
                                                                         defaultValue=""
                                                                         onChange={(e) => {
                                                                             const value = e.target.value;

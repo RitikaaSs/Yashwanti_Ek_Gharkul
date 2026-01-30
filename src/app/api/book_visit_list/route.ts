@@ -15,6 +15,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const {
       purpose,
+      status,
       date,
       page = 1,
       limit = 10,
@@ -25,13 +26,15 @@ export async function POST(req: Request) {
     const whereConditions: string[] = [];
     const values: (string | number)[] = [];
 
-
     // Purpose filter
     if (purpose && purpose !== "all") {
       whereConditions.push("purpose_of_visit = ?");
       values.push(purpose);
     }
-
+    if (status && status !== "all") {
+      whereConditions.push("status = ?");
+      values.push(status);
+    }
     // Single date filter
     if (date) {
       whereConditions.push("DATE(preferred_date) = ?");
