@@ -2,7 +2,6 @@
 // want a reset api too
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
-import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
 // import moment from "moment";
 import { useRouter } from "next/navigation";
 
@@ -117,6 +116,22 @@ export default function UserList() {
 
                 <main className="main">
                     <div className="card">
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
                         <h2>User list</h2>
                         <div className="container">
                             <div className="row ">
@@ -163,10 +178,10 @@ export default function UserList() {
                                                             <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.phone_number}</div></div>
-                                                            <div className="col-lg-3 text-center"><div className="label">{list.address}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label" onClick={() => {
+                                                            <div className="col-lg-3 text-center"><div className="label">{list.address || "--"}</div></div>
+                                                            <div className="col-lg-2 text-center"><img src={"/assets/admin/view_icon.png"} alt="view icon" className="img-fluid" onClick={() => {
                                                                 router.push(`/admin/resident-list?user_id=${list.id}`)
-                                                            }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
+                                                            }} style={{ maxHeight: "18px" }} /></div>
                                                             <div
                                                                 className="col-lg-1 text-center"
                                                                 style={{ color: "red", cursor: "pointer" }}

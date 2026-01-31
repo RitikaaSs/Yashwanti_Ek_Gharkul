@@ -1,6 +1,7 @@
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 interface EnquiryDataModel {
     id: number
@@ -19,7 +20,7 @@ export default function EnquiryList() {
     const [status, setStatus] = useState("all");
     const [date, setDate] = useState("");
     const [totalPages, setTotalPages] = useState(1);
-
+    const router = useRouter();
     useEffect(() => {
         async function fetchList() {
             try {
@@ -145,6 +146,22 @@ export default function EnquiryList() {
 
                 <main className="main">
                     <div className="card">
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
                         <h2>Enquiries</h2>
                         <div className="container">
                             <div className="row ">
@@ -218,16 +235,16 @@ export default function EnquiryList() {
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
-                                                            <div className="col-lg-1 text-center"><div className="label">{list.phone_number}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.phone_number || "--"}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.subject}</div></div>
-                                                            <div className="col-lg-3 text-center"><div className="label">{list.message}</div></div>
+                                                            <div className="col-lg-3 text-center"><div className="label">{list.message || "--"}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label">{moment(list.submitted_at).format('DD-MM-YYYY')}</div></div>
                                                             <div className="col-lg-1 text-center">
                                                                 {list.status != "New" ? (
                                                                     <div className="label">{list.status}</div>
                                                                 ) : (
                                                                     <select
-                                                                        className="form-control"
+                                                                        className="form-select" style={{ padding: ".3rem .2rem .1rem .1rem" }}
                                                                         defaultValue=""
                                                                         onChange={(e) => {
                                                                             const value = e.target.value;

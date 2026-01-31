@@ -157,6 +157,22 @@ export default function OnHoldProfile() {
 
                 <main className="main">
                     <div className="card">
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
                         <div className="row">
                             <div className="col-lg-6"><h2>Candidate Profile</h2></div>
                             <div className="col-lg-6" style={{ textAlign: "right" }}><button className="btn btn-primary mb-3" onClick={() => handleStatusChange("Approved")}>Approve</button>

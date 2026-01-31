@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import moment from "moment";
 import { logout } from "@/app/pro_utils/constantFun";
 interface CandidateDataModel {
@@ -37,7 +37,7 @@ export default function ProfileResident() {
     const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
-
+    const router = useRouter();
 
     const fetchProfile = useCallback(async () => {
         if (!id) return;
@@ -126,6 +126,22 @@ export default function ProfileResident() {
                 <main className="main">
                     {/* <LoadingDialog isLoading={isLoading} /> */}
                     <div className="card">
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
                         <h2>Candidate Profile</h2>
                         <div className="container" id='employement_id'>
                             <div className="row">

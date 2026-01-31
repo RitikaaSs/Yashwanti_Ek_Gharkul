@@ -1,6 +1,6 @@
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
-import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
+
 import moment from "moment";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -112,13 +112,29 @@ export default function OnHoldList() {
                         <a href="/admin/user-list">Relatives</a>
                         <a href="/admin/visit-requests">Visit requests</a>
                         <a href="/admin/enquiries">Enquiries</a>
-                        <a href="#"  onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); logout("admin"); }}>Logout</a>
                     </nav>
                 </aside>
 
                 <main className="main">
                     <div className="card">
-                        <h2>On Hold Applications</h2>
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
+                        <h2>Received Applications</h2>
                         <div className="container">
                             <div className="row ">
                                 <div className="col-lg-12">
@@ -127,34 +143,34 @@ export default function OnHoldList() {
                                         </div>
                                     </div>
                                     {listData && listData.length > 0 ? <>
-                                    <div className="row mb-5">
-                                        <div className="col-lg-12">
-                                            <div className="grey_box" style={{ backgroundColor: "#fff" }} >
-                                                <div className="row list_label mb-4">
-                                                    <div className="col-lg-3 text-center"><div className="label">Name</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Date of birth</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Age</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Gender</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Blood type</div></div>
-                                                    <div className="col-lg-1 text-center"><div className="label">Action</div></div>
-                                                </div>
+                                        <div className="row mb-5">
+                                            <div className="col-lg-12">
+                                                <div className="grey_box" style={{ backgroundColor: "#fff" }} >
+                                                    <div className="row list_label mb-4">
+                                                        <div className="col-lg-3 text-center"><div className="label">Name</div></div>
+                                                        <div className="col-lg-2 text-center"><div className="label">Date of birth</div></div>
+                                                        <div className="col-lg-2 text-center"><div className="label">Age</div></div>
+                                                        <div className="col-lg-2 text-center"><div className="label">Gender</div></div>
+                                                        <div className="col-lg-2 text-center"><div className="label">Recieved date</div></div>
+                                                        <div className="col-lg-1 text-center"><div className="label">Action</div></div>
+                                                    </div>
 
-                                                {/* {listData && listData.length > 0 && */}
+                                                    {/* {listData && listData.length > 0 && */}
                                                     {listData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
                                                             <div className="col-lg-3 text-center"><div className="label">{list.name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{moment(list.date_of_birth).format('DD-MM-YYYY')}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.age}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.gender}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.blood_group}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{moment(list.updated_at).format('DD-MM-YYYY')}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label" onClick={() => {
                                                                 router.push(`/admin/onhold-list/profile?id=${list.id}`)
-                                                            }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
+                                                            }}><img src={"/assets/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
                                                         </div>))}
-                                                        {/* } */}
+                                                    {/* } */}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </> : <div style={{ textAlign: "center", padding: "50px", fontSize: "18px" }}>No on hold applications found.</div>}
                                 </div>
                             </div>

@@ -125,7 +125,7 @@ export default function AdminDashboard() {
               </a>
 
               {/* Card 2 */}
-              <a href="/admin/onhold-list" style={{ textDecoration: 'none' }}>
+              <a href="/admin/onhold-list" style={{ textDecoration: 'none', cursor: "pointer" }}>
                 <div
                   style={{
                     flex: 1,

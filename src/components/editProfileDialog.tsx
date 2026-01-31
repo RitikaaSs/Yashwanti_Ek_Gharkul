@@ -120,19 +120,23 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
         if (!formValues.education) newErrors.education = "required";
         if (!formValues.profession) newErrors.profession = "required";
         if (!formValues.hobbies) newErrors.hobbies = "required";
-        if (!formValues.room_no) newErrors.room_no = "required";
+        // if (!formValues.room_no) newErrors.room_no = "required";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
     const validateUser = () => {
         const newErrors: Partial<UserDataModel> = {};
+        const phoneRegex = /^[6-9]\d{9}$/;
         if (!userformValues.full_name) newErrors.full_name = "required";
         if (!/^[A-Za-z\s]+$/.test(userformValues.full_name)) {
             newErrors.full_name = "Name is required. Only alphabets are allowed";
         }
         if (!userformValues.email) newErrors.email = "required";
         if (!userformValues.address) newErrors.address = "required";
-        if (!userformValues.phone_number) newErrors.phone_number = "required";
+        // if (!userformValues.phone_number) newErrors.phone_number = "required";
+         if (userformValues.phone_number && !phoneRegex.test(userformValues.phone_number)) {
+            newErrors.phone_number = "Valid contact number is required";
+        }
         if (userformValues.new_password || userformValues.confirm_password) {
             if (!userformValues.new_password)
                 newErrors.new_password = "required";
@@ -235,7 +239,7 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
 
 
             <div className='rightpoup_close' onClick={() => onClose(false)}>
-                <img src={"/images/close_white.png"} alt="close" title='Close' />
+                <img src={"/assets/admin/close.png"} alt="close" title='Close' />
             </div>
             {
                 role === "admin" ? (<>
@@ -272,7 +276,7 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                                 <div className="form_box mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Marital Status:  </label>
                                     <select
-                                        className="form-control"
+                                        className="form-select"
                                         id="marital_status"
                                         name="marital_status"
                                         value={formValues.marital_status}
@@ -296,7 +300,7 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                                 <div className="form_box mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Gender:  </label>
                                     <select
-                                        className="form-control"
+                                        className="form-select"
                                         id="gender"
                                         name="gender"
                                         value={formValues.gender}
@@ -306,8 +310,7 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
-                                    {/* <input type="text" className="form-control" id="gender" value={formValues.gender} name="gender" onChange={handleInputChange} /> */}
-                                    {errors.gender && <span className="error" style={{ color: "red" }}>{errors.gender}</span>}
+                                     {errors.gender && <span className="error" style={{ color: "red" }}>{errors.gender}</span>}
                                 </div>
                             </div>
                             <div className="col-md-6">
@@ -380,7 +383,7 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                                 <div className="col-md-6">
                                     <div className="form_box mb-3">
                                         <label htmlFor="exampleFormControlInput1" className="form-label">Email address:  </label>
-                                        <input type="text" className="form-control" id="email" name="email" value={userformValues.email} onChange={handleUserInputChange} />
+                                        <input type="email" className="form-control" id="email" name="email" value={userformValues.email} onChange={handleUserInputChange} />
                                         {errorsUser.email && <span className="error" style={{ color: "red" }}>{errorsUser.email}</span>}
                                     </div>
                                 </div>
@@ -389,7 +392,7 @@ const EditProfileDialog = ({ onClose, id, role }: { onClose: (fetchData: boolean
                                 <div className="col-md-6">
                                     <div className="form_box mb-3">
                                         <label htmlFor="exampleFormControlInput1" className="form-label">Contact number:  </label>
-                                        <input type="text" className="form-control" id="phone_number" value={userformValues.phone_number} name="phone_number" onChange={handleUserInputChange} />
+                                        <input type="text" className="form-control" id="phone_number" maxLength={10} minLength={10} value={userformValues.phone_number} name="phone_number" onChange={handleUserInputChange} />
                                         {errorsUser.phone_number && <span className="error" style={{ color: "red" }}>{errorsUser.phone_number}</span>}
                                     </div>
                                 </div>

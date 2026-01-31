@@ -28,11 +28,6 @@ const AddMedicalInfoDialog = ({ onClose, id }: { onClose: (fetchData: boolean) =
         const { name, value } = e.target;
         setFormValues((prev) => ({ ...prev, [name]: value }));
     }
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setAttachment(e.target.files[0])
-        }
-    }
     const validate = () => {
         const newErrors: Partial<FormValues> = {};
         if (!formValues.diagnosis) newErrors.diagnosis = "required";
@@ -113,7 +108,7 @@ const AddMedicalInfoDialog = ({ onClose, id }: { onClose: (fetchData: boolean) =
 
 
             <div className='rightpoup_close' onClick={() => onClose(false)}>
-                <img src={"/images/close_white.png"} alt="close" title='Close' />
+                <img src={"/assets/admin/close.png"} alt="close" title='Close' />
             </div>
             <div className="row">
                 {/* <div className="col-lg-12" style={{textAlign: "right"}}>

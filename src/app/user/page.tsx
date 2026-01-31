@@ -134,7 +134,8 @@ useEffect(() => {
                     padding: "20px",
                     borderRadius: "8px",
                     textAlign: "center",
-                    textDecoration: 'none'
+                    textDecoration: 'none',
+                    cursor: "pointer"
                   }}
                onClick={() => router.push(`/user/resident-profile?id=${candidate.id}`)} key={index} >
                   <h3 style={{ margin: 0, fontSize: "18px" }}>{candidate.name}</h3>

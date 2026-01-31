@@ -64,7 +64,7 @@ const StatusDisapprovedDialog = ({ onClose, id }: { onClose: (fetchData: boolean
 
 
             <div className='rightpoup_close' onClick={() => onClose(false)}>
-                <img src={"/images/close_white.png"} alt="close" title='Close' />
+                <img src={"/assets/admin/close.png"} alt="close" title='Close' />
             </div>
 
             <div className="row">

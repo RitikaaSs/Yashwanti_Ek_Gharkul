@@ -1,8 +1,9 @@
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
+import EditVisitRequest from "@/components/editVisitRequest";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
-import { set } from "zod";
 
 interface EnquiryDataModel {
     id: number
@@ -24,7 +25,9 @@ export default function VisitRequestList() {
     const [status, setStatus] = useState("all");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
+    const [showDialog, setShowDialog] = useState(false);
+    const [userId, setUserId] = useState(0);
+    const router = useRouter();
     const fetchList = useCallback(async () => {
         try {
             const res = await fetch("/api/book_visit_list", {
@@ -50,30 +53,30 @@ export default function VisitRequestList() {
         }
     }, [purpose, status, date, page]);
 
-    const handleStatus = async (id: number, status: string) => {
-        try {
-            const res = await fetch("/api/book_visit_status", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id, status }),
-            });
+    // const handleStatus = async (id: number, status: string) => {
+    //     try {
+    //         const res = await fetch("/api/book_visit_status", {
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({ id, status }),
+    //         });
 
-            const data = await res.json();
+    //         const data = await res.json();
 
-            if (data.status === 1) {
-                // update UI instantly
-                setvisitData(prev =>
-                    prev.map(item =>
-                        item.id === id ? { ...item, status } : item
-                    )
-                );
-            } else {
-                alert(data.error || "Something went wrong!");
-            }
-        } catch (error) {
-            console.error("Error updating status:", error);
-        }
-    };
+    //         if (data.status === 1) {
+    //             // update UI instantly
+    //             setvisitData(prev =>
+    //                 prev.map(item =>
+    //                     item.id === id ? { ...item, status } : item
+    //                 )
+    //             );
+    //         } else {
+    //             alert(data.error || "Something went wrong!");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error updating status:", error);
+    //     }
+    // };
 
     useEffect(() => {
         fetchList();
@@ -85,7 +88,13 @@ export default function VisitRequestList() {
         setStatus("all");
         setPage(1);
     };
+    const handleDialogClose = (shouldRefresh: boolean) => {
+        setShowDialog(false);
 
+        if (shouldRefresh) {
+            fetchList(); // refresh data
+        }
+    };
     return (
         <div>
             <style>{`
@@ -149,6 +158,22 @@ export default function VisitRequestList() {
 
                 <main className="main">
                     <div className="card">
+                        <div className="col-lg-3">
+                        <button
+                            type="button"
+                            onClick={() => router.back()}
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                fontSize: '16px',
+                            }}
+                        >
+                            ← Back
+                        </button></div>
                         <h2>Visit Requests</h2>
                         <div className="container">
                             <div className="row ">
@@ -214,7 +239,7 @@ export default function VisitRequestList() {
                                                     <div className="col-lg-2 text-center"><div className="label">Name</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Email Id</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Contact info</div></div>
-                                                    <div className="col-lg-2 text-center"><div className="label">Visit date</div></div>
+                                                    <div className="col-lg-1 text-center"><div className="label">Visit date</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Time slot</div></div>
                                                     <div className="col-lg-2 text-center"><div className="label">Purpose</div></div>
                                                     <div className="col-lg-1 text-center"><div className="label">Visitors</div></div>
@@ -225,17 +250,17 @@ export default function VisitRequestList() {
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} onClick={() => { }}>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.full_name}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.email}</div></div>
-                                                            <div className="col-lg-1 text-center"><div className="label">{list.phone_number}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{moment(list.preferred_date).format('DD-MM-YYYY')}</div></div>
-                                                            <div className="col-lg-1 text-center"><div className="label">{list.preferred_time_slot}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.purpose_of_visit}</div></div>
-                                                            <div className="col-lg-1 text-center"><div className="label">{list.number_of_visitors}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.phone_number || "--"}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{moment(list.preferred_date).format('DD-MM-YYYY') || "--"}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.preferred_time_slot || "--"}</div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.purpose_of_visit || "--"}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.number_of_visitors || "--"}</div></div>
                                                             <div className="col-lg-1 text-center">
-                                                                {list.status ? (
-                                                                    <div className="label">{list.status}</div>
-                                                                ) : (
-                                                                    <select
-                                                                        className="form-select" style={{padding: ".3rem .2rem .1rem .1rem"}}
+                                                                {/* {list.status ? ( */}
+                                                                <div className="label">{list.status ? list.status : "Not visited"}</div>
+                                                                {/* ) : ( */}
+                                                                {/* <select
+                                                                        className="form-select" style={{ padding: ".3rem .2rem .1rem .1rem" }}
                                                                         defaultValue=""
                                                                         onChange={(e) => {
                                                                             const value = e.target.value;
@@ -248,9 +273,14 @@ export default function VisitRequestList() {
                                                                         <option value="Visited">Visited</option>
                                                                         <option value="Not visited">Not visited</option>
                                                                     </select>
-                                                                )}
+                                                                )} */}
                                                             </div>
-                                                        </div>)) :
+                                                            <div className="col-lg-1 text-center"><img src={"/assets/admin/edit.png"} onClick={() => {
+                                                                setUserId(list?.id || 0); setShowDialog(true);
+                                                            }} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div>
+                                                        </div>
+                                                        // </div>
+                                                    )) :
                                                     <>No Visits Available</>
                                                 }
                                             </div>
@@ -281,8 +311,13 @@ export default function VisitRequestList() {
                             </div>
                         </div>
                     </div>
+                    <div style={{display: "block", background: "rgba(0, 0, 0, .5)"}}>
+                    <div className={showDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showDialog && <EditVisitRequest onClose={handleDialogClose} id={userId} />}
+                    </div>
+                    </div>
                 </main>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

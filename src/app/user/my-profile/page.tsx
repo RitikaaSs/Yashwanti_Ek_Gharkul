@@ -3,6 +3,7 @@
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
 import EditProfileDialog from "@/components/editProfileDialog";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface userDataModel {
@@ -13,9 +14,10 @@ interface userDataModel {
 }
 export default function ResidentProfile() {
     const [userData, setUserData] = useState<userDataModel>();
-        const [uId, setUId] = useState(0);
+    const [uId, setUId] = useState(0);
     const [userId, setUserId] = useState<number | null>(null);
-        const [showEditDialog, setShowEditDialog] = useState(false);
+    const [showEditDialog, setShowEditDialog] = useState(false);
+    const router = useRouter();
     useEffect(() => {
         async function getUser() {
             const res = await fetch("/api/auth/me");
@@ -31,7 +33,7 @@ export default function ResidentProfile() {
         }
     }, [userId]);
 
-const handledEditDialogClose = (shouldRefresh: boolean) => {
+    const handledEditDialogClose = (shouldRefresh: boolean) => {
         setShowEditDialog(false);
 
         if (shouldRefresh) {
@@ -40,7 +42,7 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
     };
     async function fetchProfile(id: number | null) {
         try {
-            
+
             const res = await fetch("/api/user_profile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -118,6 +120,22 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                 <main className="main">
                     {/* <LoadingDialog isLoading={isLoading} /> */}
                     <div className="card">
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
                         <h2>My Profile</h2>
                         <div className="container" id='employement_id'>
                             <div className="row">
@@ -127,8 +145,8 @@ const handledEditDialogClose = (shouldRefresh: boolean) => {
                                             <div className="row">
                                                 {/* <div className="col-lg-6">Basic Details</div> */}
                                                 <div className="col-lg-12" style={{ textAlign: "right" }}>
-                                                    <button className="btn btn-primary mb-3" style={{background: "#0A6C85"}} onClick={() => { setUId(userId || 0); setShowEditDialog(true); }}>
-                                                    Update</button></div>
+                                                    <button className="btn btn-primary mb-3" style={{ background: "#0A6C85" }} onClick={() => { setUId(userId || 0); setShowEditDialog(true); }}>
+                                                        Update</button></div>
                                                 {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
                                             </div>
                                         </div>

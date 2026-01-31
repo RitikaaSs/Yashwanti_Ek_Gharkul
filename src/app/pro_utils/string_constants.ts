@@ -1,6 +1,6 @@
 
 
-export const staticIconsBaseURL=`${process.env.NEXT_PUBLIC_BASE_URL}`;
+export const staticIconsBaseURL=`${process.env.BASE_URL}`;
 
 export const logURL=staticIconsBaseURL+"/images/main_logo.webp";
 export const getImageApiURL=`${process.env.BASE_URL}/api/loadImagePath?imagePath=`

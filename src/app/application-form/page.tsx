@@ -24,7 +24,8 @@ interface FormValues {
     hobbies: string,
     volunteer_interest: string,
     volunteer_details: string,
-    health_data: string
+    health_data: string,
+    digital_signature: string
     // signature: File | null;
 }
 
@@ -50,7 +51,7 @@ const ApplicationForm = () => {
         volunteer_interest: '',
         volunteer_details: '',
         health_data: '',
-        // signature: null,
+        digital_signature: '0',
     });
     const resetForm = () => {
         setFormValues({
@@ -73,6 +74,7 @@ const ApplicationForm = () => {
             volunteer_interest: '',
             volunteer_details: '',
             health_data: '',
+            digital_signature: ''
         });
     };
     const [errors, setErrors] = useState<Partial<FormValues>>({});
@@ -122,6 +124,11 @@ const ApplicationForm = () => {
         if (!formValues.date_of_birth) newErrors.date_of_birth = "required";
         if (!formValues.age) newErrors.age = "required";
         if (!formValues.gender) newErrors.gender = "required";
+        // if (!formValues.digital_signature) newErrors.digital_signature = "required";
+if (formValues.digital_signature !== "1") {
+  newErrors.digital_signature = "Consent is required";
+}
+
         // if (!formValues.blood_group) newErrors.blood_group = "required";
         // if (!formValues.relationship_with_applicant) newErrors.relationship_with_applicant = "required";
         // if (!formValues.address) newErrors.address = "required";
@@ -173,6 +180,7 @@ const ApplicationForm = () => {
             volunteer_interest: formValues.volunteer_interest,
             volunteer_details: formValues.volunteer_details,
             health_data: formValues.health_data,
+            digital_signature: formValues.digital_signature === "1" ? "1" : "0",
         };
 
         const res = await fetch("/api/application_form", {
@@ -260,35 +268,35 @@ const ApplicationForm = () => {
                                                         <label htmlFor="">Marital Status </label>
                                                         <div className="form_radio_mainbox">
                                                             <label htmlFor="Married">
-                                                                <input type="radio" id="Married" name="marital_status" value="Married" onChange={handleInputChange} />
+                                                                <input type="radio" id="Married" name="marital_status" checked={formValues.marital_status === "Married"} value="Married" onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
                                                                 <div className="radio_name">Married</div>
                                                             </label>
                                                             <label htmlFor="Unmarried">
-                                                                <input type="radio" id="Unmarried" name="marital_status" value="Unmarried" onChange={handleInputChange} />
+                                                                <input type="radio" id="Unmarried" name="marital_status" value="Unmarried" checked={formValues.marital_status === "Unmarried"} onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
                                                                 <div className="radio_name">Unmarried</div>
                                                             </label>
                                                             <label htmlFor="Widower">
-                                                                <input type="radio" id="Widower" name="marital_status" value="Widower/Widow" onChange={handleInputChange} />
+                                                                <input type="radio" id="Widower" name="marital_status" value="Widower/Widow" checked={formValues.marital_status === "Widower/Widow"} onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
                                                                 <div className="radio_name">Widower/Widow</div>
                                                             </label>
                                                             <label htmlFor="Divorced">
-                                                                <input type="radio" id="Divorced" name="marital_status" value="Divorced" onChange={handleInputChange} />
+                                                                <input type="radio" id="Divorced" name="marital_status" value="Divorced" checked={formValues.marital_status === "Divorced"} onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
                                                                 <div className="radio_name">Divorced</div>
                                                             </label>
                                                             <label htmlFor="Separated">
-                                                                <input type="radio" id="Separated" name="marital_status" value="Separated" onChange={handleInputChange} />
+                                                                <input type="radio" id="Separated" name="marital_status" value="Separated" checked={formValues.marital_status === "Separated"} onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
@@ -301,14 +309,14 @@ const ApplicationForm = () => {
                                                         <label htmlFor="">Gender <span className="req_text">*</span></label>
                                                         <div className="form_radio_mainbox">
                                                             <label htmlFor="Male">
-                                                                <input type="radio" name="gender" id="Male" value="Male" onChange={handleInputChange} />
+                                                                <input type="radio" name="gender" id="Male" value="Male" checked={formValues.gender === "Male"} onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
                                                                 <div className="radio_name">Male</div>
                                                             </label>
                                                             <label htmlFor="Female">
-                                                                <input type="radio" name="gender" id="Female" value="Female" onChange={handleInputChange} />
+                                                                <input type="radio" name="gender" id="Female" value="Female" checked={formValues.gender === "Female"} onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
@@ -356,14 +364,14 @@ const ApplicationForm = () => {
                                                         <label>Would you like to volunteer for any activities in the home?</label>
                                                         <div className="form_radio_mainbox">
                                                             <label htmlFor="Yes">
-                                                                <input type="radio" name="volunteer_interest" id="Yes" value="1" onChange={handleInputChange} />
+                                                                <input type="radio" name="volunteer_interest" id="Yes" checked={formValues.volunteer_interest === "1"} value="1" onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
                                                                 <div className="radio_name">Yes</div>
                                                             </label>
                                                             <label htmlFor="No">
-                                                                <input type="radio" name="volunteer_interest" id="No" value="0" onChange={handleInputChange} />
+                                                                <input type="radio" name="volunteer_interest" id="No" checked={formValues.volunteer_interest === "0"} value="0" onChange={handleInputChange} />
                                                                 <div className="chekmark">
                                                                     <svg width="12" height="12" x="0" y="0" viewBox="0 0 520 520"><g><path d="M239.987 460.841a10 10 0 0 1-7.343-3.213L34.657 243.463A10 10 0 0 1 42 226.675h95.3a10.006 10.006 0 0 1 7.548 3.439l66.168 76.124c7.151-15.286 20.994-40.738 45.286-71.752 35.912-45.85 102.71-113.281 216.994-174.153a10 10 0 0 1 10.85 16.712c-.436.341-44.5 35.041-95.212 98.6-46.672 58.49-108.714 154.13-139.243 277.6a10 10 0 0 1-9.707 7.6z" data-name="6-Check" fill="#028298" opacity="1" data-original="#000000"></path></g></svg>
                                                                 </div>
@@ -372,22 +380,36 @@ const ApplicationForm = () => {
                                                             {errors.volunteer_interest && <span className="error_msg" style={{ color: "red" }}>{errors.volunteer_interest}</span>}
                                                         </div>
                                                     </div>
+                                                    {formValues.volunteer_interest === "1" && (
                                                     <div className="form_group">
                                                         <label>If Yes, then what and why?</label>
                                                         <textarea className="form-control" name="volunteer_details" rows={1} id="volunteer_details" placeholder="Write your interest.." value={formValues.volunteer_details} onChange={handleInputChange}></textarea>
                                                         {errors.volunteer_details && <span className="error_msg" style={{ color: "red" }}>{errors.volunteer_details}</span>}
+                                                    </div>)}
+                                                    <div className="form_group consent_box">
+                                                        <label>
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={formValues.digital_signature === "1"}
+                                                                onChange={(e) =>
+                                                                    setFormValues((prev) => ({
+                                                                        ...prev,
+                                                                        digital_signature: e.target.checked ? "1" : "0",
+                                                                    }))
+                                                                }
+                                                            />
+                                                            <span>
+                                                                I hereby declare that the information provided is true and I give my
+                                                                consent for the use and processing of my personal and medical information
+                                                                as per the terms mentioned above.
+                                                            </span>
+                                                        </label>
+                                                        {errors.digital_signature && (
+                                                            <span className="error_msg" style={{ color: "red" }}>
+                                                                {errors.digital_signature}
+                                                            </span>
+                                                        )}
                                                     </div>
-                                                    {/* <div className="form_group">
-                                                        <label>Upload Photo <span>(with signature across)</span></label>
-                                                        <input
-                                                            type="file"
-                                                            name="photo"
-                                                            accept="image/*"
-                                                            onChange={(e) => setPhoto(e.target.files?.[0] || null)}
-                                                        /> */}
-                                                    {/* <input className="form-control" type="file" name="signature" id="signature"  onChange={handleInputChange} /> */}
-                                                    {/* {errors.signature && <span className="error_msg" style={{ color: "red" }}>{errors.signature}</span>} */}
-                                                    {/* </div> */}
                                                 </div>
                                                 {/* Submit */}
                                                 <div className="form_submit">

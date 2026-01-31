@@ -274,7 +274,8 @@ export async function POST(req: NextRequest) {
       hobbies,
       volunteer_interest,
       volunteer_details,
-      health_data
+      health_data,
+      digital_signature
     } = body;
 
     await connection.beginTransaction();
@@ -334,9 +335,10 @@ export async function POST(req: NextRequest) {
         volunteer_interest,
         volunteer_details,
         health_data,
-        status
+        status,
+        digital_signature
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `,
       [
         userId,
@@ -354,7 +356,8 @@ export async function POST(req: NextRequest) {
         volunteer_interest === "1" || volunteer_interest === 1 ? 1 : 0,
         volunteer_details || null,
         health_data || null,
-        "On hold"
+        "On hold",
+        digital_signature
       ]
     );
 

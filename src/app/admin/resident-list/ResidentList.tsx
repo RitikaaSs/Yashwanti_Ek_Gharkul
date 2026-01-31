@@ -1,6 +1,5 @@
 "use client";
 import { logout } from "@/app/pro_utils/constantFun";
-import { staticIconsBaseURL } from "@/app/pro_utils/string_constants";
 import moment from "moment";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -143,6 +142,22 @@ export default function ResidentList() {
 
                 <main className="main">
                     <div className="card">
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
                         <h2>Resident list</h2>
                         <div className="container">
                             <div className="row ">
@@ -223,14 +238,16 @@ export default function ResidentList() {
                                                     listData.map((list, index) => (
                                                         <div className="row list_listbox" style={{ alignItems: "center", cursor: "pointer" }} key={index} >
                                                             <div className="col-lg-3 text-center"><div className="label">{list.name || "--"}</div></div>
-                                                            <div className="col-lg-1 text-center"><div className="label">{list.room_no}</div></div>
+                                                            <div className="col-lg-1 text-center"><div className="label">{list.room_no || "--"}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{moment(list.date_of_birth).format('DD-MM-YYYY')}</div></div>
                                                             <div className="col-lg-1 text-center"><div className="label">{list.age}</div></div>
                                                             <div className="col-lg-2 text-center"><div className="label">{list.gender}</div></div>
-                                                            <div className="col-lg-2 text-center"><div className="label">{list.blood_group}</div></div>
-                                                            <div className="col-lg-1 text-center"><div className="label" onClick={() => {
-                                                                router.push(`/admin/resident-profile?id=${list.id}`)
-                                                            }}><img src={staticIconsBaseURL + "/images/admin/view_icon.png"} alt="view icon" className="img-fluid" style={{ maxHeight: "18px" }} /></div></div>
+                                                            <div className="col-lg-2 text-center"><div className="label">{list.blood_group || "--"}</div></div>
+                                                            <div className="col-lg-1 text-center">
+                                                                <img src={"/assets/admin/view_icon.png"} alt="view icon" className="img-fluid" onClick={() => {
+                                                                    router.push(`/admin/resident-profile?id=${list.id}`)
+                                                                }} style={{ width: "20px", cursor: "pointer", paddingBottom: "0px", alignItems: "center" }} />
+                                                            </div>
                                                         </div>))
                                                     : <>No such candidate</>
                                                 }

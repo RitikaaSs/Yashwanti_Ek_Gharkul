@@ -1,10 +1,12 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import moment from "moment";
 import AddMedicalInfoDialog from "@/components/addMedicalInfoDialog";
 import { logout } from "@/app/pro_utils/constantFun";
 import EditProfileDialog from "@/components/editProfileDialog";
+import AddSecondaryUser from "@/components/addSecondaryGuardian";
+// import router from "next/router";
 interface CandidateDataModel {
     id: number
     user_id: number
@@ -34,23 +36,32 @@ interface userDataModel {
     phone_number: string
     address: string
 }
+interface userSecDataModel {
+    name: string
+    email: string
+    contact_number: string
+    address: string
+}
 interface CandidateMedicalDataModel {
     diagnosis: string,
     medications: string,
     doctor_notes: string,
     record_date: string,
+    attachment: string
 }
 export default function ResidentProfile() {
     const [listData, setlistData] = useState<CandidateDataModel>();
     const [userData, setUserData] = useState<userDataModel>();
+    const [secUserData, setsecUserData] = useState<userSecDataModel>();
     const [showDialog, setShowDialog] = useState(false);
+    const [showSecUserDialog, setShowshowSecUserDialog] = useState(false);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [medicalId, setMedicalId] = useState(0);
     const [userId, setUserId] = useState(0);
     const [medData, setMedData] = useState<CandidateMedicalDataModel[]>();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
-
+    const router = useRouter();
     const fetchProfile = useCallback(async () => {
         if (!id) return;
 
@@ -66,6 +77,7 @@ export default function ResidentProfile() {
             setlistData(data.data.personal_details[0]);
             setUserData(data.data.user_details[0]);
             setMedData(data.data.medical_record);
+            setsecUserData(data.data.secondary_guardians[0]);
         }
     }, [id]);
 
@@ -87,7 +99,13 @@ export default function ResidentProfile() {
             fetchProfile(); // refresh data
         }
     };
+    const handleSecUserDialogClose = (shouldRefresh: boolean) => {
+        setShowshowSecUserDialog(false);
 
+        if (shouldRefresh) {
+            fetchProfile(); // refresh data
+        }
+    };
     return (
         <div>
             <style>{`
@@ -153,6 +171,22 @@ export default function ResidentProfile() {
                 <main className="main">
                     {/* <LoadingDialog isLoading={isLoading} /> */}
                     <div className="card">
+                        <div className="col-lg-3">
+                            <button
+                                type="button"
+                                onClick={() => router.back()}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    fontSize: '16px',
+                                }}
+                            >
+                                ← Back
+                            </button></div>
                         <h2>Candidate Profile</h2>
                         <div className="container" id='employement_id'>
                             <div className="row">
@@ -231,12 +265,21 @@ export default function ResidentProfile() {
                                         </div>
                                     </div>
                                     <div className="d_user_new_details_mainbox">
-                                        <div className="d_user_profile_heading">User/Guardian Details</div>
+                                        <div className="d_user_profile_heading">
+                                            <div className="row">
+                                                <div className="col-lg-6">Guardian Details</div>
+                                                {!secUserData ? <div className="col-lg-6" style={{ textAlign: "right" }}>
+                                                    <button className="btn btn-primary mb-3" style={{ background: "#0A6C85" }} onClick={() => { setUserId(listData?.id || 0); setShowshowSecUserDialog(true); }}>
+                                                        Add Secondary</button></div> : <></>}
 
+                                                {/* <img src={staticIconsBaseURL + "/images/menu.png"} className="img-fluid edit-icon" alt="Search Icon" style={{ width: "20px", paddingBottom: "5px", alignItems: "center" }} onClick={() => { setEditLeaveId(applied.id); setShowDialog(true); setisToBeEdited(false) }} /> */}
+                                            </div>
+                                        </div>
+                                        {/* <div className="d_user_profile_heading"></div> */}
+                                        {/*  */}
                                         <div className="d_user_profile_details_listing_box">
-
                                             <div className="d_user_profile_details_listing">
-                                                <div className="d_user_profile_details_subheading">Name	</div>
+                                                <div className="d_user_profile_details_subheading">Name	(Primary)</div>
                                                 <div className="d_user_profile_details_content">{userData?.full_name || "--"}</div>
                                             </div>
                                             <div className="d_user_profile_details_listing">
@@ -252,6 +295,26 @@ export default function ResidentProfile() {
                                                 <div className="d_user_profile_details_content">{userData?.address || "--"}</div>
                                             </div>
                                         </div>
+                                        {secUserData && <>
+                                            <div className="d_user_profile_heading"></div>
+                                            <div className="d_user_profile_details_listing_box">
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Name	(Secondary)</div>
+                                                    <div className="d_user_profile_details_content">{secUserData?.name || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Email ID</div>
+                                                    <div className="d_user_profile_details_content">{secUserData?.email || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Contact info</div>
+                                                    <div className="d_user_profile_details_content">{secUserData?.contact_number || "--"}</div>
+                                                </div>
+                                                <div className="d_user_profile_details_listing">
+                                                    <div className="d_user_profile_details_subheading">Address</div>
+                                                    <div className="d_user_profile_details_content">{secUserData?.address || "--"}</div>
+                                                </div>
+                                            </div></>}
                                     </div>
                                     <div className="d_user_new_details_mainbox">
                                         <div className="d_user_profile_heading">
@@ -270,7 +333,7 @@ export default function ResidentProfile() {
                                                     <div className="d_user_profile_details_content">{medItem?.diagnosis || "--"}</div>
                                                 </div>
                                                 <div className="d_user_profile_details_listing">
-                                                    <div className="d_user_profile_details_subheading">Medications</div>
+                                                    <div className="d_user_profile_details_subheading">Medications </div>
                                                     <div className="d_user_profile_details_content">{medItem?.medications || "--"}</div>
                                                 </div>
                                                 <div className="d_user_profile_details_listing">
@@ -281,6 +344,29 @@ export default function ResidentProfile() {
                                                     <div className="d_user_profile_details_subheading">Record Date</div>
                                                     <div className="d_user_profile_details_content">{moment(medItem?.record_date).format('DD-MM-YYYY') || "--"}</div>
                                                 </div>
+                                                {/* {medItem.attachment && (
+                                                    <a href={medItem.attachment} target="_blank" rel="noopener noreferrer">
+                                                        <img
+                                                            src={medItem.attachment}
+                                                            alt="Medical attachment"
+                                                            style={{ maxWidth: "120px", cursor: "pointer" }}
+                                                        />
+                                                    </a>
+                                                )} */}
+                                                {medItem.attachment && (
+                                                    <a
+                                                        href={`/api/fetch_uploads?path=${encodeURIComponent(medItem.attachment)}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        <img
+                                                            src={`/api/fetch_uploads?path=${encodeURIComponent(medItem.attachment)}`}
+                                                            alt="Medical attachment"
+                                                            style={{ maxWidth: "120px", cursor: "pointer" }}
+                                                        />
+                                                    </a>
+                                                )}
+
                                             </div>)) : <div>No medical records found.</div>}
 
                                     </div>
@@ -294,6 +380,9 @@ export default function ResidentProfile() {
                     </div>
                     <div className={showEditDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
                         {showEditDialog && <EditProfileDialog onClose={handledEditDialogClose} id={userId} role={"admin"} />}
+                    </div>
+                    <div className={showSecUserDialog ? "rightpoup rightpoupopen" : "rightpoup"}>
+                        {showSecUserDialog && <AddSecondaryUser onClose={handleSecUserDialogClose} id={userId} />}
                     </div>
                 </main>
             </div>
